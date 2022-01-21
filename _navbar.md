@@ -1,7 +1,7 @@
 - [**知识库HOME**](/README.md)
 
 - 项目文档
-  - [**微服务项目**](microservice-platform-doc/README.md)
+  - [**微服务项目**](/microservice-platform-doc/README.md)
 
 - 开发必备
   - [**在线ASCII码表**](http://www.fly63.com/tool/ascii/)
