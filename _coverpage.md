@@ -5,7 +5,8 @@
 - 相应知识整理
 
 [**个人博客**](https://www.fortuna7.top)
-[**开启阅读**](README.md)
+[**知识库**](README.md)
+[**微服务项目**](microservice-platform-doc/README.md)
 [**GitHub**](https://github.com/EdgarDing77/EdgarDing77.github.io)
 
 ![color](#E4C6C0)
