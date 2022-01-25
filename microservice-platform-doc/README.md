@@ -1,5 +1,7 @@
 # microservice-platform
 
+**联系本人：www.fortuna7.top**
+
 ## A-项目说明
 
 个人博客：www.fortuna7.top
@@ -13,12 +15,21 @@
 
 ##  B-使用说明
 
-启动模块：
+**核心模块：**
 
-1. djj-uaa(User Account and Authentication，用户账户和认证)
-2. user-center
+1. djj-uaa(User Account and Authentication，用户账户和认证):8077
+2. user-center:9001
 3. djj-gateway
-4. back-web
+   1. sc-gateway:8099
+
+4. back-web 9000
+
+**拓展模块：**
+
+1. djj-monitor
+   1. sc-admin:8150
+
+**命令使用：**
 
 项目编译：`mvn clean package -Dmaven.test.skip=true`
 
@@ -28,7 +39,16 @@ Sentinel控制台启动：`java -jar -Dserver.port=6999 sentinel-dashboard.jar`
 
 Redis控制台启动：`redis-server`
 
+docker打包：参考docker文档
+
 日志存放位置：`../logs`
+
+脚本启动或关闭nacos和redis：`sh work.sh`
+
+**账号密码：**
+
+1. back-web:admin/123456
+2. sc-admin监控:admin/admin
 
 **文档：**
 
@@ -45,6 +65,9 @@ Redis控制台启动：`redis-server`
 - djj-register
   - nacos：8848
 - djj-sentinel：6999
+- djj-monitor：
+  - sc-admin：8150
+
 - djj-web：
   - djj-back-end：9000
 
@@ -80,7 +103,10 @@ Redis控制台启动：`redis-server`
 -  [分布式锁.md](e-function/分布式锁.md) 
 -  [缓存操作.md](e-function/缓存操作.md) 
 -  [前后端分离.md](e-function/前后端分离.md) 
+-  [日志中心.md](e-function/日志中心.md) 
 -  [审计日志.md](e-function/审计日志.md) 
+-  [微服务监控.md](e-function/微服务监控.md) 
+-  [文件中心.md](e-function/文件中心.md) 
 -  [alibaba-nacos.md](e-function/alibaba-nacos.md) 
 -  [alibaba-sentinel.md](e-function/alibaba-sentinel.md) 
 -  [jwt的RSA非对称密钥生成.md](e-function/jwt的RSA非对称密钥生成.md) 
