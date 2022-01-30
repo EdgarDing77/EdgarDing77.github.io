@@ -30,7 +30,7 @@ Sentinel 具有以下特征:
 
 ## 使用
 
-### 接入
+### 如何接入
 
 1. 修改pom.xml
 
@@ -41,14 +41,19 @@ Sentinel 具有以下特征:
 </dependency>
 ```
 
-1. 接入限流埋点
+2. 接入限流埋点
 
-- HTTP埋点：Sentinel Starter默认对所有HTTP服务提供限流埋点
-- 自定义埋点：对某个特定方法进行限流或降级，可以通过`@SentinelResource`来完成自定义配置
+- HTTP埋点：Sentinel Starter默认对所有HTTP服务提供限流埋点，如果只想对 HTTP 服务进行限流，那么只需要引入依赖，无需修改代码。
+- 自定义埋点：对某个特定方法进行限流或降级，可以通过`@SentinelResource`来完成限流埋点。
 
-1. 配置限流规则：两种配置方式：代码配置和控制太配置
+3. 配置限流规则：两种配置方式：代码配置和控制台配置。
+
+   
 
 ## Reference
 
 - [Github](https://github.com/alibaba/Sentinel)
+
 - [wiki手册](https://github.com/alibaba/Sentinel/wiki)
+
+  

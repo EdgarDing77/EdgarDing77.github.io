@@ -92,6 +92,12 @@ fd1/*　　　
 5. $ git commit -m “add .gitignore”
 6. 最后push即可
 
+**大文件上传失败操作：**
+
+参考：https://git-lfs.github.com/
+
+参考：https://blog.csdn.net/yimingsilence/article/details/81460278
+
 ### javadoc 标签
 
 javadoc 工具软件识别以下标签：

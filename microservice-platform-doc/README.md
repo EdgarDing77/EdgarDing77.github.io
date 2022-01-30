@@ -50,7 +50,11 @@ docker打包：参考docker文档
 1. back-web:admin/123456
 2. sc-admin监控:admin/admin
 
+**Spring-Boot自动提示：**将项目重新编译，并修改IDEA配置，搜索`Annotation Processor`并设置`Enable annotation processing`。
+
 **文档：**
+
+-  [部署说明.md](b-usage/部署说明.md) 
 
 -  [环境说明.md](b-usage/环境说明.md) 
 -  [接口说明.md](b-usage/接口说明.md) 
@@ -61,7 +65,8 @@ docker打包：参考docker文档
 - djj-uaa：uaa-server:8077
 - djj-gateway：sc-gateway:8099
 - djj-business：(:9001+)
-  - user-center：user-center:9001
+  - user-center:9001
+  - file-center:9005
 - djj-register
   - nacos：8848
 - djj-sentinel：6999
@@ -69,7 +74,21 @@ docker打包：参考docker文档
   - sc-admin：8150
 
 - djj-web：
-  - djj-back-end：9000
+  - back-end：9000
+
+**必要启动模块：**
+
+1. djj-uaa 授权中心
+2. djj-web:back-end 后台前端页面
+3. djj-gateway:sc-gateway Spring Cloud Gateway统一网关
+4. djj-business:user-center 用户中心 授权需要RPC该模块
+5. djj-register:nacos 配置中心、服务注册、服务发现
+
+**拓展模块：**
+
+- djj-monitor:sc-admin 微服务监控
+- djj-business
+  - file-center 文件中心（使用gitee作为图床实现）
 
 **自定义spring-boot-starter：**
 
@@ -98,7 +117,7 @@ docker打包：参考docker文档
 -  [单点登录.md](e-function/单点登录.md) 
 -  [登陆认证.md](e-function/登陆认证.md) 
 -  [多租户.md](e-function/多租户.md) 
--  [分布式功能.md](e-function/分布式功能.md) 
+-  [分布式事务.md](e-function/分布式事务.md) 
 -  [分布式日志链路追踪.md](e-function/分布式日志链路追踪.md) 
 -  [分布式锁.md](e-function/分布式锁.md) 
 -  [缓存操作.md](e-function/缓存操作.md) 
@@ -112,6 +131,9 @@ docker打包：参考docker文档
 -  [jwt的RSA非对称密钥生成.md](e-function/jwt的RSA非对称密钥生成.md) 
 
 ## F-系统设计
+
+-  [持续集成部署CICD.md](f-system-design/持续集成部署CICD.md) 
+-  [分布式ID生成器.md](f-system-design/分布式ID生成器.md) 
 
 -  [服务认证架构设计.md](f-system-design/服务认证架构设计.md) 
 -  [架构设计方法论.md](f-system-design/架构设计方法论.md) 
@@ -153,12 +175,7 @@ banner.txt logo来源：https://devops.datenkollektiv.de/banner.txt/index.html
 
  [难点记录.md](z-project-daily/issue/难点记录.md) 
 
-**ISSUE**
+**项目记录：**
 
--  [issue-2022-01.md](z-project-daily/issue/issue-2022-01.md) 
--  [issue-2021-12.md](z-project-daily/issue/issue-2021-12.md) 
-
-**更新日志**
-
-- [record-2022-01.m d](z-project-daily/record-2022-01.md) 
+-  [record-2022-01.md](z-project-daily/record-2022-01.md) 
 -  [record-2021-12.md](z-project-daily/record-2021-12.md) 
