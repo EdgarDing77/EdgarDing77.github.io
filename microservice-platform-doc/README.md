@@ -1,7 +1,5 @@
 # microservice-platform
 
-**联系本人：www.fortuna7.top**
-
 ## A-项目说明
 
 个人博客：www.fortuna7.top
