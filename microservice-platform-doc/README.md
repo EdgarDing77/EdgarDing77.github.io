@@ -6,26 +6,36 @@
 
 该项目为微服务平台设计与实现的项目文档。
 
-主要针对解决微服务和业务开发时常见的**非功能性需求**。
+**项目概述：**采用前后端分离的微服务架构，主要针对解决微服务和业务开发时常见的**非功能性需求**。
 
 1.  [项目设计.md](a-introduction/项目设计.md) 
 2.  [项目细节.md](a-introduction/项目细节.md) 
 
-##  B-使用说明
+## B-使用说明
+
+**开发启用：**
+
+1. sh work.sh
+2. 启动如下核心模块
 
 **核心模块：**
 
 1. djj-uaa(User Account and Authentication，用户账户和认证):8077
-2. user-center:9001
+2. djj-business
+   - user-center:9001
+   - file-center:9005
+   - search-center
+     - search-client
+     - search-server:9010
 3. djj-gateway
-   1. sc-gateway:8099
-
+   - sc-gateway:8099
 4. back-web 9000
 
 **拓展模块：**
 
 1. djj-monitor
-   1. sc-admin:8150
+   - sc-admin:8150
+   - log-center:8200
 
 **命令使用：**
 
@@ -69,6 +79,7 @@ docker打包：参考docker文档
   - nacos：8848
 - djj-sentinel：6999
 - djj-monitor：
+  - log-cneter：8200
   - sc-admin：8150
 
 - djj-web：
