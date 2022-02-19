@@ -18,40 +18,75 @@ Logstash和Beats进行数据收集、聚合和存储进Elasticsearch，Kibana允
 
 组件分工：
 
-- filebeat：部署在每台应用服务器、数据库、中间件中，负责日志抓取与日志聚合
+- 11filebeat：部署在每台应用服务器、数据库、中间件中，负责日志抓取与日志聚合
   - 日志聚合：把多行日志合并成一条，例如exception的堆栈信息等
 - logstash：通过各种filter结构化日志信息，并把字段transform成对应的类型
 - elasticsearch：负责存储和查询日志信息
 - kibana：通过ui展示日志信息、还能生成饼图、柱状图等
 
-## Elasticsearch
+### 使用说明
 
-version: 7.15
+- 5601:Kibana web interface
+- 9200:Elasticsearch JSON interface
+- 9300:Elasticsearch transport interface
+- 5044:Logstash Beats interface
 
-### Introduction-Elasticsearch
+- 9600:Logstash API endpoint
 
-随着近些年系统越来越大而复杂，系统间流转和产生大量的数据，现有许多技术都在集中如何解决数据仓库存储以及如何结构化这些数据，而数据若只是单纯的存储在磁盘上那便失去了其意义，如何去进行数据的分析和搜索便是Elasticsearch所做的事。
+结构化日志：
 
-Elasticsearch提供近乎实时的**搜索**和**分析**对于**全类型数据**，当然不是每个问题都是搜索问题，Elasticsearch提供一个快速且灵活的数据处理：
+```json
+{
+  "timestamp": "时间",
+  "message": "具体日志信息",
+  "threadName": "线程名",
+  "serverPort": "服务端口",
+  "serverIp": "服务ip",
+  "logLevel": "日志级别",
+  "appName": "工程名称",
+  "classname": "类名"
+}
+```
 
-- Add a search box to an app or website
-- Store and analyze logs, metrics, and security event data
-- Use machine learning to automatically model the behavior of your data in real time
-- Automate business workflows using Elasticsearch as a storage engine
-- Manage, integrate, and analyze spatial information using Elasticsearch as a geographic information system (GIS)
-- Store and process genetic data using Elasticsearch as a bioinformatics research tool
+- 5601 (Kibana web interface).
+- 9200 (Elasticsearch JSON interface).
+- 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat – see the *[Forwarding logs with Filebeat](https://elk-docker.readthedocs.io/#forwarding-logs-filebeat)* section).
 
-#### Data in: documents and indices
+## ES相关组件版本对应表
 
-ES不将数据存储为二维状，而采用存储为已被序列化成JSON的数据结构。当集群有多个ES节点时，存储的文档分布在整个集群中，并可从任何节点立即访问。
+官网信息：https://www.elastic.co/cn/support/matrix#matrix_compatibility
 
-ES采用一种数据结构“inverted index”支持快速的full-text search，An inverted index会列出出现在任何文档中每个独特的单词，识别每个单词出现的文档。
+**与 Elasticsearch（5.x、6.x、7.x）的兼容性**
 
-索引可以认为是一个文档的优化集合，每个文档都是字段集合，且字段都是key-value键值对。默认情况下，ES 索引每个字段中的所有数据，每个索引字段都有一个专用的、优化的数据结构。同时我们可以自定义的进行动态映射去控制如何进行字段的存储和索引。
+| Elasticsearch | Kibana | X-Pack |   Beats^*    | Elastic Agent^* |   Logstash^*   | ES-Hadoop (jar) |   APM Server    | App Search | Enterprise Search | Elastic Endgame |
+| :-----------: | :----: | :----: | :----------: | :-------------: | :------------: | :-------------: | :-------------: | :--------: | :---------------: | :-------------: |
+|     6.5.x     | 6.5.x  | N/A**  | 5.6.x-6.8.x  |                 |  5.6.x-6.8.x   |   6.0.x-6.8.x   |   6.2.x-6.8.x   |            |                   |                 |
+|     6.6.x     | 6.6.x  | N/A**  | 5.6.x-6.8.x  |                 |  5.6.x-6.8.x   |   6.0.x-6.8.x   |   6.2.x-6.8.x   |            |                   |                 |
+|     6.7.x     | 6.7.x  | N/A**  | 5.6.x-6.8.x  |                 |  5.6.x-6.8.x   |   6.0.x-6.8.x   |   6.2.x-6.8.x   |            |                   |                 |
+|     6.8.x     | 6.8.x  | N/A**  | 5.6.x-6.8.x  |                 |  5.6.x-6.8.x   |   6.0.x-6.8.x   |   6.2.x-6.8.x   |            |                   |                 |
+|     7.0.x     | 7.0.x  | N/A**  | 6.8.x-7.17.x |                 |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |            |                   | 3.14.x - 3.18.x |
+|     7.1.x     | 7.1.x  | N/A**  | 6.8.x-7.17.x |                 |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |            |                   | 3.14.x - 3.18.x |
+|     7.2.x     | 7.2.x  | N/A**  | 6.8.x-7.17.x |                 |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |   7.2.x    |                   | 3.14.x - 3.18.x |
+|     7.3.x     | 7.3.x  | N/A**  | 6.8.x-7.17.x |                 |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |   7.3.x    |                   | 3.14.x - 3.18.x |
+|     7.4.x     | 7.4.x  | N/A**  | 6.8.x-7.17.x |                 |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |   7.4.x    |                   | 3.14.x - 3.18.x |
+|     7.5.x     | 7.5.x  | N/A**  | 6.8.x-7.17.x |                 |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |   7.5.x    |                   | 3.14.x - 3.18.x |
+|     7.6.x     | 7.6.x  | N/A**  | 6.8.x-7.17.x |                 |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |   7.6.x    |                   | 3.14.x - 3.18.x |
+|     7.7.x     | 7.7.x  | N/A**  | 6.8.x-7.17.x |                 |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |       7.7.x       | 3.14.x - 3.18.x |
+|     7.8.x     | 7.8.x  | N/A**  | 6.8.x-7.17.x |      7.8.x      |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |       7.8.x       | 3.14.x - 3.18.x |
+|     7.9.x     | 7.9.x  | N/A**  | 6.8.x-7.17.x |      7.9.x      |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |       7.9.x       | 3.14.x - 3.19.x |
+|    7.10.x     | 7.10.x | N/A**  | 6.8.x-7.17.x |     7.10.x      |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |      7.10.x       | 3.14.x - 3.20.x |
+|    7.11.x     | 7.11.x | N/A**  | 6.8.x-7.17.x |     7.11.x      |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |      7.11.x       | 3.14.x - 3.21.x |
+|    7.12.x     | 7.12.x | N/A**  | 6.8.x-7.17.x |     7.12.x      |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |      7.12.x       | 3.14.x - 3.22.x |
+|    7.13.x     | 7.13.x | N/A**  | 6.8.x-7.17.x |     7.13.x      |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |      7.13.x       | 3.14.x - 3.23.x |
+|    7.14.x     | 7.14.x | N/A**  | 6.8.x-7.17.x |   7.14.x*****   |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |      7.14.x       | 3.14.x - 3.24.x |
+|    7.15.x     | 7.15.x | N/A**  | 6.8.x-7.17.x | 7.14.x - 7.15.x |  6.8.x-7.17.x  |  6.8.x-7.16.x   | 7.0.x-7.17.x*** |  N/A****   |      7.15.x       | 3.14.x - 3.24.x |
+|    7.16.x     | 7.16.x | N/A**  | 6.8.x-7.17.x | 7.14.x - 7.16.x |  6.8.x-7.17.x  |                 | 7.0.x-7.17.x*** |  N/A****   |      7.16.x       | 3.14.x - 3.24.x |
+|    7.17.x     | 7.17.x | N/A**  | 6.8.x-7.17.x | 7.14.x - 7.17.x |  6.8.x-7.17.x  |                 | 7.0.x-7.17.x*** |  N/A****   |      7.17.x       | 3.14.x - 3.25.x |
+|     8.0.x     | 8.0.x  | N/A**  | 7.17.x-8.0.x | 7.17.x - 8.0.x  | 7.17.x - 8.0.x |                 |  7.17.x-8.0.x   |            |   7.17.x-8.0.x    |                 |
 
-#### Information out: search and analyze
 
-ES提供REST API进行集群管理、索引和数据搜索。在数据搜索上，其查询结构类似与SQL，可以构建SQL央视的查询在ES内部搜索和聚合本地数据。在数据分析上，ES聚合可以构建复杂的数据摘要并深入了解关键指标、模式和趋势。聚合与查询可以一起运行，可以在单个请求中搜索文档、过滤结果和可视化数据。
+
+Elasticsearch 输出兼容性 — Beats、Logstash 和 Elastic 代理将数据索引到 Elasticsearch；**从 6.3 版开始，Elastic Stack 的默认分发版中将包含 X-Pack 功能。请查看 https://www.elastic.co/what-is/open-x-pack。**APM Server 6.7 和 6.8 版可与 Elasticsearch 7.0 版一起使用，但数据必须使用升级助手进行迁移才能在 Kibana 7.0 版中可见。App Search 从 7.7.0 版开始将移至企业搜索中。
 
 ## Docker开发部署
 
