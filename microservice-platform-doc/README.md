@@ -6,7 +6,7 @@
 
 该项目为微服务平台设计与实现的项目文档。
 
-**项目概述：**采用前后端分离的微服务架构，主要针对解决微服务和业务开发时常见的**非功能性需求**。
+**项目概述：**采用前后端分离的微服务架构，主要针对解决微服务和业务开发时常见的**非功能性需求**。基于Spring Boot2.5.7构建，Spring Cloud Finchley、Spring Cloud Alibaba实现微服务，定制Spring Security实现RBAC、jwt和oauth2的权限认证方案，提供多租户隔离，适用于B端和C端用户。
 
 1.  [项目设计.md](a-introduction/项目设计.md) 
 2.  [项目细节.md](a-introduction/项目细节.md) 
@@ -63,10 +63,10 @@ docker打包：参考docker文档
 **文档：**
 
 -  [部署说明.md](b-usage/部署说明.md) 
-
 -  [环境说明.md](b-usage/环境说明.md) 
 -  [接口说明.md](b-usage/接口说明.md) 
 -  [开发说明.md](b-usage/开发说明.md) 
+-  [前后端分离.md](b-usage/前后端分离.md) 
 
 ## C-模块说明
 
@@ -118,6 +118,7 @@ docker打包：参考docker文档
 -  [metrics监控.md](d-pre-research/metrics监控.md) 
 -  [mysql数据库.md](d-pre-research/mysql数据库.md) 
 -  [redis.md](d-pre-research/redis.md) 
+-  [spring核心概念梳理.md](d-pre-research/spring核心概念梳理.md) 
 
 ## E-功能说明
 
@@ -143,12 +144,10 @@ docker打包：参考docker文档
 
 -  [持续集成部署CICD.md](f-system-design/持续集成部署CICD.md) 
 -  [分布式ID生成器.md](f-system-design/分布式ID生成器.md) 
-
 -  [服务认证架构设计.md](f-system-design/服务认证架构设计.md) 
 -  [架构设计方法论.md](f-system-design/架构设计方法论.md) 
 -  [监控架构设计.md](f-system-design/监控架构设计.md) 
 -  [系统幂等性.md](f-system-design/系统幂等性.md) 
--  [项目系统设计.md](f-system-design/项目系统设计.md) 
 
 ## G-技术说明
 
@@ -161,9 +160,7 @@ docker打包：参考docker文档
 -  [mybatisplus.md](g-technology/mybatisplus.md) 
 -  [oauth2.md](g-technology/oauth2.md) 
 -  [OIDC.md](g-technology/OIDC.md) 
--  [redis.md](g-technology/redis.md) 
 -  [spring-webflux.md](g-technology/spring-webflux.md) 
--  [spring.md](g-technology/spring.md) 
 -  [springcloud.md](g-technology/springcloud.md) 
 -  [springsecurity-架构.md](g-technology/springsecurity-架构.md) 
 -  [springsecurity.md](g-technology/springsecurity.md) 
@@ -187,4 +184,5 @@ banner.txt logo来源：https://devops.datenkollektiv.de/banner.txt/index.html
 **项目记录：**
 
 -  [record-2022-01.md](z-project-daily/record-2022-01.md) 
--  [record-2021-12.md](z-project-daily/record-2021-12.md) 
+-  [record-2021-12.md](z-project-daily/record-2021-12.md)  
+-  [record-2022-02.md](z-project-daily/record-2022-02.md) 
