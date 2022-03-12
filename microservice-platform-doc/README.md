@@ -110,7 +110,6 @@ docker打包：参考docker文档
 
 -  [djj-gateway.md](c-module/djj-gateway.md) 
 -  [djj-uaa.md](c-module/djj-uaa.md) 
--  [djj-web.md](c-module/djj-web.md) 
 
 ## D-技术预研
 
@@ -186,3 +185,4 @@ banner.txt logo来源：https://devops.datenkollektiv.de/banner.txt/index.html
 -  [record-2022-01.md](z-project-daily/record-2022-01.md) 
 -  [record-2021-12.md](z-project-daily/record-2021-12.md)  
 -  [record-2022-02.md](z-project-daily/record-2022-02.md) 
+

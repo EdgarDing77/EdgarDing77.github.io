@@ -55,7 +55,9 @@ AuthoritiesEnum列举了三个角色：
 - USER(“ROLE_USER”)
 - ANONYMOUS(“ROLE_ANONYMOUS”)
 
-OpenIdTokenClaimConstans：OpenId协议常用的常量
+OpenIdTokenClaimConstans
+
+：OpenId协议常用的常量
 
 ### 配置
 
