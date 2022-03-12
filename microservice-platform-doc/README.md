@@ -68,6 +68,10 @@ docker打包：参考docker文档
 -  [开发说明.md](b-usage/开发说明.md) 
 -  [前后端分离.md](b-usage/前后端分离.md) 
 
+- [依赖说明.md](b-usage/依赖说明.md) 
+
+- [自定义spring-boot-starter.md](b-usage/自定义spring-boot-starter.md) 
+
 ## C-模块说明
 
 - djj-uaa：uaa-server:8077
@@ -144,7 +148,6 @@ docker打包：参考docker文档
 -  [持续集成部署CICD.md](f-system-design/持续集成部署CICD.md) 
 -  [分布式ID生成器.md](f-system-design/分布式ID生成器.md) 
 -  [服务认证架构设计.md](f-system-design/服务认证架构设计.md) 
--  [架构设计方法论.md](f-system-design/架构设计方法论.md) 
 -  [监控架构设计.md](f-system-design/监控架构设计.md) 
 -  [系统幂等性.md](f-system-design/系统幂等性.md) 
 
