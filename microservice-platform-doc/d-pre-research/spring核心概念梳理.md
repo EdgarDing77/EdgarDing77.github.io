@@ -34,8 +34,6 @@ IOC与AOP理解简述：
 - Provide production-ready features such as metrics, health checks, and externalized configuration
 - Absolutely no code generation and no requirement for XML configuration
 
-
-
 ### SpringBoot的启动
 
 Spring Boot项目在主类`main()`方法，通过`SpringApplication.run(XXApplication.class, args);`仅可以完成项目的启动，该节追溯该SpringApplication和run()的底层，探寻启动流程。
@@ -166,25 +164,6 @@ public @interface EnableAutoConfiguration { ... }
 - @Service
 - @Repository
 - …
-
-### Spring Factories机制
-
-通过spring.factories实现**解耦拓展机制**。Spring Boot 应用中的”自动配置”是通过 `@EnableAutoConfiguration` 注解进行开启的。`@EnableAutoConfiguration` 可以帮助 Spring Boot 应用将所有符合条件的 `@Configuration` 配置类的 bean 都加载到 Spring IoC 容器中。
-
-> SpringFactoriesLoader loads and instantiates factories of a given type from “META-INF/spring.factories” files which may be present in multiple JAR files in the classpath. The spring.factories file must be in Properties format, where the key is the fully qualified name of the interface or abstract class, and the value is a comma-separated list of implementation class names.
-
- spring-core 中的加载类 `SpringFactoriesLoader` 加载指定配置，该类会通过类加载器从 classpath 中搜索所有 `META-INF/spring.factories` 配置文件，然后获取 key 为 `org.springframework.boot.autoconfigure.EnableAutoConfiguration` 部分。
-
-**Java SPI机制：**SPI 的全名为 Service Provider Interface，Java SPI 就是提供这样的一种机制：为某个接口寻找服务的实现的机制，有点类似IOC的思想，就是将装配的控制权移到程序之外，在模块化设计中这个机制很重要。而spring factories就类似于该机制。
-
-**使用场景：**当需要实现一些自定义的Spring Boot Starter，可以通过spring factories的机制，将自己的starter注册到`org.springframework.boot.autoconfigure.EnableAutoConfiguration`命名空间下，这样用户只需要在服务中引入jar包即可以完成自动加载和配置。
-
-**Reference**
-
-- [Spring Boot 自动配置及 Factories 机制总结](https://qidawu.github.io/2017/08/20/spring-factories/)
-- [spring boot中的spring factories机制](https://www.jianshu.com/p/7367dddab20d)
-
-
 
 ## IoC
 
@@ -629,10 +608,121 @@ Reference：https://mp.weixin.qq.com/s/m2DrtDxBzShtNF2Uk6zSAg
 >    [不使用该 connection 连接数据库执行的数据库命令，在本事务回滚的时候得不到回滚]
 >     （物理连接 connection 逻辑上新建一个会话session；
 >    DataSource 与 TransactionManager 配置相同的数据源）
->
 > 2) 事务结束时，回滚在第1步骤中得到的代理 connection 对象上执行的数据库命令，
 >    然后关闭该代理 connection 对象。
 >     （事务结束后，回滚操作不会对已执行完毕的SQL操作命令起作用）
+
+## 实践功能
+
+
+
+### @Autowird注入与构造函数注入
+
+Spring4.3+后，constructor注入支持非显示注入方式。事实上，spring在4.x版本后就推荐使用构造器的方式的来注入fileld。
+
+官方推荐理由：
+
+- 单一职责: 当使用构造函数注入的时候，你会很容易发现参数是否过多，这个时候需要考虑你这个类的职责是否过大，考虑拆分的问题；而当使用@Autowired注入field的时候，不容易发现问题
+
+- 依赖不可变: 只有使用构造函数注入才能注入final
+
+- 依赖隐藏: 使用依赖注入容器意味着类不再对依赖对象负责，获取依赖对象的职责就从类抽离出来，IOC容器会帮你自动装配。这意味着它应该使用更明确清晰的公用接口方法或者构造器，这种方式就能很清晰的知道类需要什么和到底是使用setter还是构造器
+
+- 降低容器耦合度: 依赖注入框架的核心思想之一是托管类不应依赖于所使用的DI容器。换句话说，它应该只是一个普通的POJO，只要您将其传递给所有必需的依赖项，就可以独立地实例化。这样，您可以在单元测试中实例化它，而无需启动IOC容器并单独进行测试（使用一个可以进行集成测试的容器）。如果没有容器耦合，则可以将该类用作托管或非托管类，甚至可以切换到新的DI框架。
+
+### Spring Factories机制
+
+通过spring.factories实现**解耦拓展机制**。Spring Boot 应用中的”自动配置”是通过 `@EnableAutoConfiguration` 注解进行开启的。`@EnableAutoConfiguration` 可以帮助 Spring Boot 应用将所有符合条件的 `@Configuration` 配置类的 bean 都加载到 Spring IoC 容器中。
+
+> SpringFactoriesLoader loads and instantiates factories of a given type from “META-INF/spring.factories” files which may be present in multiple JAR files in the classpath. The spring.factories file must be in Properties format, where the key is the fully qualified name of the interface or abstract class, and the value is a comma-separated list of implementation class names.
+
+ spring-core 中的加载类 `SpringFactoriesLoader` 加载指定配置，该类会通过类加载器从 classpath 中搜索所有 `META-INF/spring.factories` 配置文件，然后获取 key 为 `org.springframework.boot.autoconfigure.EnableAutoConfiguration` 部分。
+
+**Java SPI机制：**SPI 的全名为 Service Provider Interface，Java SPI 就是提供这样的一种机制：为某个接口寻找服务的实现的机制，有点类似IOC的思想，就是将装配的控制权移到程序之外，在模块化设计中这个机制很重要。而spring factories就类似于该机制。
+
+**使用场景：**当需要实现一些自定义的Spring Boot Starter，可以通过spring factories的机制，将自己的starter注册到`org.springframework.boot.autoconfigure.EnableAutoConfiguration`命名空间下，这样用户只需要在服务中引入jar包即可以完成自动加载和配置。
+
+**Reference**
+
+- [Spring Boot 自动配置及 Factories 机制总结](https://qidawu.github.io/2017/08/20/spring-factories/)
+- [spring boot中的spring factories机制](https://www.jianshu.com/p/7367dddab20d)
+
+### Spring BeanFactoryAware
+
+`BeanFactory`是整个IOC容器的最顶层接口，规定了容器的行为，而实现了该接口，就表明当前类具有`BeanFactory`的能力。
+
+`BeanFactoryAware`接口中只有一个`setBeanFactory`方法。实现了`BeanFactoryAware`接口的类，可以在该`Bean`被加载的过程中获取加载该`Bean`的`BeanFactory`，同时也可以获取这个`BeanFactory`中加载的其它`Bean`。
+
+关键是我们为什么需要通过`BeanFactory`的`getBean`来获取`Bean`呢？Spring已经提供了很多便捷的注入方式，那么通过`BeanFactory`的`getBean`来获取`Bean`有什么好处呢？
+
+**好处：**通过实现`BeanFactoryAware`该接口，在调用者（客户端中），只需要通过一个beanName就可以实现不同实现类的切换。
+
+**Reference**
+
+- https://cloud.tencent.com/developer/article/1749642
+- https://juejin.cn/post/6844903661689110542
+
+**具体实现**：
+
+在Knife4j的自定义spring-boot-starter中，为了实现不同服务下的swagger聚合，因此通过实现`BeanFactoryAware`接口，从而在进行聚合的时候，通过获取该Bean。
+
+在大多数情况下，我们应该避免使用任何Aware接口，除非我们需要它们，实现这些接口会将代码耦合到Spring框架。 
+
+### Spring Boot自定义配置自动提示
+
+官方提供的spring-boot-starter的配置项带有自动提示，而自己定义的配置却没有，对开发来说十分不优化，容易打错配置。
+
+**提示原理**
+
+IDE是通过读取配置信息的元数据而实现自动提示的，而元数据在目录META-INF中的spring-configuration-metadata.json 或者 additional-spring-configuration-metadata.json
+
+**具体实现**
+
+在工程下引入依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-configuration-processor</artifactId>
+    <optional>true</optional>
+</dependency>
+```
+
+修改IDEA配置：
+
+1. 搜索`Annotation Processor`并设置`Enable annotation processing`
+2. 重新编译项目，项目在编译后会自动生成`spring-configuration-metadata.json`文件
+
+**Reference**
+
+- https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html
+
+### @EnableCofigurationProperties注解
+
+「What」@EnableConfigurationProperties注解的作用时：使得@ConfigurationProperties生效。
+
+**@ConfigurationProperties**
+
+使用@Value将Spring ENV bean访问这些属性的时候十分笨重，因此使用更安全的方式，且可以动态控制，因此使用@ConfigurationProperties来进行属性的获取。
+
+基本用法如下，为每个要捕获的外部属性提供一个带有字段的类：
+
+- 前缀定义了哪些外部属性将要绑定到该类的字段上，如`@ConfigurationProperties(prefix = "djj.security")`
+- 根据Spring Boot宽松的绑定原则，类的属性名程必须与外部属性匹配
+- 类的本身可以是protected
+- 类的字段必须有public setter方法
+
+> Spring 宽松绑定规则（relaxed binding）
+>
+> Spring使用一些宽松的绑定属性规则。如以下变体都将绑定到hostName属性上：
+>
+> ```properties
+> mail.hostName=localhost
+> mail.hostname=localhost
+> mail.host_name=localhost
+> mail.host-name=localhost
+> mail.HOST_NAME=localhost
+> ```
 
 ## Reference
 
