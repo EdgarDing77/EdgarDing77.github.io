@@ -1,0 +1,1261 @@
+# ELK-部署
+
+## Introduction
+
+*吐血，电脑没法进行下去，内存不够，难以部署成功，具体部署参考Docker6.x*
+
+Logstash和Beats进行数据收集、聚合和存储进Elasticsearch，Kibana允许我们对数据进行交互式探索、可视化和监控，Elasticsearch是进行索引、搜索和分析的地方。
+
+组件分工：
+
+- filebeat：部署在每台应用服务器、数据库、中间件中，负责日志抓取与日志聚合
+  - 日志聚合：把多行日志合并成一条，例如exception的堆栈信息等
+- logstash：通过各种filter结构化日志信息，并把字段transform成对应的类型
+- elasticsearch：负责存储和查询日志信息
+- kibana：通过ui展示日志信息、还能生成饼图、柱状图等
+
+![img](https://cdn.jsdelivr.net/gh/edgarding77/microservice-platform-doc@latest/image/func/elk_overview.png)
+
+**使用说明**
+
+- 5601:Kibana web interface
+- 9200:Elasticsearch JSON interface
+- 9300:Elasticsearch transport interface
+- 5044:Logstash Beats interface
+
+- 9600:Logstash API endpoint
+
+结构化日志：
+
+```json
+{
+  "timestamp": "时间",
+  "message": "具体日志信息",
+  "threadName": "线程名",
+  "serverPort": "服务端口",
+  "serverIp": "服务ip",
+  "logLevel": "日志级别",
+  "appName": "工程名称",
+  "classname": "类名"
+}
+```
+
+- 5601 (Kibana web interface).
+- 9200 (Elasticsearch JSON interface).
+- 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat – see the *[Forwarding logs with Filebeat](https://elk-docker.readthedocs.io/#forwarding-logs-filebeat)* section).
+
+## Docker部署6.x
+
+> **注意，确保内存足够，docker需要4g内存，其中es需要分配2g，不然无法启动。**
+
+环境准备：
+
+- docker version: 1.13.1
+
+- ELK 6.5.1
+- filebeats：6.8.3
+
+部署参考：
+
+- https://elk-docker.readthedocs.io/#prerequisites
+- https://blog.csdn.net/m0_37063785/article/details/101074010
+
+docker镜像加速：`/etc/docker/daemon.json`:
+
+```json
+{"registry-mirrors":["https://reg-mirror.qiniu.com/"]}
+```
+
+### ELK部署
+
+#### 1.修改mmap计数大于等于262144的限制
+
+> ***max_map_count\***文件包含限制一个进程可以拥有的VMA(虚拟内存区域)的数量。虚拟内存区域是一个连续的虚拟地址空间区域。在进程的生命周期中，每当程序尝试在内存中映射文件，链接到共享内存段，或者分配堆空间的时候，这些区域将被创建。调优这个值将限制进程可拥有VMA的数量。限制一个进程拥有VMA的总数可能导致应用程序出错，因为当进程达到了VMA上线但又只能释放少量的内存给其他的内核进程使用时，操作系统会抛出内存不足的错误。如果你的操作系统在NORMAL区域仅占用少量的内存，那么调低这个值可以帮助释放内存给内核用。
+
+```bash
+#在/etc/sysctl.conf文件最后添加一行
+vm.max_map_count=655360
+#并执行命令
+sysctl -p
+```
+
+- 这里如果使用docker for mac，[参考这里](https://elk-docker.readthedocs.io/#overriding-variables)
+
+#### 2.下载运行镜像
+
+```bash
+docker run -p 5601:5601 -p 9200:9200 -p 9300:9300 -p 5044:5044 --name elk -d sebp/elk:651
+```
+
+#### 3.准备elasticsearch的配置文件
+
+```bash
+mkdir /opt/elk/elasticsearch/conf
+#复制elasticsearch的配置出来
+docker cp elk:/etc/elasticsearch/elasticsearch.yml /opt/elk/elasticsearch/conf
+```
+
+修改elasticsearch.yml配置：
+
+```yml
+cluster.name: my-es
+# add 
+thread_pool.bulk.queue_size: 1000
+
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+```
+
+#### 4.准备logstash的配置文件
+
+```bash
+mkdir /opt/elk/logstash/conf
+#复制logstash的配置出来
+docker cp elk:/etc/logstash/conf.d/. /opt/elk/logstash/conf/
+```
+
+#### 5.准备logstash的patterns文件
+
+```bash
+mkdir /opt/elk/logstash/patterns
+# 新建一个my_patterns的patterns文件，vim java 内容如下
+# user-center
+MYAPPNAME [0-9a-zA-Z._-]*
+# RMI TCP Connection(2)-127.0.0.1
+MYTHREADNAME ([0-9a-zA-Z._-]|\(|\)|\s)*
+```
+
+#### 6.删除02-beats-input.conf的最后三句，去掉强制认证（这里注意）
+
+`vim ~/elk/logstash/conf/02-beats-input.conf`
+
+```conf
+client_inactivity_timeout => 1200 # 添加
+ssl  => false
+#ssl => true 
+#ssl_certificate => "/pki/tls/certs/logstash.crt"
+#ssl_key => "/pki/tls/private/logstash.key"
+```
+
+#### 7.修改10-syslog.conf配置
+
+`vim ~/elk/logstash/conf/10-syslog.conf `
+
+```conf
+filter {
+  if [fields][docType] == "sys-log" {
+    grok {
+      patterns_dir => ["patterns"]
+      match => { "message" => "\[%{NOTSPACE:appName}:%{IP:serverIp}:%{NOTSPACE:serverPort}\] %{TIMESTAMP_ISO8601:logTime} %{LOGLEVEL:logLevel} %{WORD:pid} \[%{MYAPPNAME:traceId}-%{MYAPPNAME:spanId}\] \[%{MYTHREADNAME:threadName}\] %{NOTSPACE:classname} %{GREEDYDATA:message}" }
+      overwrite => ["message"]
+    }
+    date {
+      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS Z"]
+    }
+    date {
+      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS"]
+      target => "timestamp"
+      locale => "en"
+      timezone => "+08:00"
+    }
+    mutate {
+      remove_field => "logTime"
+      remove_field => "@version"
+      remove_field => "host"
+      remove_field => "offset"
+    }
+  }
+  if [fields][docType] == "point-log" {
+    grok {
+      patterns_dir => ["/opt/logstash/patterns"]
+      match => {
+        "message" => "%{TIMESTAMP_ISO8601:logTime}\|%{MYAPPNAME:appName}\|%{WORD:resouceid}\|%{MYAPPNAME:type}\|%{GREEDYDATA:object}"
+      }
+    }
+    kv {
+        source => "object"
+        field_split => "&"
+        value_split => "="
+    }
+    date {
+      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS Z"]
+    }
+    date {
+      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS"]
+      target => "timestamp"
+      locale => "en"
+      timezone => "+08:00"
+    }
+    mutate {
+      remove_field => "message"
+      remove_field => "logTime"
+      remove_field => "@version"
+      remove_field => "host"
+      remove_field => "offset"
+    }
+  }
+  if [fields][docType] == "mysqlslowlogs" {
+    grok {
+        match => [
+          "message", "^#\s+User@Host:\s+%{USER:user}\[[^\]]+\]\s+@\s+(?:(?<clienthost>\S*) )?\[(?:%{IP:clientip})?\]\s+Id:\s+%{NUMBER:id}\n# Query_time: %{NUMBER:query_time}\s+Lock_time: %{NUMBER:lock_time}\s+Rows_sent: %{NUMBER:rows_sent}\s+Rows_examined: %{NUMBER:rows_examined}\nuse\s(?<dbname>\w+);\nSET\s+timestamp=%{NUMBER:timestamp_mysql};\n(?<query_str>[\s\S]*)",
+          "message", "^#\s+User@Host:\s+%{USER:user}\[[^\]]+\]\s+@\s+(?:(?<clienthost>\S*) )?\[(?:%{IP:clientip})?\]\s+Id:\s+%{NUMBER:id}\n# Query_time: %{NUMBER:query_time}\s+Lock_time: %{NUMBER:lock_time}\s+Rows_sent: %{NUMBER:rows_sent}\s+Rows_examined: %{NUMBER:rows_examined}\nSET\s+timestamp=%{NUMBER:timestamp_mysql};\n(?<query_str>[\s\S]*)",
+          "message", "^#\s+User@Host:\s+%{USER:user}\[[^\]]+\]\s+@\s+(?:(?<clienthost>\S*) )?\[(?:%{IP:clientip})?\]\n# Query_time: %{NUMBER:query_time}\s+Lock_time: %{NUMBER:lock_time}\s+Rows_sent: %{NUMBER:rows_sent}\s+Rows_examined: %{NUMBER:rows_examined}\nuse\s(?<dbname>\w+);\nSET\s+timestamp=%{NUMBER:timestamp_mysql};\n(?<query_str>[\s\S]*)",
+          "message", "^#\s+User@Host:\s+%{USER:user}\[[^\]]+\]\s+@\s+(?:(?<clienthost>\S*) )?\[(?:%{IP:clientip})?\]\n# Query_time: %{NUMBER:query_time}\s+Lock_time: %{NUMBER:lock_time}\s+Rows_sent: %{NUMBER:rows_sent}\s+Rows_examined: %{NUMBER:rows_examined}\nSET\s+timestamp=%{NUMBER:timestamp_mysql};\n(?<query_str>[\s\S]*)"
+        ]
+    }
+    date {
+      match => ["timestamp_mysql","yyyy-MM-dd HH:mm:ss.SSS","UNIX"]
+    }
+    date {
+      match => ["timestamp_mysql","yyyy-MM-dd HH:mm:ss.SSS","UNIX"]
+      target => "timestamp"
+    }
+    mutate {
+      convert => ["query_time", "float"]
+      convert => ["lock_time", "float"]
+      convert => ["rows_sent", "integer"]
+      convert => ["rows_examined", "integer"]
+      remove_field => "message"
+      remove_field => "timestamp_mysql"
+      remove_field => "@version"
+    }
+  }
+}
+```
+
+- 以上logstash结构化配置是以当前项目为日志格式配置
+
+#### 8.修改30-output.conf配置
+
+```conf
+output {
+  if [fields][docType] == "sys-log" {
+    elasticsearch {
+      hosts => ["http://localhost:9200"]
+      index => "sys-log-%{+YYYY.MM.dd}"
+    }
+  }
+  if [fields][docType] == "point-log" {
+    elasticsearch {
+      hosts => ["http://localhost:9200"]
+      index => "point-log-%{+YYYY.MM.dd}"
+      routing => "%{type}"
+    }
+  }
+  if [fields][docType] == "mysqlslowlogs" {
+    elasticsearch {
+      hosts => ["http://localhost:9200"]
+      index => "mysql-slowlog-%{+YYYY.MM.dd}"
+    }
+  }
+}
+```
+
+- document_type配置方式废除，[具体参考](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/removal-of-types.html)
+
+#### 9.创建运行脚本
+
+`vim elk/start.sh`
+
+启动：`sh start.sh`
+
+安装信息如下：GET:localhost:9200
+
+```json
+docker stop elk
+docker rm elk
+
+docker run -p 5601:5601 -p 9200:9200 -p 9300:9300 -p 5044:5044 \
+    -e LS_HEAP_SIZE="1g" -e ES_JAVA_OPTS="-Xms512m -Xmx2g" \
+    -v $PWD/elasticsearch/data:/var/lib/elasticsearch \
+    -v $PWD/elasticsearch/plugins:/opt/elasticsearch/plugins \
+    -v $PWD/logstash/conf:/etc/logstash/conf.d \
+    -v $PWD/logstash/patterns:/opt/logstash/patterns \
+    -v $PWD/elasticsearch/conf/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml \
+    -v $PWD/elasticsearch/log:/var/log/elasticsearch \
+    -v $PWD/logstash/log:/var/log/logstash \
+    --name elk \
+    --privileged=true \
+    -d sebp/elk:651              
+```
+
+### 分词插件 & 索引模版
+
+#### 分词插件
+
+查询数据，都是使用的默认的分词器，分词效果不太理想，会把text的字段分成一个一个汉字，然后搜索的时候也会把搜索的句子进行分词，所以这里就需要更加智能的分词器IK分词器了
+
+下载地址：https://github.com/medcl/elasticsearch-analysis-ik/releases
+
+1. 这里你需要根据你的Es的版本来下载对应版本的IK
+
+2. 解压-->将文件复制到 es的安装目录/plugin/ik下面即可
+
+检查：`http://localhost:9200/_cat/plugins`
+
+#### 索引模版
+
+更新现有索引
+
+```bash
+curl -X PUT "http://localhost:9200/sys-log-*/_settings" -H 'Content-Type: application/json' -d'
+{
+    "index" : {
+        "number_of_replicas" : 0
+    }
+}'
+curl -X PUT "http://localhost:9200/mysql-slowlog-*/_settings" -H 'Content-Type: application/json' -d'
+{
+    "index" : {
+        "number_of_replicas" : 0
+    }
+}'
+```
+
+设置索引模版：
+
+**系统日志**
+
+```bash
+curl -X PUT http://localhost:9200/_template/template_sys_log -H 'Content-Type: application/json' -d '
+{
+    "index_patterns" : ["sys-log-*"],
+    "order" : 0,
+    "settings" : {
+        "number_of_replicas" : 0
+    },
+    "mappings": {
+        "doc": {
+            "properties": {
+                "message": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "analyzer": "ik_max_word"
+                },
+                "pid": {
+                    "type": "text"
+                },
+                "serverPort": {
+                    "type": "text"
+                },
+                "logLevel": {
+                    "type": "text"
+                },
+                "traceId": {
+                    "type": "text"
+                }
+            }
+    
+        }  
+ 
+    }   
+}'
+```
+
+**慢sql日志**
+
+```bash
+curl -XPUT http://localhost:9200/_template/template_sql_slowlog -H 'Content-Type: application/json' -d '
+{
+    "index_patterns" : ["mysql-slowlog-*"],
+    "order" : 0,
+    "settings" : {
+        "number_of_replicas" : 0
+    },
+    "mappings": {
+    	"doc": {
+    		"properties": {
+    			"query_str": {
+    				"type": "text",
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					},
+					"analyzer": "ik_max_word"
+    			}
+    		}
+    	}
+    }
+}'
+```
+
+**埋点日志**
+
+```bash
+curl -XPUT http://localhost:9200/_template/template_point_log -H 'Content-Type: application/json' -d '
+{
+    "index_patterns" : ["point-log-*"],
+    "order" : 0,
+    "settings" : {
+        "number_of_shards" : 2,
+        "number_of_replicas" : 0
+    }
+}'
+```
+
+### Filebeat部署
+
+#### 直接部署
+
+1. 从[官网](https://www.elastic.co/cn/downloads/beats/filebeat)下载
+
+2. 修改配置文件filebeat.yml
+
+   1. 修改filebeat.inputs 为以下内容，其中paths为项目的日志路径
+
+   ```yml
+   filebeat.inputs:
+   - type: log
+     enabled: true
+     paths:
+       - /var/log/application/*/*.log
+     exclude_lines: ['\sDEBUG\s\d']
+     exclude_files: ['sc-admin.*.log$']
+     fields:
+       docType: sys-log
+       project: microservice-platform
+     multiline:
+       pattern: '^\[\S+:\S+:\d{2,}] '
+       negate: true
+       match: after
+   - type: log
+     enabled: true
+     paths:
+       - /var/log/point/*.log
+     fields:
+       docType: point-log
+       project: microservice-platform
+   ```
+
+   2. 修改output.logstash为以下内容，其中hosts为logstash的部署地址
+
+   ```yml
+   output.logstash:
+   	hosts: ["localhost:5044"]
+   # bulk_max_size: 2048
+   # output.elasticsearch:
+   	# hosts: ["localhost:9200"]
+   ```
+
+3. 启动filebeat
+
+   ```bash
+   ./filebeat modules enable logstash
+   
+   ./filebeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["localhost:9200"]'
+   
+   ./filebeat -c filebeat.yml -e
+   ```
+
+配置参考：https://www.elastic.co/guide/en/beats/filebeat/7.17/configuring-howto-filebeat.html
+
+input配置：https://www.elastic.co/guide/en/beats/filebeat/7.17/configuration-filebeat-options.html
+
+#### docker部署
+
+pwd -> elk
+
+版本对应：elk - 6.5.1 filebeat - 6.5.1
+
+```bash
+docker pull docker.elastic.co/beats/filebeat:7.17.0
+
+docker pull docker.elastic.co/beats/filebeat:6.8.23
+```
+
+配置文件下载：`curl -L -O https://raw.githubusercontent.com/elastic/beats/6.8/deploy/docker/filebeat.docker.yml`
+
+logstash配置：和上面一样类似
+
+配置文件内容：filebeat.docker.yml
+
+```bash
+docker stop filebeat
+docker rm filebeat
+
+docker run -d \
+  --name filebeat \
+  --network my-es \
+  --user root \
+  --privileged=true \
+  -v $PWD/filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro \
+  -v $PWD/filebeat/logs:/logs \
+  -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+  -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  docker.elastic.co/beats/filebeat:6.8.23 filebeat -e -strict.perms=false \
+  -E output.logstash.hosts=["192.168.90.177:5044"]
+  
+#  -E output.elasticsearch.hosts=["elk:9200"] 
+```
+
+输出配置：https://www.elastic.co/guide/en/beats/filebeat/6.8/logstash-output.html
+
+### 部署问题
+
+#### elk问题
+
+> 启动脚本报错：`container_linux.go:235: starting container process caused "container init exited prematurely"`
+
+在elasticsearch下创建log、plugins、data三个文件夹。
+
+> 错误提示：`cat: /var/log/elasticsearch/elasticsearch.log: No such file or directory`
+
+解决参考：
+
+- https://blog.csdn.net/qq_38865022/article/details/115706795
+- https://elk-docker.readthedocs.io/#es-not-starting-not-enough-memory
+
+问题原因：没有足够的内存，Elasticsearch需要至少2GB内存，而Kibana、logstash其它服务也会使用内存，所以至少4GB。
+
+解决方案：MAC端修改resource限制
+
+> `chown: changing ownership of '/var/lib/elasticsearch': Permission denied docker`
+
+在docker run中加入 --privileged=true  给容器加上特定权限
+关闭selinux
+在selinux添加规则，修改挂载目录
+
+> `main ERROR Unable to create file /var/log/elasticsearch/my-es.log java.io.IOException: Permission denied`
+
+权限是root：root的，启动时不能用root权限启动的
+
+```bash
+groupadd es
+useradd es -g es
+chown -R es:es /opt/elk
+```
+
+您的问题是 Docker 包装了您的进程 - 因此`elasticsearch`容器内的用户`elasticsearch`与容器外的用户不同（它们将具有不同的 UID 和 GID）。
+
+假设 elasticsearch 容器使用固定的 UID，您应该在 ansible 脚本中指定 THAT UID 以使其正常工作。
+
+Update `/etc/sysconfig/docker` with below for OPTION key -
+
+```java
+--selinux-enabled=false
+```
+
+参考：https://stackoverflow.com/questions/41057917/elasticsearch-unable-to-start-permission-issue
+
+> 错误提示：`Failed to publish events caused by: client is not connected`
+
+解决方案：https://discuss.elastic.co/t/filebeat-failed-to-publish-events-caused-by-client-is-not-connected/217603/6
+
+I'm embarrassed it took me so long to solve this. Turns out all I needed to do was specify a client_inactivity_timeout of more than the default of 60 seconds. In my particular situation the client (on a test server) was relatively inactive, causing Logstash to kill the connection after 60 seconds. Increasing this beyond the inactivity time resolved the issue. input { beats { client_inactivity_timeout => 1200 port => 5044 } } Thanks, Greg。
+
+> ` Detected a 6.x and above cluster: the `type` event field won't be used to determine the document _type {:es_version=>7}`
+
+it is an informational message.
+
+> `java.lang.IllegalArgumentException: unknown setting [cluster.initial_master_nodes] please check that any required plugins are installed, or check the breaking changes documentation for removed settings`
+
+解决方案：https://discuss.elastic.co/t/unknown-setting-cluster-initial-master-nodes/174102
+
+> main ERROR RollingFileManager (/var/log/elasticsearch/my-es.log) java.io.FileNotFoundException: /var/log/elasticsearch/my-es.log (Permission denied) java.io.FileNotFoundException: /var/log/elasticsearch/my-es.log (Permission denied)
+
+删除启动脚本里的`-v. $PWD/elasticsearch/log:/var/log/elasticsearch`。
+
+#### filebeat问题
+
+> Failed to connect to backoff(async(tcp://elk:5044)): dial tcp 172.19.0.2:5044: connect: connection refused
+>
+> Attempting to reconnect to backoff(async(tcp://elk:5044)) with 5 reconnect attempt(s)
+
+1. `netstat -an|grep 5044`
+2. output.logstash.hosts=[192.168.90.177:5044]
+
+> Failed to publish events caused by: write tcp 172.19.0.3:55726->192.168.90.177:5044: write: broken pipe
+
+参考：https://discuss.elastic.co/t/filebeat-logstash-write-broken-pipe/45077
+
+### 补充
+
+为了使两个容器elk和filebeat能够进行通信，需要让他们运行在同一个docker网络上，具体如下：
+
+```bash
+docker network create my-es # 默认桥接模式
+# 通过--network 配置网络所属
+```
+
+## Docker部署7.x+xpack
+
+> 「What」**X-Pack**是elasticsearch的一个扩展包，将安全，警告，监视，图形和报告功能捆绑在一个易于安装的软件包中，可以轻松的启用或者关闭一些功能。
+
+### Prerequisites
+
+部署环境：centos7+docker
+
+- 环境要求：>=4GB内存分配到Docker
+- mmap >= 262144(`sysctl vm.max_map_count`)
+- 接受TCP从port:5044
+
+镜像选择：version:7.16.3(elk+filebeat)
+
+- 镜像地址：https://elk-docker.readthedocs.io/
+- dockerhub：https://hub.docker.com/r/sebp/elk/
+
+- 分词插件：查询数据，都是使用的默认的分词器，分词效果不太理想，会把text的字段分成一个一个汉字，然后搜索的时候也会把搜索的句子进行分词，所以这里就需要更加智能的分词器IK分词器了。
+  - 下载地址：https://github.com/medcl/elasticsearch-analysis-ik/releases
+  - 检查：`http://localhost:9200/_cat/plugins`
+  - 注意：版本需要与Es一致
+
+部署在统一docker network下：
+
+```bash
+sudo docker network create -d bridge elknet
+```
+
+### Installation
+
+```bash
+sudo docker pull sebp/elk:7.16.3
+docker pull docker.elastic.co/beats/filebeat:7.16.3
+```
+
+具体配置仍然如上，进行细微调整：
+
+```bash
+docker run -p 5601:5601 -p 9200:9200 -p 9300:9300 -p 5044:5044 --name elk -d sebp/elk:7.16.3
+
+docker cp elk:/etc/elasticsearch/elasticsearch.yml /opt/elk/elasticsearch/conf
+```
+
+#### Elasticsearch
+
+Elasticsearch为了安全考虑，不让使用root启动，解决方法新建一个用户，用此用户进行相关的操作。如果你用root启动，会出现`“java.lang.RuntimeException: can not runelasticsearch as root”`错误，**因此需要自己新建用户来运行ES**：
+
+1. 创建新用户：`adduser es`
+2. 修改新用户密码：`passwd es`
+3. 授权sudo
+   1. 添加sudoers文件可写权限：`chmod -v u+w /etc/sudoers`
+   2. 修改sudoers文件：`vim /etc/sudoers`
+   3. 在sudoers文件中找到如下位置并添加如下内容
+      **[用户名]  ALL=(ALL)  ALL**（如需新用户使用sudo时不用输密码，把最后一个**ALL**改为**NOPASSWD:ALL**即可）
+   4. 收回sudoers文件可写权限：`chmod -v u-w /etc/sudoers`
+4. 赋予所有文件权限给予用户和用户组：`chown -R es:es elk`
+
+**配置修改**
+修改conf下elasticsearch.yml文件，增加两个参数：
+
+```yml
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+```
+
+修改外网访问设置：
+
+1. 修改network.host为`0.0.0.0`
+2. 设置node.name参数
+3. 设置cluster.initial_master_nodes参数：数组值需与参数node.name相同
+
+**配置xpack**
+
+```yml
+xpack.license.self_generated.type: basic
+xpack.security.enabled: true
+xpack.monitoring.collection.enabled: true
+```
+
+#### Logstash
+
+**配置文件**
+
+修改logstash.conf，修改地方如下：
+
+1. filter 块中的`patterns_dir`路径
+2. output 块中的密码
+
+#### Filebeat
+
+具体配置如下：
+
+```conf
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /logs/application/*/*.log
+  exclude_lines: ['\sDEBUG\s\d']
+  exclude_files: ['sc-admin.*.log$']
+  fields:
+    docType: sys-log
+    project: microservice-platform
+  multiline:
+    pattern: '^\[\S+:\S+:\d{2,}] '
+    negate: true
+    match: after
+- type: log
+  enabled: true
+  paths:
+    - /logs/point/*.log
+  fields:
+    docType: point-log
+    project: microservice-platform
+    
+# 修改output.logstash为以下内容，其中hosts为logstash的部署地址
+#output.elasticsearch:
+#  hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
+ # username: '${ELASTICSEARCH_USERNAME:}'
+  #password: '${ELASTICSEARCH_PASSWORD:}'
+
+output.logstash:
+  hosts: ["localhost:5044"]
+  bulk_max_size: 2048
+```
+
+#### 启动
+
+创建启动start.sh
+
+**ELK:**
+
+```shell
+docker stop elk
+docker rm elk
+
+docker run -p 5601:5601 -p 9200:9200 -p 9300:9300 -p 5044:5044 \
+    -e LS_HEAP_SIZE="1g" -e ES_JAVA_OPTS="-Xms2g -Xmx2g" \
+    -v $PWD/elasticsearch/data:/var/lib/elasticsearch \
+    -v $PWD/elasticsearch/plugins:/opt/elasticsearch/plugins \
+    -v $PWD/logstash/conf:/etc/logstash/conf.d \
+    -v $PWD/logstash/patterns:/opt/logstash/patterns \
+    -v $PWD/elasticsearch/conf/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml \
+    -v $PWD/elasticsearch/log:/var/log/elasticsearch \
+    -v $PWD/logstash/log:/var/log/logstash \
+    --name elk \
+    --network elknet \
+    --privileged=true \
+    -d sebp/elk:7.16.3
+```
+
+**Filebeat:**
+
+```shell
+docker stop filebeat
+docker rm filebeat
+
+docker run -d \
+  --name filebeat \
+  --network elknet \
+  --user root \
+  --privileged=true \
+  -v $PWD/filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro \
+  -v $PWD/filebeat/logs:/logs \
+  -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+  -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  docker.elastic.co/beats/filebeat:6.8.23 filebeat -e -strict.perms=false \
+  -E output.logstash.hosts=["elk:5044"]
+  
+#  -E output.elasticsearch.hosts=["elk:9200"] 
+```
+
+### Usage
+
+- 9200 (Elasticsearch JSON interface).
+- 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat – see the *[Forwarding logs with Filebeat](https://elk-docker.readthedocs.io/#forwarding-logs-filebeat)* section).
+
+The image exposes (but does not publish):
+
+- Elasticsearch's transport interface on port 9300. Use the `-p 9300:9300` option with the `docker` command above to publish it. This transport interface is notably used by [Elasticsearch's Java client API](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html), and to run Elasticsearch in a cluster.
+- [Logstash's monitoring API](https://www.elastic.co/guide/en/logstash/current/monitoring-logstash.html) on port 9600. Use the `-p 9600:9600` option with the `docker` command above to publish it.
+
+![img](https://cdn.jsdelivr.net/gh/edgarding77/microservice-platform-doc@latest/image/func/elk-docker.png)
+
+使用Kiana：`http://<your-host>:5601`
+
+访问：9200结果如下：
+
+```json
+{
+  "name" : "elk",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "v-oGgC70Tw2X27JO2xb6FA",
+  "version" : {
+    "number" : "7.16.3",
+    "build_flavor" : "default",
+    "build_type" : "tar",
+    "build_hash" : "4e6e4eab2297e949ec994e688dad46290d018022",
+    "build_date" : "2022-01-06T23:43:02.825887787Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.10.1",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+
+### ISSUE
+
+> main ERROR Unable to create file /var/log/elasticsearch/my-es_deprecation.log java.io.IOException: Permission denied
+
+参考：https://discuss.elastic.co/t/elasticsearch-unable-to-start/23824
+
+> [2022-02-17T09:18:53,007][ERROR][o.e.x.i.IndexLifecycleRunner] [elk] policy [kibana-event-log-policy] for index [.kibana-event-log-7.16.3-000001] failed on step [{"phase":"hot","action":"rollover","name":"check-rollover-ready"}]. Moving to ERROR step
+> org.elasticsearch.cluster.block.ClusterBlockException: index [.kibana-event-log-7.16.3-000001] blocked by: [TOO_MANY_REQUESTS/12/disk usage exceeded flood-stage watermark, index has read-only-allow-delete block];
+
+## 安装包部署7.x
+
+*具体选用ELK7.12.0*
+
+### 软件下载
+
+Elasticsearch: https://www.elastic.co/cn/downloads/past-releases/elasticsearch-7-12-0
+
+Logstash: https://www.elastic.co/cn/downloads/past-releases/logstash-7-12-0
+
+Kibana: https://www.elastic.co/cn/downloads/past-releases/kibana-7-12-0
+
+IK分词插件: https://github.com/medcl/elasticsearch-analysis-ik/releases/tag/v7.12.0
+
+### Elasticsearch
+
+username: elastic
+
+password: 123456
+
+Elasticsearch启动和停止：
+
+- 启动：`bin/elasticsearch`，后台运行参数：`-d`
+- 关闭：`jps | grep Elasticsearch`，`kill -SIGTERM pid`
+
+若出现-- process information unavailable信息，可以使用`rm -rf /tmp/hsperfdata_*`，清楚残余信息，参考：https://www.cnblogs.com/freeweb/p/5748424.html。
+
+节点信息：
+
+```json
+{
+  "name" : "node-1",
+  "cluster_name" : "my-es",
+  "cluster_uuid" : "bjWKlsiKRziBlU9khFXFOQ",
+  "version" : {
+    "number" : "7.12.0",
+    "build_flavor" : "default",
+    "build_type" : "tar",
+    "build_hash" : "78722783c38caa25a70982b5b042074cde5d3b3a",
+    "build_date" : "2021-03-18T06:17:15.410153305Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.8.0",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+
+账户信息，可以通过两种方式生成密码：
+
+1. 自动生成密码
+
+```
+bin/elasticsearch-setup-passwords auto
+```
+
+2. 手动设置密码
+
+```
+bin/elasticsearch-setup-passwords interactive
+```
+
+#### 更新已有索引
+
+```bash
+curl -XPUT http://192.168.90.177:9200/sys-log-*/_settings \
+    -H 'Content-Type: application/json' \
+    -u elastic:123456 \
+    -d '{
+        "index" : {
+            "number_of_replicas" : 0
+        }
+    }'
+```
+
+
+
+#### 设置索引模版
+
+**系统日志**
+
+```bash
+curl -XPUT http://192.168.90.177:9200/_template/template_sys_log \
+    -H 'Content-Type: application/json' \
+    -u elastic:123456 \
+    -d '{
+        "index_patterns" : ["sys-log-*"],
+        "order" : 0,
+        "settings" : {
+            "number_of_replicas" : 0
+        },
+        "mappings": {
+            "properties": {
+                "message": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "analyzer": "ik_max_word"
+                },
+                "pid": {
+                    "type": "text"
+                },
+                "serverPort": {
+                    "type": "text"
+                },
+                "logLevel": {
+                    "type": "text"
+                },
+                "traceId": {
+                    "type": "text"
+                }
+            }
+        }
+    }'
+```
+
+**埋点日志**
+
+```bash
+curl -XPUT http://192.168.90.177:9200/_template/template_point_log \
+    -H 'Content-Type: application/json' \
+    -u elastic:123456 \
+    -d '{
+        "index_patterns" : ["point-log-*"],
+        "order" : 0,
+        "settings" : {
+            "number_of_replicas" : 0
+        }
+    }'
+```
+
+**慢sql日志**
+
+```bash
+curl -XPUT http://192.168.90.177:9200/_template/template_sql_slowlog \
+    -H 'Content-Type: application/json' \
+    -u elastic:123456 \
+    -d '{
+        "index_patterns" : ["mysql-slowlog-*"],
+        "order" : 0,
+        "settings" : {
+            "number_of_replicas" : 0
+        },
+        "mappings": {
+          "properties": {
+            "query_str": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              },
+              "analyzer": "ik_max_word"
+            }
+          }
+        }
+    }'
+```
+
+### Logstash
+
+后台运行指令：`nohup bin/logstash -f config/logstash.conf &`
+
+在logstash目录下，新建patterns/my_patterns文件，即就my_patterns没有后缀。
+
+```bash
+# user-center
+MYAPPNAME [0-9a-zA-Z._-]*
+# RMI TCP Connection(2)-127.0.0.1
+MYTHREADNAME ([0-9a-zA-Z._-]|\(|\)|\s)*
+```
+
+创建配置文件在config目录下，logstash.conf：
+
+```conf
+input {
+  beats {
+    port => 5044
+  }
+}
+
+filter {
+  if [fields][docType] == "sys-log" {
+    grok {
+      patterns_dir => ["/home/es/logstash7/logstash-7.12.0/patterns"]
+      match => { "message" => "\[%{NOTSPACE:appName}:%{IP:serverIp}:%{NOTSPACE:serverPort}\] %{TIMESTAMP_ISO8601:logTime} %{LOGLEVEL:logLevel} %{WORD:pid} \[%{MYAPPNAME:traceId}-%{MYAPPNAME:spanId}\] \[%{MYTHREADNAME:threadName}\] %{NOTSPACE:classname} %{GREEDYDATA:message}" }
+      overwrite => ["message"]
+    }
+    date {
+      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS Z"]
+    }
+    date {
+      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS"]
+      target => "timestamp"
+      locale => "en"
+      timezone => "+08:00"
+    }
+    mutate {
+      remove_field => "logTime"
+      remove_field => "@version"
+      remove_field => "host"
+      remove_field => "offset"
+    }
+  }
+  if [fields][docType] == "point-log" {
+    grok {
+      patterns_dir => ["/home/es/logstash7/logstash-7.12.0/patterns"]
+      match => {
+        "message" => "%{TIMESTAMP_ISO8601:logTime}\|%{MYAPPNAME:appName}\|%{WORD:resouceid}\|%{MYAPPNAME:type}\|%{GREEDYDATA:object}"
+      }
+    }
+    kv {
+        source => "object"
+        field_split => "&"
+        value_split => "="
+    }
+    date {
+      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS Z"]
+    }
+    date {
+      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS"]
+      target => "timestamp"
+      locale => "en"
+      timezone => "+08:00"
+    }
+    mutate {
+      remove_field => "message"
+      remove_field => "logTime"
+      remove_field => "@version"
+      remove_field => "host"
+      remove_field => "offset"
+    }
+  }
+}
+
+output {
+  if [fields][docType] == "sys-log" {
+    elasticsearch {
+      hosts => ["http://localhost:9200"]
+      user => "elastic"
+      password => "123456"
+      index => "sys-log-%{+YYYY.MM.dd}"
+    }
+  }
+  if [fields][docType] == "point-log" {
+    elasticsearch {
+      hosts => ["http://localhost:9200"]
+      user => "elastic"
+      password => "123456"
+      index => "point-log-%{+YYYY.MM.dd}"
+      routing => "%{type}"
+    }
+  }
+}
+```
+
+### Kibana
+
+修改配置config/kibana.yml:
+
+```yml
+#端口    
+server.port: 5601    
+#主机
+server.host: "0.0.0.0"
+#Kibana服务名
+server.name: "kibana"
+#es的地址
+elasticsearch.hosts: ["http://localhost:9200"]
+#kibana在es中的索引
+kibana.index: ".kibana"
+#kibana访问es的用户名和密码
+elasticsearch.username: "kibana"
+elasticsearch.password: "123456"
+#使用中文
+i18n.locale: "zh-CN"
+```
+
+后台运行:
+
+```
+nohup bin/kibana >> /dev/null 2>&1 &
+```
+
+说明：使用nohup指令运行，会产生一个nohup.out的文件，这个是可以不需要的，通过`>> /dev/null 2>&1`来解决。
+
+> **/dev/null** 代表空设备文件，也就是不输出任何信息到终端。
+>
+> 操作系统中有三个常用的流：
+> 　　0：标准输入流 stdin
+> 　　1：标准输出流 stdout
+> 　　2：标准错误流 stderr
+>
+> "**>/dev/null**" 等价于 "**1>/dev/null**"，表示标准输出（1）输出到 /dev/null 中，即终端不输出标准输出信息；
+>
+> "**2>&1**" 中的 “**&**” 是等价于的意思，表示 标准错误（2）输出的位置 等价于 标准输出（1）的位置，即等价于 “**2>/dev/null**”， 即终端不输出标准错误信息。
+>
+> 因此，"**>/dev/null 2>&1**" 表示 标准错误信息和标准输出信息，在终端上均不输出。
+
+停止kibana方法:
+
+```
+[root@localhost bin]# ps -ef | grep node
+root      3607  3247  1 13:49 pts/1    00:00:06 ./../node/bin/node --no-warnings ./../src/cli
+root      3680  3247  0 13:56 pts/1    00:00:00 grep --color=auto node
+[root@localhost bin]# kill -9 3607
+```
+
+参考：https://www.elastic.co/guide/en/kibana/7.12/start-stop.html
+
+## filebeat部署
+
+官网下载：https://www.elastic.co/cn/downloads/beats/filebeat
+
+修改filebeat.yml，其中paths为项目的日志路径：
+
+```yml
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /Users/edgarding/filebeat/logs/application/*/*.log
+  exclude_lines: ['\sDEBUG\s\d']
+  exclude_files: ['sc-admin.*.log$']
+  fields:
+    docType: sys-log
+    project: microservices-platform
+  multiline:
+    pattern: '^\[\S+:\S+:\d{2,}] '
+    negate: true
+    match: after
+- type: log
+  enabled: true
+  paths:
+    - /Users/edgarding/filebeat/logs/point/*.log
+  fields:
+    docType: point-log
+    project: microservices-platform
+    
+    
+output.logstash:
+	  hosts: ["192.168.90.177:5044"]
+	  bulk_max_size: 2048
+```
+
+启动filebeat：`./filebeat -c filebeat.yml -e`
+
+## ES索引管理
+
+### 定期任务定期删除
+
+#### 说明
+
+如果不删除ES数据，将会导致ES存储的数据越来越多，磁盘满了之后将无法写入新的数据。这时可以使用脚本定时删除过期数据
+
+#### 创建清理脚本
+
+```
+vim es-index-clear.sh
+#/bin/bash
+#只保留15天内的日志索引
+LAST_DATA=`date -d "-15 days" "+%Y.%m.%d"`
+#删除15天前的索引
+curl -XDELETE 'http://ip:port/*-'${LAST_DATA}
+#如果有用户密码则用下面的
+#curl -XDELETE -u elastic:xxx 'http://ip:port/*-'${LAST_DATA} 
+```
+
+#### 添加定时任务
+
+```
+#编辑crontab文件，添加相应的任务
+vim /etc/crontab
+
+#设置每天的凌晨一点清除索引
+0 1 * * * root sh /opt/elk/scripts/es-index-clear.sh
+```
+
+## 问题排查思路
+
+### 说明
+
+部署ELK后，没有发现日志数据等，可以按照以下的思路进行排查。
+
+### 数据流向
+
+整个数据的流向过程，按照以下过程分析问题所在：
+
+1. 源头数据(xxx.log)
+2. 数据抽取(Filebeat)
+3. 数据解析(Logstash)
+4. 数据存储(Elasticsearch)
+5. 数据展示(search-center,log-center)
+
+### 问题排查
+
+**版本问题**
+
+具体查看官网中ELK各个组件的版本支持度；
+
+**源头数据**
+
+查看应用程序是否生成数据；
+
+**数据抽取**
+
+1. 检查抽取配置（filebeat.yml）配置文件；
+
+2. 检查输出端配置（`output.logstash`的地址是否正确）；
+3. 检查日志，查看是否报错和抽数据；
+
+**数据解析**
+
+检查logstash的log目录下的日志，看看有没有报错信息
+**有报错信息**
+
+- 检查配置文件是否有语法错误，参考官网手册
+- 在不影响语法正确性的前提下，用排除法删减或增加配置，逐步找出有问题的配置项，例如：
+  1. 把所有配置都删掉看看有没有报错，没有则继续下一步
+  2. 只添加10行配置看看有没有报错，没有则继续下一步
+  3. 再添加10行配置看看有没有报错，报错了则详细检查新增加这10行的配置语法
+
+> 需要对logstash的配置和语法有基本的了解
+
+**数据存储**
+
+1. 检查日志（elasticsearch的log目录）
+2. 检查索引，是否有数据（`http://es地址:9200/_cat/indices?v`）
+3. 查看索引字段是否结构化，若没有结构化，则检查logstash的grok配置
+
+**数据展示**
+
+1. 检查服务日志
+2. 检查服务配置（对应的uris、username、password）
+
+## reference
+
+- 官网：https://www.elastic.co/cn/what-is/elk-stack
+- Elasticsearch：https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+- Elasticsearch2.X：https://github.com/elastic/elasticsearch-definitive-guide/
+- Filebeat：https://www.elastic.co/cn/products/beats/filebeat
+  - 下载地址：https://www.elastic.co/cn/downloads/beats/filebeat
+
+- 部署参考：https://blog.csdn.net/m0_37063785/article/details/101074010
+- filebeat+elk：
+  - https://www.robertobandini.it/2021/01/31/how-to-install-the-elk-stack-using-docker-compose/
+  - https://www.robertobandini.it/2021/02/07/how-to-run-filebeat-with-docker-and-use-it-with-elk-stack/
+- docker官方：https://elk-docker.readthedocs.io/
+- es安装问题总结：https://blog.51cto.com/u_10950710/2124131
+
+
+

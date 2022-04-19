@@ -1,4 +1,4 @@
-# ELK
+# ELK-前置
 
 ## Introduction
 
@@ -52,6 +52,27 @@ Logstash和Beats进行数据收集、聚合和存储进Elasticsearch，Kibana允
 - 9200 (Elasticsearch JSON interface).
 - 5044 (Logstash Beats interface, receives logs from Beats such as Filebeat – see the *[Forwarding logs with Filebeat](https://elk-docker.readthedocs.io/#forwarding-logs-filebeat)* section).
 
+## ES与SpringBoot版本对应表
+
+官网信息：https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#preface.versions
+
+The following table shows the Elasticsearch versions that are used by Spring Data release trains and version of Spring Data Elasticsearch included in that, as well as the Spring Boot versions referring to that particular Spring Data release train:
+
+|                  Spring Data Release Train                   |                  Spring Data Elasticsearch                   | Elasticsearch |                       Spring Framework                       |                         Spring Boot                          |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :-----------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| 2021.1 (Q)[[1](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_1)] | 4.3.x[[1](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_1)] |    7.15.2     | 5.3.x[[1](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_1)] | 2.5 .x[[1](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_1)] |
+|                       2021.0 (Pascal)                        |                            4.2.x                             |    7.12.0     |                            5.3.x                             |                            2.5.x                             |
+|                       2020.0 (Ockham)                        |                            4.1.x                             |     7.9.3     |                            5.3.2                             |                            2.4.x                             |
+|                           Neumann                            |                            4.0.x                             |     7.6.2     |                            5.2.12                            |                            2.3.x                             |
+|                            Moore                             |                            3.2.x                             |    6.8.12     |                            5.2.12                            |                            2.2.x                             |
+| Lovelace[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] | 3.1.x[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] |     6.2.2     |                            5.1.19                            |                            2.1.x                             |
+| Kay[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] | 3.0.x[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] |     5.5.0     |                            5.0.13                            |                            2.0.x                             |
+| Ingalls[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] | 2.1.x[[2](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#_footnotedef_2)] |     2.4.0     |                            4.3.25                            |                            1.5.x                             |
+
+Support for upcoming versions of Elasticsearch is being tracked and general compatibility should be given assuming the usage of the [high-level REST client](https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#elasticsearch.clients.rest).
+
+**因为SpringData版本为4.2.7，因此应选用ES7.12.0。**
+
 ## ES相关组件版本对应表
 
 官网信息：https://www.elastic.co/cn/support/matrix#matrix_compatibility
@@ -87,201 +108,6 @@ Logstash和Beats进行数据收集、聚合和存储进Elasticsearch，Kibana允
 
 
 Elasticsearch 输出兼容性 — Beats、Logstash 和 Elastic 代理将数据索引到 Elasticsearch；**从 6.3 版开始，Elastic Stack 的默认分发版中将包含 X-Pack 功能。请查看 https://www.elastic.co/what-is/open-x-pack。**APM Server 6.7 和 6.8 版可与 Elasticsearch 7.0 版一起使用，但数据必须使用升级助手进行迁移才能在 Kibana 7.0 版中可见。App Search 从 7.7.0 版开始将移至企业搜索中。
-
-## Docker开发部署
-
-> **注意：以下参照部署的版本偏低。**
-
-### 环境要求
-
-- Docker for Mac
-- docker-compose
-
-### 部署实践
-
-**1、文件夹创建：**
-
-分别用于存放Elasticsearch数据、Logstash插件和Logstash配置文件。
-
-```bash
-# pwd -> /Users/xxxx/
-mkdir -p elk/elasticsearch/data
-mkdir -p elk/elasticsearch/plugins
-mkdir -p elk/logstash
-mkdir -p elk/elasticsearch/conf
-mkdir -p elk/docker # 存放docker-compose.yml文件
-```
-
-**2、准备和修改配置文件**
-
-- 运行和下载ELK
-
-```bash
-docker run -p 5601:5601 -p 9200:9200 -p 9300:9300 -p 5044:5044 --name elk -d sebp/elk:651
-```
-
-- 准备elasticsearch配置文件
-
-```bash
-#复制elasticsearch的配置出来
-docker cp elk:/etc/elasticsearch/elasticsearch.yml elk/elasticsearch/conf
-```
-
-- 修改elasticsearch.yml配置
-
-```bash
-# 修改cluster.name
-cluster.name: my-es
-# 最后新增三个参数
-thread_pool.bulk.queue_size: 1000
-http.cors.enabled: true
-http.cors.allow-origin: "*"
-```
-
-- 准备logstash配置文件
-
-```bash
-#复制logstash的配置出来
-docker cp elk:/etc/logstash/conf.d/. elk/logstash/conf/
-```
-
-- 准备logstash的patterns文件
-
-```bash
-# 新建一个patterns文件夹
-mkdir -p elk/logstash/patterns
-# 新建一个java的patterns文件，vim java.patterns 内容如下
-# user-center
-MYAPPNAME ([0-9a-zA-Z_-]*)
-# RMI TCP Connection(2)-127.0.0.1
-MYTHREADNAME ([0-9a-zA-Z._-]|\(|\)|\s)*
-```
-
-- 删除02-beats-input.conf最后三句，去掉强制认证
-
-```bash
-vim elk/logstash/conf/02-beats-input.conf
-#ssl => true 
-#ssl_certificate => "/pki/tls/certs/logstash.crt"
-#ssl_key => "/pki/tls/private/logstash.key"
-```
-
-- 修改10-syslog.conf配置
-
->  **注意，下面的logstash结构化配置样例都是以本工程的日志格式配置，并不是通用的**
-
-```bash
-filter {
-  if [type] == "syslog" {
-    grok {
-      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
-      add_field => [ "received_at", "%{@timestamp}" ]
-      add_field => [ "received_from", "%{host}" ]
-    }
-    syslog_pri { }
-    date {
-      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
-    }
-  }
-  if [fields][docType] == "sys-log" {
-    grok {
-      patterns_dir => ["/opt/elk/logstash/patterns"]
-      match => { "message" => "\[%{NOTSPACE:appName}:%{NOTSPACE:serverIp}:%{NOTSPACE:serverPort}\] %{TIMESTAMP_ISO8601:logTime} %{LOGLEVEL:logLevel} %{WORD:pid} \[%{MYAPPNAME:traceId}\] \[%{MYTHREADNAME:threadName}\] %{NOTSPACE:classname} %{GREEDYDATA:message}" }
-      overwrite => ["message"]
-    }
-    date {
-      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS Z"]
-    }
-    date {
-      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS"]
-      target => "timestamp"
-      locale => "en"
-      timezone => "+08:00"
-    }
-    mutate {  
-      remove_field => "logTime"
-      remove_field => "@version"
-      remove_field => "host"
-      remove_field => "offset"
-    }
-  }
-  if [fields][docType] == "point-log" {
-    grok {
-      patterns_dir => ["/opt/elk/logstash/patterns"]
-      match => { 
-        "message" => "%{TIMESTAMP_ISO8601:logTime}\|%{MYAPPNAME:appName}\|%{WORD:resouceid}\|%{MYAPPNAME:type}\|%{GREEDYDATA:object}"
-      }
-    }
-    kv {
-        source => "object"
-        field_split => "&"
-        value_split => "="
-    }
-    date {
-      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS Z"]
-    }
-    date {
-      match => ["logTime","yyyy-MM-dd HH:mm:ss.SSS"]
-      target => "timestamp"
-      locale => "en"
-      timezone => "+08:00"
-    }
-    mutate {
-      remove_field => "logTime"
-      remove_field => "@version"
-      remove_field => "host"
-      remove_field => "offset"
-    }
-  }
-}
-```
-
-- 修改30-output.conf配置
-
-```bash
-output {
-  if [fields][docType] == "sys-log" {
-    elasticsearch {
-      hosts => ["localhost"]
-      manage_template => false
-      index => "sys-log-%{+YYYY.MM.dd}"
-      document_type => "%{[@metadata][type]}"
-    }
-  }
-  if [fields][docType] == "point-log" {
-    elasticsearch {
-      hosts => ["localhost"]
-      manage_template => false
-      index => "point-log-%{+YYYY.MM.dd}"
-      document_type => "%{[@metadata][type]}"
-      routing => "%{type}"
-    }
-  }
-}
-```
-
-**3、docker-compose.yml文件(位置：elk/docker/docker-compose.yml)**
-
-使用运行脚本或者docker-compose
-
-```sh
-docker stop elk
-docker rm elk
-
-docker run -p 5601:5601 -p 9200:9200 -p 9300:9300 -p 5044:5044 \
-    -e LS_HEAP_SIZE="1g" -e ES_JAVA_OPTS="-Xms2g -Xmx2g" \
-    -v $PWD/elasticsearch/data:/var/lib/elasticsearch \
-    -v $PWD/elasticsearch/plugins:/opt/elasticsearch/plugins \
-    -v $PWD/logstash/conf:/etc/logstash/conf.d \
-    -v $PWD/logstash/patterns:/opt/logstash/patterns \
-    -v $PWD/elasticsearch/conf/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml \
-    -v $PWD/elasticsearch/log:/var/log/elasticsearch \
-    -v $PWD/logstash/log:/var/log/logstash \
-    --name elk \
-    -d sebp/elk:651
-```
-
-
 
 ## reference
 

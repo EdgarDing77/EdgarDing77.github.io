@@ -4,9 +4,7 @@
 
 **Docker** 是一个[开放源代码](https://zh.wikipedia.org/wiki/開放原始碼)[软件](https://zh.wikipedia.org/wiki/軟體)，是一个[开放平台](https://zh.wikipedia.org/wiki/開放平臺)，用于开发应用、交付（shipping）应用、运行应用。 Docker允许用户将基础设施（Infrastructure）中的应用单独分割出来，形成更小的颗粒（容器），从而提高交付软件的速度。
 
-## docker命令
-
-例子：
+## 启动命令
 
 ```bash
 docker run -d -p 8080:8080 edgarding/microservice-platform-demo/djj-docker-demo
@@ -15,6 +13,18 @@ docker run -d -p 8080:8080 edgarding/microservice-platform-demo/djj-docker-demo
 - -p：端口映射，格式为`{主机端口:容器端口}`
 - -it：为容器分配伪输入终端(-t)，且以交互模式运行(-i)
 - -d：后台运行容器
+
+```bash
+docker run -p 9001:9001 \
+ -e spring_cloud_nacos_server_addr=localhost:8848 \
+ -e djj_datasource_ip=127.0.0.1\
+ -e djj_datasource_username=root \
+ -e djj_datasource_password= xxxx\
+ -e spring_redis_host=localhost \
+ --name user-center \
+ --network microservice \
+ -d microservice-platform/user-center:latest
+```
 
 ## 使用Docker部署Spring Boot
 
@@ -104,9 +114,17 @@ Maven插件导入：
 **参数解释**
 
 - docker.baseImage：为jre8的基础镜像
+
 - docker.volumes：是在容器里挂载的目录
+
 - docker.image.prefix：仓库地址/项目名
+
 - docker.java.security.egd：加快随机数产生过程
+
+  - ```
+    -Djava.security.egd=file:/dev/./urandom
+    ```
+
 - docker.java.opts：设置JVM启动参数
 
 ### 推送Docker镜像
