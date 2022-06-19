@@ -1,4 +1,4 @@
-baseurl = "https://edgarding.cn"
+baseurl = "http://www.edgarding.cn"
 title = "EdgarDing Blog"
 theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
@@ -14,7 +14,7 @@ home = ["HTML", "RSS", "Algolia"]
 
 [params]
   header_image = "img/home-bg-jeep.jpg"
-  SEOTitle = "丁骏杰的博客 | EdgarDing Blog"
+  SEOTitle = "EdgarDing 的博客 | One day One day"
   description = "一天又一天"
   keyword = "Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice"
   slogan = "Do Not Go Gentle Into That Good Night."
@@ -36,7 +36,6 @@ home = ["HTML", "RSS", "Algolia"]
 
   # Sidebar settings
   sidebar_about_description = "Rookie ... You Only Live Once."
-  #sidebar_avatar = "img/avatar-zhaohuabing.jpg"      # use absolute URL, seeing it's used in both `/` and `/about/`
   sidebar_avatar = "img/edgarding.jpeg"      # use absolute URL, seeing it's used in both `/` and `/about/`
 
   featured_tags = true 
@@ -67,7 +66,7 @@ home = ["HTML", "RSS", "Algolia"]
   #custom_js = ["js/lightbox.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js", "js/main.js"]
 
   [params.social]
-  rss            = true 
+  #rss            = true 
   email          = "edgarding97@gmail.com"
   #facebook      = "full profile url in facebook"
   #googleplus    = "full profile url in googleplus"
