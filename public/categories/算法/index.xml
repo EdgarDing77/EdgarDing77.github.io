@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on EdgarDing Blog</title>
-    <link>http://www.edgarding.cn/post/</link>
-    <description>Recent content in Posts on EdgarDing Blog</description>
+    <title>算法 on EdgarDing Blog</title>
+    <link>http://www.edgarding.cn/categories/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on EdgarDing Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Feb 2022 13:54:27 +0000</lastBuildDate><atom:link href="http://www.edgarding.cn/post/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Spring核心概念梳理</title>
-      <link>http://www.edgarding.cn/post/2021/spring%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E6%A2%B3%E7%90%86-spring-he-xin-gai-nian-shu-li/</link>
-      <pubDate>Mon, 28 Feb 2022 13:54:27 +0000</pubDate>
-      
-      <guid>http://www.edgarding.cn/post/2021/spring%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E6%A2%B3%E7%90%86-spring-he-xin-gai-nian-shu-li/</guid>
-      <description>Spring核心概念梳理 Introduction 针对Spring的几个核心概念进行梳理。 SpringBoot框架的启动流程与相应注解。 IOC与AOP两大Sprin</description>
-    </item>
-    
+    <lastBuildDate>Fri, 14 Jan 2022 13:08:05 +0000</lastBuildDate><atom:link href="http://www.edgarding.cn/categories/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>算法(4)-动态规划</title>
       <link>http://www.edgarding.cn/post/2021/%E7%AE%97%E6%B3%954-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-suan-fa-4-dong-tai-gui-hua/</link>
@@ -62,39 +53,12 @@
     </item>
     
     <item>
-      <title>Kubernetes-基础</title>
-      <link>http://www.edgarding.cn/post/2021/kubernetes-%E5%9F%BA%E7%A1%80-kubernetes-ji-chu/</link>
-      <pubDate>Fri, 17 Sep 2021 20:30:16 +0000</pubDate>
-      
-      <guid>http://www.edgarding.cn/post/2021/kubernetes-%E5%9F%BA%E7%A1%80-kubernetes-ji-chu/</guid>
-      <description>Kubernetes-基础 2021/09/14 前言 由于有段时间没接触Kubernetes，最近面试运维开发的时候又经常问到，因此重新体系的入门下Kuberne</description>
-    </item>
-    
-    <item>
-      <title>Datadog Agent部署</title>
-      <link>http://www.edgarding.cn/post/2021/datadog-agent%E9%83%A8%E7%BD%B2-datadogagent-bu-shu/</link>
-      <pubDate>Tue, 14 Sep 2021 17:47:15 +0000</pubDate>
-      
-      <guid>http://www.edgarding.cn/post/2021/datadog-agent%E9%83%A8%E7%BD%B2-datadogagent-bu-shu/</guid>
-      <description>Datadog Agent 部署 Datadog Cluster Agent提供了一种简化的集中式方法来收集集群级别的监视数据。通过充当API服务器和基于节点的代理之间的代理，群集代理有助于减轻</description>
-    </item>
-    
-    <item>
       <title>算法-排序</title>
       <link>http://www.edgarding.cn/post/2021/%E7%AE%97%E6%B3%95-%E6%8E%92%E5%BA%8F-pai-xu-suan-fa/</link>
       <pubDate>Wed, 08 Sep 2021 10:03:34 +0000</pubDate>
       
       <guid>http://www.edgarding.cn/post/2021/%E7%AE%97%E6%B3%95-%E6%8E%92%E5%BA%8F-pai-xu-suan-fa/</guid>
       <description>算法-排序 Introduction 以下为自己整理总结的常用排序算法与实现。 时间复杂度一次完整的计算：http://discrete.gr/complexity/ 基</description>
-    </item>
-    
-    <item>
-      <title>SpringBoot核心源码分析</title>
-      <link>http://www.edgarding.cn/post/2021/springboot%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-springboot%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
-      <pubDate>Sat, 17 Oct 2020 14:55:50 +0000</pubDate>
-      
-      <guid>http://www.edgarding.cn/post/2021/springboot%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-springboot%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
-      <description>SpringBoot 核心源码分析 convention over configuration 约定优于配置 SprinBoot 核心特性：约定优于配置 举一个具体一点的例子，这个理念我们其实一直都在遵循并使用，比如我们在 MVC 项目的开发中会</description>
     </item>
     
   </channel>

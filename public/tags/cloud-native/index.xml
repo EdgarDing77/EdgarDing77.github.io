@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cloud Native on EdgarDing Blog</title>
+    <link>http://www.edgarding.cn/tags/cloud-native/</link>
+    <description>Recent content in Cloud Native on EdgarDing Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 17 Sep 2021 20:30:16 +0000</lastBuildDate><atom:link href="http://www.edgarding.cn/tags/cloud-native/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes-基础</title>
+      <link>http://www.edgarding.cn/post/2021/kubernetes-%E5%9F%BA%E7%A1%80-kubernetes-ji-chu/</link>
+      <pubDate>Fri, 17 Sep 2021 20:30:16 +0000</pubDate>
+      
+      <guid>http://www.edgarding.cn/post/2021/kubernetes-%E5%9F%BA%E7%A1%80-kubernetes-ji-chu/</guid>
+      <description>Kubernetes-基础 2021/09/14 前言 由于有段时间没接触Kubernetes，最近面试运维开发的时候又经常问到，因此重新体系的入门下Kuberne</description>
+    </item>
+    
+    <item>
+      <title>Datadog Agent部署</title>
+      <link>http://www.edgarding.cn/post/2021/datadog-agent%E9%83%A8%E7%BD%B2-datadogagent-bu-shu/</link>
+      <pubDate>Tue, 14 Sep 2021 17:47:15 +0000</pubDate>
+      
+      <guid>http://www.edgarding.cn/post/2021/datadog-agent%E9%83%A8%E7%BD%B2-datadogagent-bu-shu/</guid>
+      <description>Datadog Agent 部署 Datadog Cluster Agent提供了一种简化的集中式方法来收集集群级别的监视数据。通过充当API服务器和基于节点的代理之间的代理，群集代理有助于减轻</description>
+    </item>
+    
+  </channel>
+</rss>

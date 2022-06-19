@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="EdgarDing Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="http://www.edgarding.cn/img/home-bg-main.jpg">
+    <meta property="twitter:image" content="http://www.edgarding.cn/img/home-bg-main.jpg" />
+    
+
+    
+    <meta name="title" content="算法(0)-base" />
+    <meta property="og:title" content="算法(0)-base" />
+    <meta property="twitter:title" content="算法(0)-base" />
+    
+
+    
+    <meta name="description" content="一天又一天">
+    <meta property="og:description" content="一天又一天" />
+    <meta property="twitter:description" content="一天又一天" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>算法(0)-base | EdgarDing 的博客 | One day One day</title>
+
+    <link rel="canonical" href="/post/2021/%E7%AE%97%E6%B3%950-base-suan-fa-base/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">EdgarDing Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-main.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                    </div>
+                    <h1>算法(0)-base</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    EdgarDing Blog
+                             
+                            on 
+                            Wednesday, November 17, 2021
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="算法0-base">算法(0)-base</h1>
+<h2 id="introduction">Introduction</h2>
+<p>该文主要总结一些有关算法的基础，其具体的分类等在之后进行，这也是对自己刷题这么久来的一次系统化整理。该篇主要进行一些前置知识的整理和常见问题。具体类型查看后面系列，该文不涉及dp类等较难问题。</p>
+<p>其代码将具体存于：<a href="https://github.com/EdgarDing77/code-collection">code-collection</a></p>
+<p><strong>更新说明：</strong></p>
+<ul>
+<li>2022/1/2：开始刷题笔记，具体处于 interview-note 模块中更具有方向性的进行练习，提高自己。
+<ul>
+<li>分类依据《程序员代码面试指南》，进行章节划分</li>
+<li>题库参考：
+<ul>
+<li>codetop.cn</li>
+<li>《程序员代码面试指南》</li>
+<li>《labuladong的算法小抄》</li>
+<li>《算法》第四版</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="基础">基础</h2>
+<h3 id="时间复杂度">时间复杂度</h3>
+<p>
+  <img src="https://cdn.jsdelivr.net/gh/edgarding77/images@latest/algorithm/computational_complexity.png" alt="img">
+
+</p>
+<p>「What」时间复杂度是一个函数，定性描述该算法的运行时间。</p>
+<blockquote>
+<p>假设算法的问题规模为n，那么操作单元数量便用函数f(n)来表示，随着数据规模n的增大，算法执行时间的增长率和f(n)的增长率相同，这称作为算法的渐近时间复杂度，简称时间复杂度，记为 O(f(n))。</p>
+</blockquote>
+<p>时间复杂度的衡量通过<strong>大O表示法Big O notation</strong>，即O(n),O($n^2$)等方式。大O用于表示算法的<em>最坏情况下复杂度</em>，即对任意数据输入的运行时间上界。而时间复杂度都是忽略常数项系数的，因为一般情况下都是默认数据规模足够的大，基于这样的事实，给出的算法时间复杂的的一个排行如下所示：</p>
+<pre tabindex="0"><code>O(1)常数阶 &lt; O(logn)对数阶 &lt; O(n)线性阶 &lt; O(n^2)平方阶 &lt; O(n^3)(立方阶) &lt; O(2^n) (指数阶)
+</code></pre><p>**「tip」**因为输入数据的不同，对于程序的运算时间也是有着很大影响的，当然对于正常来说如快排复杂度为O(nlogn)都是代表一般情况，而若是最坏情况就到了O($n^2$)，即不是严格的上界。因此面试中提的算法的时间复杂度指平均情况复杂度。</p>
+<h3 id="空间复杂度">空间复杂度</h3>
+<p>「What」空间复杂度是对算法在运行过程中占用内存大小的量度，记做S(n)=O(f(n)。</p>
+<p>空间复杂度(Space Complexity)记作S(n) 依然使用大O来表示。利用程序的空间复杂度，可以对程序运行中需要多少内存有个预先估计。</p>
+<h3 id="时间复杂度计算">时间复杂度计算</h3>
+<p>时间复杂度计算以<code>O(2*n^2 + 10*n + 1000)</code>为例：</p>
+<ol>
+<li>去掉常数项，因为常数项不会随着n而增加而增加操作次数</li>
+<li>完成(1)后，<code>O(n^2 + n)</code>，最后仅保留最高项得到<code>O(n^2)</code></li>
+</ol>
+<p>对于递归复杂度 = 递归次数 * 每次递归中的操作次数</p>
+<h3 id="ologn是以什么为底">O(logn)是以什么为底？</h3>
+<p>logn是忽略底数的描述：</p>
+<ul>
+<li>$O(log_2n)$ = $log_2{10} * O(log_{10}n)$</li>
+<li>$log_i^n$ = $O(log_ij * log_jn)$ 其中$log_ij$是常数需要呗湖绿</li>
+<li>这也是$O(log_in) -&gt; O(logn)$缘由</li>
+</ul>
+<blockquote>
+<p>假如有两个算法的时间复杂度，分别是log以2为底n的对数和log以10为底n的对数，那么这里如果还记得高中数学的话，应该不难理解<code>以2为底n的对数 = 以2为底10的对数 * 以10为底n的对数</code>。</p>
+<p>而以2为底10的对数是一个常数，在上文已经讲述了我们计算时间复杂度是忽略常数项系数的。</p>
+<p>抽象一下就是在时间复杂度的计算过程中，log以i为底n的对数等于log 以j为底n的对数，所以忽略了i，直接说是logn。</p>
+</blockquote>
+<h3 id="数据的存储方式">数据的存储方式</h3>
+<p>数据的存储方式只有两种：数组（顺序存储）和链表（链式存储）是数据结构的基础，而如栈、队列等都是在这之上的上层建筑。</p>
+<table>
+<thead>
+<tr>
+<th>存储方式</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数组</td>
+<td>根据索引可以直接访问所需任意节点</td>
+<td>在初始化的时候就需要知道元素的数量</td>
+</tr>
+<tr>
+<td>链表</td>
+<td>所需的空间大小与元素个数成正比</td>
+<td>需要引用遍历来访问任意元素</td>
+</tr>
+</tbody>
+</table>
+<p><strong>二者的优缺点如下</strong>：</p>
+<p><strong>数组</strong>由于是紧凑连续存储,可以随机访问，通过索引快速找到对应元素O(1)，而且相对节约存储空间。但正因为连续存储，内存空间必须一次性分配够，所以说数组如果要扩容，需要重新分配一块更大的空间，再把数据全部复制过去，时间复杂度 O(N)；而且你如果想在数组中间进行插入和删除，每次必须搬移后面的所有数据以保持连续，时间复杂度 O(N)。</p>
+<p><strong>链表</strong>因为元素不连续，而是靠指针指向下一个元素的位置，所以不存在数组的扩容问题；如果知道某一元素的前驱和后驱，操作指针即可删除该元素或者插入新元素，时间复杂度 O(1)。但是正因为存储空间不连续，你无法根据一个索引算出对应元素的地址，所以不能随机访问；而且由于每个元素必须存储指向前后元素位置的指针，会消耗相对更多的储存空间。</p>
+<h3 id="递归和迭代">递归和迭代</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>定义</strong></th>
+<th><strong>优点</strong></th>
+<th><strong>缺点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>递归</td>
+<td>程序调用自身的编程技巧称为递归</td>
+<td>1）大问题化为小问题,可以极大的减少代码量；2）用有限的语句来定义对象的无限集合.；3）代码更简洁清晰，可读性更好</td>
+<td>1）递归调用函数,浪费空间；2）递归太深容易造成堆栈的溢出；</td>
+</tr>
+<tr>
+<td>迭代</td>
+<td>利用变量的原值推算出变量的一个新值，迭代就是A不停的调用B.</td>
+<td>1）迭代效率高，运行时间只因循环次数增加而增加；2）没什么额外开销，空间上也没有什么增加，</td>
+<td>1） 不容易理解；2） 代码不如递归简洁；3） 编写复杂问题时困难。</td>
+</tr>
+<tr>
+<td>二者关系</td>
+<td>1） 递归中一定有迭代,但是迭代中不一定有递归,大部分可以相互转换。2） 能用迭代的不用递归,递归调用函数,浪费空间,并且递归太深容易造成堆栈的溢出./<em>相对</em>/</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="理论知识">理论知识</h2>
+<p>刷题分类：</p>
+<ul>
+<li>数组</li>
+<li>链表</li>
+<li>哈希表</li>
+<li>字符串</li>
+<li>双指针法</li>
+<li>栈与队列
+<ul>
+<li>单调栈</li>
+<li>单调队列</li>
+</ul>
+</li>
+<li>二叉树</li>
+<li>回溯算法</li>
+<li>贪心算法</li>
+<li>动态规划</li>
+</ul>
+<h3 id="数组">数组</h3>
+<p>**「What」**数组是存放在连续内存空间上的相同类型的数据的集合。</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>数组下标都是从0开始的</li>
+<li>数组内存空间的地址是连续的</li>
+</ul>
+<p>因为数组的内存空间是连续的，所以在进行删除或者增加元素的时候，就难免要移动其他元素的位置，且元素也是不能删除的，只能是覆盖。</p>
+<h3 id="链表">链表</h3>
+<p>**「What」**链表是一种通过指针串联在一起的线性结构，每一个节点由两个部分组成，一个是数据域，一个是指针域（存放指向下一个节点的指针）。</p>
+<p><strong>链表类型：</strong></p>
+<ul>
+<li>单链表</li>
+<li>双链表</li>
+<li>循环链表：头尾指针相连</li>
+</ul>
+<p>链表节点的定义：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Node</span> <span style="color:#ff79c6">{</span>
+		<span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">;</span>
+  	Node next<span style="color:#ff79c6">;</span>
+  	Node prev<span style="color:#ff79c6">;</span> <span style="color:#6272a4">// 若是双链表
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div><p><strong>链表操作：</strong></p>
+<ul>
+<li>删除节点：将删除节点的前一个节点指向删除节点的下一个节点；对于C++需要手动释放内存，但对于Java、Python有内存回收机制的就无需手动释放了。</li>
+<li>添加节点：改变添加位置的节点指向即可</li>
+</ul>
+<h3 id="树">树</h3>
+<h4 id="二叉树">二叉树</h4>
+<p>**「What」**每个结点至多有两个分支（即不存在分支度大于2）的树结构。通常分支被称为“左子树”和“右子树”，分支具有左右次序，不可被随意颠倒。</p>
+<p>二叉树结点数可以为0，称空二叉树。</p>
+<p>常见定义方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">TreeNode</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">;</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> TreeNode left<span style="color:#ff79c6">;</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> TreeNode right<span style="color:#ff79c6">;</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">TreeNode</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">,</span> TreeNode left<span style="color:#ff79c6">,</span> TreeNode right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">val</span> <span style="color:#ff79c6">=</span> val<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">left</span> <span style="color:#ff79c6">=</span> left<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">right</span> <span style="color:#ff79c6">=</span> right<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">TreeNode</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">val</span> <span style="color:#ff79c6">=</span> val<span style="color:#ff79c6">;</span>
+        left <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">;</span>
+        right <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p><strong>本身性质：</strong></p>
+<ul>
+<li>结点数</li>
+<li>深度</li>
+</ul>
+<p><strong>特点：</strong></p>
+<ul>
+<li>二叉树的第<em>i</em>层至多有$2^{i-1}$个结点</li>
+<li>深度为<em>k</em>（k≥0）的二叉树至多总共有$2^{k+1}-1$个结点（定义根结点所在的深度为<em>k0=0）</em>，而总结拥有结点的数符合的，称“满二叉树”</li>
+<li>在一颗二叉树中，若除最后一层外的其余层都是满的，并且要么最后一层是满的，要么右边结点缺少若干结点，称“完全二叉树”，具有n个结点完全二叉树的深度为$log2n+1$，且结点数≥$2^{k-1}$</li>
+</ul>
+<p>二叉树通常作为数据结构应用，典型用法是对节点定义一个标记函数，将一些值与每个节点相关系。这样标记的二叉树就可以实现<a href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E5%85%83%E6%90%9C%E5%B0%8B%E6%A8%B9">二叉搜索树</a>和<a href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E5%85%83%E5%A0%86%E7%A9%8D">二叉堆</a>，并应用于高效率的搜索和排序。</p>
+<p><strong>满二叉树性质：</strong></p>
+<p>对于深度为k（k≥1）的满二叉树：</p>
+<ul>
+<li>共有$2^k-1$个结点</li>
+<li>结点个数一定为奇数（仅有根结点（k=1层）为一个结点）</li>
+<li>第<em>i</em>层有$2^{i-1}$结点</li>
+<li>有$2^{k-1}$个叶子</li>
+</ul>
+<h4 id="二叉搜索树">二叉搜索树</h4>
+<p><strong>「What」<strong>二叉搜索树（Binary Search Tree，BST）也称为二叉查找树、有序二叉树或者排序二叉树，指</strong>一颗空树</strong>或者具有以下性质的二叉树：</p>
+<ol>
+<li>若任意节点的左子树不空，则左子树上所有节点的值均小于它的根节点的值；</li>
+<li>若任意节点的右子树不空，则右子树上所有节点的值均大于它的根节点的值；</li>
+<li>任意节点的左、右子树也分别为二叉查找树；</li>
+</ol>
+<p>BST的优势在于查找、插入的时间复杂度较低为$O(logn)$。BST是基础线性数据结构，用于构建更为抽象的数据结构。</p>
+<p>搜索、插入、删除的复杂度等于树高，期望$O(logn)$，最坏为$O(n)$（数列有序，树会退化成线性表）。</p>
+<p>改进版的二叉树可以使得树高为$O(logn)$，从降低最坏效率，如AVL树。</p>
+<h4 id="avl树">AVL树</h4>
+<p><strong>「What」<strong>AVL（Adelson-Velsky and Landis Tree）定义：一种自平衡二叉树，在AVL树中，任一节点对应的两棵子树的最大高度差为1，因此它也被称为</strong>高度平衡树</strong>。查找、插入和删除在平均和最坏情况下的<a href="https://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">时间复杂度</a>都是$O(logn)$，增加和删除元素的操作可能需要借助由一次或多次树旋转，来实现树的重新平衡。</p>
+<p><strong>节点平衡因子</strong>：由左子树的高度减去它的右子树高度（绝对值）≤1则被认为是平衡的。</p>
+<h4 id="红黑树">红黑树</h4>
+<p><strong>「What」<strong>红黑树（Red-Black Tree）的定义：是一种</strong>自平衡二叉查找树</strong>，有着良好的最坏情况运行时间，并且在实践中高效：可以在$O(logn)$时间内完成查找、插入和删除，这里的<em>n</em>是树中的元素数目。红黑树的每个节点不同于AVL树，都是带有颜色属性的二叉查找树，颜色为红色或黑色。</p>
+<p><strong>性质：</strong></p>
+<ol>
+<li>节点为red或black</li>
+<li>根为black</li>
+<li>所有叶子都是black（叶子是NIL节点）</li>
+<li>每个red节点必须有两个black的子节点（从每个叶子到根的所有路径上不能有两个red节点）</li>
+<li>从任一节点到每个叶子节点的所有叶子的所有简单路径都包含相同的black节点</li>
+</ol>
+<p>
+  <img src="https://cdn.jsdelivr.net/gh/edgarding77/images@latest/algorithm/red-black-tree.png" alt="Image">
+
+</p>
+<p>这些约束确保了红黑树的关键特性：从根到叶子的最长的可能路径不多于最短的可能路径的两倍长。结果是这个树大致上是平衡的。因为操作比如插入、删除和查找某个值的最坏情况时间都要求与树的高度成比例，这个在高度上的理论上限允许红黑树在最坏情况下都是高效的，而不同于普通的二叉查找树。</p>
+<h3 id="回溯">回溯</h3>
+<p>**「What」**回溯其实就是递归，其本质是穷举，列出所有可能找出所需要的解。</p>
+<p>回溯一般可以解决以下问题：</p>
+<ul>
+<li>组合问题：N个数里面按一定规则找出k个数的集合</li>
+<li>切割问题：一个字符串按一定规则有几种切割方式</li>
+<li>子集问题：一个N个数的集合里有多少符合条件的子集</li>
+<li>排列问题：N个数按一定规则全排列，有几种排列方式</li>
+<li>棋盘问题：N皇后，解数独等问题</li>
+</ul>
+<p>**「tip」**组合无序，排列有序。</p>
+<p>所有回溯法解决的问题都可以抽象成树形结构，因为回溯法解决的就是在集合中递归查找子集，集合的大小就构成了递归的宽度即树的宽度，数据量的大小构成了递归的深度树的深度。</p>
+<h4 id="回溯模版">回溯模版</h4>
+<p>解决一个回溯问题，实际就是一个决策树的遍历过程，只需要思考三个过程：</p>
+<ol>
+<li>路径：做出的选车</li>
+<li>选择列表：当前可以做的选择</li>
+<li>结束条件End Condition：达到决策树的底层，无法再做选择的条件</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">result <span style="color:#ff79c6">=</span> []
+<span style="color:#ff79c6">def</span> <span style="color:#50fa7b">backtrack</span>(trace[], select[]):
+  <span style="color:#ff79c6">if</span> 满足结束条件：
+  	result<span style="color:#ff79c6">.</span>add(trace[i])
+    <span style="color:#ff79c6">return</span>
+  <span style="color:#ff79c6">for</span> 选择 <span style="color:#ff79c6">in</span> select[]:
+    do select
+    backtrack(trace[<span style="color:#8be9fd;font-style:italic">next</span>], select[])
+    withdraw select
+</code></pre></div><p><strong>其核心就是for循环里面的递归，在递归调用前“做选择”，在递归调用后“撤销选择”。</strong></p>
+<h3 id="贪心">贪心</h3>
+<p>**「What」**贪心的本质是选择每一阶段的局部最优，从而达到全局最优。</p>
+<p>其难点在于，如何通过局部最优，从而推出整体最优，因此能使用的贪心的题目可以通过举反例，来判断是否可以使用贪心。即现手动模拟，若可以模拟则尝试贪心，若不可行，就可能需要动态规划了。</p>
+<p>贪心的过程：</p>
+<ol>
+<li>将问题分解为若干个子问题</li>
+<li>找出适合贪心的策略</li>
+<li>求解每个子问题的最优解</li>
+<li>将局部解堆叠成全局最优解</li>
+</ol>
+<p>贪心可以认为是动态规划的一个特例，相比动态规划，使用贪心的算法需要满足更多的条件（贪心性质），但是效率要高于动态规划。</p>
+<h3 id="动态规划">动态规划</h3>
+<p><strong>「What」<strong>动态规划Dynamic Programming，动态规划问题的一般形式是</strong>求最值</strong>，其求解的核心问题是<strong>穷举</strong>，但是这类穷举问题有点特别存在<strong>重叠子问题</strong>，若暴力穷举则效率低下，因此通过动态规划来避免不必要的计算。而且，动态规划一定<strong>具备最优子结构</strong>，才能通过子问题的最值的到原问题的最值。</p>
+<p>动态规划的问题需要以下特点：</p>
+<ul>
+<li>**子问题重叠性质：**这类问题存在重叠子问题</li>
+<li>**最优子结构：**该问题可以通过最优子问题得到原问题的最优解</li>
+<li>**无后效性：**子问题的解一旦确定就不再更改，不受在这之后、包含它的更大问题的求解决策影响</li>
+</ul>
+<p>思考状态转移方程的思维框架：</p>
+<ol>
+<li>这个问题的base case（最简单情况）是什么？</li>
+<li>这个问题有什么“状态”？</li>
+<li>对于每个“状态”，可以做什么“选择”使得“状态”发生改变？</li>
+<li>如何定义dp数组/函数的含义来表现“状态”和“选择”？</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#6272a4"># 初始化 base case</span>
+dp[<span style="color:#bd93f9">0</span>][<span style="color:#bd93f9">0</span>][<span style="color:#ff79c6">...</span>] <span style="color:#ff79c6">=</span> base
+<span style="color:#6272a4"># 进行状态转移</span>
+<span style="color:#ff79c6">for</span> 状态1 <span style="color:#ff79c6">in</span> 状态1的所有取值：
+    <span style="color:#ff79c6">for</span> 状态2 <span style="color:#ff79c6">in</span> 状态2的所有取值：
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">...</span>
+            dp[状态1][状态2][<span style="color:#ff79c6">...</span>] <span style="color:#ff79c6">=</span> 求最值(选择1，选择2<span style="color:#ff79c6">...</span>)
+</code></pre></div><h2 id="位运算">位运算</h2>
+<h3 id="位操作符">位操作符</h3>
+<ul>
+<li>
+<p>“&amp;”，两个位都为1时才为1。</p>
+</li>
+<li>
+<p>“｜”，两个位都为0时才为0，否则为1。</p>
+</li>
+<li>
+<p>“^”异或，相同为0，不同为1。</p>
+</li>
+<li>
+<p>“～”取反，0-&gt;1,1-&gt;0。</p>
+</li>
+<li>
+<p>“&laquo;”左移运算符，向左移位，高位丢弃，低位补0。</p>
+</li>
+<li>
+<p>“&raquo;“右移运算符，向右移位，对无符号数，高位补0，对有符号数，高位补符号位。</p>
+</li>
+</ul>
+<h3 id="常见位运算">常见位运算</h3>
+<ul>
+<li>乘除法：通过“&laquo;1”,”&raquo;1”来实现乘以2和除以。</li>
+<li>数值交换：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">swap</span>(<span style="color:#8be9fd">int</span> <span style="color:#ff79c6">&amp;</span>a, <span style="color:#8be9fd">int</span> <span style="color:#ff79c6">&amp;</span>b) {
+  	a <span style="color:#ff79c6">^=</span> b;
+  	b <span style="color:#ff79c6">^=</span> a;
+  	a <span style="color:#ff79c6">^=</span> b;
+}
+</code></pre></div><ul>
+<li>
+<p>判断奇偶性：<code>a&amp;1==0</code>判断二进制的最后一位。</p>
+</li>
+<li>
+<p>交换符号位：<code>return ~a + 1</code>整数取反加1，正好变成其对应的负数(补码表示)；负数取反加一，则变为其原码，即正数。</p>
+</li>
+<li>
+<p>求绝对值：整数的绝对值是其本身，负数的绝对值正好可以对其进行取反加一求得，即我们首先判断其符号位（整数右移 31 位得到 0，负数右移 31 位得到 -1,即 0xffffffff），然后根据符号进行相应的操作。</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">abs</span>(<span style="color:#8be9fd">int</span> a) {
+   	<span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> a <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">31</span>;
+   	<span style="color:#ff79c6">return</span> i <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">?</span> <span style="color:#8be9fd;font-style:italic">a</span> : (<span style="color:#ff79c6">~</span>a <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>);
+ }
+</code></pre></div><ul>
+<li>高低位交换：如<code>a = (a &gt;&gt; 16) | (a &lt;&lt; 16);</code>HashMap的源码中出现。</li>
+</ul>
+<p>统计二进制中1的个数：</p>
+<p>**x &amp; (-x)：**保留二进制下最后出现的1的位置，其余位置置0（即一个数中最大的2的n次幂的因数  ）</p>
+<ul>
+<li>-x的运算是所有位置取反加1</li>
+</ul>
+<p>**x &amp; (x-1)：**消除二进制下最后出现1的位置，其余保持不变</p>
+<ul>
+<li>可用于判断是否是2的幂次方（是否只出现了一个1）</li>
+<li>二进制中1的个数</li>
+</ul>
+<h2 id="数组-1">数组</h2>
+<h3 id="二分查找">二分查找</h3>
+<p><strong>以下场景为寻找一个数（基本的二分搜索）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">binarySearch</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+  <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>l <span style="color:#ff79c6">&lt;=</span> r<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd">int</span> mid <span style="color:#ff79c6">=</span> l <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">((</span>r <span style="color:#ff79c6">-</span> l<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+      r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&gt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+      l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">==</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+      <span style="color:#ff79c6">return</span> mid<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>二分的几个要点：</p>
+<ul>
+<li>计算mid时要防止溢出，<code>l + ((r - l) &gt;&gt; 1)</code>。</li>
+<li>为什么while循环的条件中的是&lt;=，而不是&lt;？
+<ul>
+<li>因为初始化right的赋值是nums.length-1，即最后一个元素的索引，而不是nums.length。</li>
+<li>而这个区间就是两端都闭的区间<code>[left, right]</code>，该区间就是每次都进行搜索的区间。</li>
+</ul>
+</li>
+<li>尽量统一写法，判断区间的不同，会导致边界更新的方式不同。</li>
+</ul>
+<p>若存在重复元素，则可以进行边界查找，查找第一个出现的元素：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * 左边界查找 -》 左边第一个元素
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @param nums
+</span><span style="color:#6272a4">     * @param target
+</span><span style="color:#6272a4">     * @return
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">leftBoundSearch</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>l <span style="color:#ff79c6">&lt;=</span> r<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> mid <span style="color:#ff79c6">=</span> l <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">((</span>r <span style="color:#ff79c6">-</span> l<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&gt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">==</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>l <span style="color:#ff79c6">&gt;=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">||</span> nums<span style="color:#ff79c6">[</span>l<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">!=</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> l<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * 右边界查找
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @param nums
+</span><span style="color:#6272a4">     * @param target
+</span><span style="color:#6272a4">     * @return
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">rightBoundSearch</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>l <span style="color:#ff79c6">&lt;=</span> r<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> mid <span style="color:#ff79c6">=</span> l <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">((</span>r <span style="color:#ff79c6">-</span> l<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&gt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">==</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>r <span style="color:#ff79c6">&lt;</span> 0 <span style="color:#ff79c6">||</span> nums<span style="color:#ff79c6">[</span>r<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">!=</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> r<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * 搜索左右边界
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @param nums
+</span><span style="color:#6272a4">     * @param target
+</span><span style="color:#6272a4">     * @param isLeftOrRight true -&gt; left falst -&gt; right
+</span><span style="color:#6272a4">     * @return
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">binarySearch</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">boolean</span> isLeftOrRight<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(;</span> l <span style="color:#ff79c6">&lt;=</span> r<span style="color:#ff79c6">;</span> <span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> mid <span style="color:#ff79c6">=</span> l <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">((</span>r <span style="color:#ff79c6">-</span> l<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>isLeftOrRight<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                    r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                    l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>isLeftOrRight <span style="color:#ff79c6">&amp;&amp;</span> l <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>l<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> l<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(!</span>isLeftOrRight <span style="color:#ff79c6">&amp;&amp;</span> r <span style="color:#ff79c6">&gt;=</span> 0 <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>r<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> r<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><p>而上面算法能搜索到左侧边界的原因在于对<code>nums[mid] == target</code>的处理：</p>
+<ul>
+<li>若为查找左边界，<code>right = mid - 1</code>收缩右侧边界。</li>
+<li>若为查找右边界，<code>left = mid + 1</code>收缩左侧边界。</li>
+</ul>
+<p>这里注意下边界检查，需要判断下是否过界。</p>
+<h4 id="二分查找问题">二分查找问题</h4>
+<p><strong>搜索旋转数组：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">search</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> len <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>len <span style="color:#ff79c6">==</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> len <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(;</span>l<span style="color:#ff79c6">&lt;=</span>r<span style="color:#ff79c6">;)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> mid <span style="color:#ff79c6">=</span> l <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">((</span>r <span style="color:#ff79c6">-</span> l<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">return</span> mid<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">[</span>r<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&gt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&amp;&amp;</span> target <span style="color:#ff79c6">&lt;=</span> nums<span style="color:#ff79c6">[</span>r<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                    l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                    r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&amp;&amp;</span> target <span style="color:#ff79c6">&gt;=</span> nums<span style="color:#ff79c6">[</span>l<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                    r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                    l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><h3 id="双指针">双指针</h3>
+<h4 id="快慢指针">快慢指针</h4>
+<p>快慢指针主要解决链表中的问题，但也能在数组中有着巧妙的运用。</p>
+<p><em>reference：<a href="https://leetcode-cn.com/problems/remove-element/">27.移除元素</a></em></p>
+<p>该题的麻烦在于不能使用额外数组空间，但是不需要考虑数组中超出新长度后面的元素，因为数组在内存地中是连续的，不能单独删除数组中的某个元素，只能覆盖（这里磁盘的存储也是如此，所谓的删除仅是将相应的存储索引删除）。</p>
+<p>首先考虑暴力，通过两次for循环遍历，一次遍历元素第二次循环更新数组。时间复杂度是$O(n^2)$，代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">removeElement</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">=</span>0<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">&lt;</span>n<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j<span style="color:#ff79c6">=</span>i<span style="color:#ff79c6">+</span>1<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">&lt;</span>n<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+                    nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">];</span>
+                <span style="color:#ff79c6">}</span>
+                i<span style="color:#ff79c6">--;</span>
+                n<span style="color:#ff79c6">--;</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> n<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><p>在数组操作的时候，可以考虑双指针（快慢指针），这里与快排<code>partitiion()</code>有着异曲同工之处：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">partition</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> left<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> pivot <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">[</span>right<span style="color:#ff79c6">];</span>
+        <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> left <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> left<span style="color:#ff79c6">;</span> j <span style="color:#ff79c6">&lt;=</span> right <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;=</span> pivot<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                swap<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> <span style="color:#ff79c6">++</span>i<span style="color:#ff79c6">,</span> j<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        swap<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> right<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">return</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">removeElement</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span> j <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">!=</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">++]</span> <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">];</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> i<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><p>以上复杂度为$O(n + nlogn)$。</p>
+<h4 id="左右指针">左右指针</h4>
+<p>左右指针主要解决数组（或者字符串中的问题），如二分查找这种。</p>
+<p><em>reference：<a href="https://leetcode-cn.com/problems/squares-of-a-sorted-array/">977. 有序数组的平方</a></em></p>
+<p>一样首先考虑暴力，这里最简单就是for循环遍历一边平方处理，再进行数组排序，时间复杂度为$O(nlogn)$。</p>
+<p>这里数组本身就是顺序的，平方后的变化在于负数，因此可以考虑左右指针，来进行处理：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">sortedSquares</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> right <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#8be9fd">int</span> left <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span>
+        <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> result <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[</span>nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">];</span>
+        <span style="color:#8be9fd">int</span> index <span style="color:#ff79c6">=</span> result<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>left <span style="color:#ff79c6">&lt;=</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>left<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">*</span> nums<span style="color:#ff79c6">[</span>left<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> nums<span style="color:#ff79c6">[</span>right<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">*</span> nums<span style="color:#ff79c6">[</span>right<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                result<span style="color:#ff79c6">[</span>index<span style="color:#ff79c6">--]</span> <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>left<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">*</span> nums<span style="color:#ff79c6">[</span>left<span style="color:#ff79c6">];</span>
+                <span style="color:#ff79c6">++</span>left<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                result<span style="color:#ff79c6">[</span>index<span style="color:#ff79c6">--]</span> <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>right<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">*</span> nums<span style="color:#ff79c6">[</span>right<span style="color:#ff79c6">];</span>
+                <span style="color:#ff79c6">--</span>right<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> result<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><p>时间复杂度降到了$O(n)$，但相应的空间复杂度相比暴力的$O(1)$变成了$O(n)$。</p>
+<p><em><strong>题目：翻转数组</strong></em></p>
+<p>一般的语言都会提供<code>reverse()</code>，而这也是双指针的用武之地：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">;</span> j <span style="color:#ff79c6">&gt;=</span> 0<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">--)</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#8be9fd">int</span> k <span style="color:#ff79c6">=</span> n <span style="color:#ff79c6">-</span> j<span style="color:#ff79c6">;</span>
+  <span style="color:#8be9fd">byte</span> cj <span style="color:#ff79c6">=</span> val<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">];</span>
+  val<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> val<span style="color:#ff79c6">[</span>k<span style="color:#ff79c6">];</span>
+  val<span style="color:#ff79c6">[</span>k<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> cj<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>以上为<em>AbstractStringBuilder.java</em>中<code>reverse()</code>的一段截取。</p>
+<h3 id="滑动窗口">滑动窗口</h3>
+<p>滑动窗口是双指针的一个进阶用法，即维护一个窗口不断滑动，然后更新答案。主要用于解决一大类字符串匹配问题。</p>
+<p>其大致逻辑如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd">int</span> left <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> right <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">while</span><span style="color:#ff79c6">(</span>right <span style="color:#ff79c6">&lt;</span> s<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+	window<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">[</span>right<span style="color:#ff79c6">++]);</span> <span style="color:#6272a4">// 扩大窗口
+</span><span style="color:#6272a4"></span>	
+	<span style="color:#ff79c6">while</span><span style="color:#ff79c6">(</span>window needs shrink<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span> <span style="color:#6272a4">// 缩小窗口
+</span><span style="color:#6272a4"></span>    res<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">()</span>； <span style="color:#6272a4">// 这里进行需要的结果记录
+</span><span style="color:#6272a4"></span>		window<span style="color:#ff79c6">.</span><span style="color:#50fa7b">remove</span><span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">[</span>left<span style="color:#ff79c6">++]);</span>
+	<span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>时间复杂度为$O(n)$，对于字符串的一些问题进行暴力处理来说效率高的多。</p>
+<p><em>reference：<a href="https://leetcode-cn.com/problems/minimum-window-substring">76.最小覆盖子串（困难）</a></em></p>
+<p>对于该问题使用暴力，大概如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> s<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">();</span> i<span style="color:#ff79c6">++)</span>
+    <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span> j <span style="color:#ff79c6">&lt;</span> s<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">();</span> j<span style="color:#ff79c6">++)</span>
+        <span style="color:#ff79c6">if</span> s<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">:</span>j<span style="color:#ff79c6">]</span> 包含 t 的所有字母<span style="color:#ff79c6">:</span>
+            更新答案
+
+</code></pre></div><p>时间复杂度为$O(n^2)$，而滑动窗口算法如下：</p>
+<ol>
+<li>初始化：在字符串S中使用双指针的左右指针，初始化left=right=0，将索引的左闭合右开区间<code>[left, right)</code>称为<strong>窗口</strong>。</li>
+<li>窗口扩大：先不断扩大right，即扩大窗口，直到窗口中的值符合要求（包含T中的所有字符串）。</li>
+<li>达到收缩条件：停止增加right，转而增加left（缩小窗口），直到窗口中的字符串不再符合要求（不包含T的所有字符），同时每次增加left，都要更新一轮结果。</li>
+<li>重复(2)、(3)。</li>
+</ol>
+<p>具体代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Solution</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">minWindow</span><span style="color:#ff79c6">(</span>String s<span style="color:#ff79c6">,</span> String t<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n1 <span style="color:#ff79c6">=</span> s<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">(),</span> n2 <span style="color:#ff79c6">=</span> t<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>n1 <span style="color:#ff79c6">==</span> 0 <span style="color:#ff79c6">||</span> n2 <span style="color:#ff79c6">==</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// 需要的元素 记录元素的数量，以来判断何时进行shrink
+</span><span style="color:#6272a4"></span>        HashMap<span style="color:#ff79c6">&lt;</span>Character<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> needs <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> HashMap<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#6272a4">// 窗口
+</span><span style="color:#6272a4"></span>        HashMap<span style="color:#ff79c6">&lt;</span>Character<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> window <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> HashMap<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">char</span> ch <span style="color:#ff79c6">:</span> t<span style="color:#ff79c6">.</span><span style="color:#50fa7b">toCharArray</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+            needs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span>ch<span style="color:#ff79c6">,</span> needs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getOrDefault</span><span style="color:#ff79c6">(</span>ch<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// validChar   start of result   len of result
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">int</span> valid <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> start <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> len <span style="color:#ff79c6">=</span> Integer<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MAX_VALUE</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> 0 <span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> r <span style="color:#ff79c6">&lt;</span> n1<span style="color:#ff79c6">;)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">char</span> ch <span style="color:#ff79c6">=</span> s<span style="color:#ff79c6">.</span><span style="color:#50fa7b">charAt</span><span style="color:#ff79c6">(</span>r<span style="color:#ff79c6">);</span>
+            r<span style="color:#ff79c6">++;</span>
+            
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>needs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">containsKey</span><span style="color:#ff79c6">(</span>ch<span style="color:#ff79c6">))</span> <span style="color:#ff79c6">{</span>
+                window<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span>ch<span style="color:#ff79c6">,</span> window<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getOrDefault</span><span style="color:#ff79c6">(</span>ch<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">);</span>
+                <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>needs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>ch<span style="color:#ff79c6">).</span><span style="color:#50fa7b">intValue</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">==</span> window<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>ch<span style="color:#ff79c6">).</span><span style="color:#50fa7b">intValue</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span> <span style="color:#6272a4">// 这里注意Java语言Integer缓存池问题
+</span><span style="color:#6272a4"></span>                    valid<span style="color:#ff79c6">++;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(;</span>valid <span style="color:#ff79c6">==</span> needs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">size</span><span style="color:#ff79c6">();</span>l<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span> <span style="color:#6272a4">// 达到条件
+</span><span style="color:#6272a4"></span>                <span style="color:#8be9fd">char</span> d <span style="color:#ff79c6">=</span> s<span style="color:#ff79c6">.</span><span style="color:#50fa7b">charAt</span><span style="color:#ff79c6">(</span>l<span style="color:#ff79c6">);</span>
+                <span style="color:#6272a4">// 记录res结果值
+</span><span style="color:#6272a4"></span>                <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>r <span style="color:#ff79c6">-</span> l <span style="color:#ff79c6">&lt;</span> len<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span> 
+                    len <span style="color:#ff79c6">=</span> r <span style="color:#ff79c6">-</span> l<span style="color:#ff79c6">;</span>
+                    start <span style="color:#ff79c6">=</span> l<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+                <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>needs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">containsKey</span><span style="color:#ff79c6">(</span>d<span style="color:#ff79c6">))</span> <span style="color:#ff79c6">{</span>
+                    <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>needs<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>d<span style="color:#ff79c6">).</span><span style="color:#50fa7b">intValue</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">==</span> window<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>d<span style="color:#ff79c6">).</span><span style="color:#50fa7b">intValue</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+                        valid<span style="color:#ff79c6">--;</span>
+                    <span style="color:#ff79c6">}</span>
+                    window<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span>d<span style="color:#ff79c6">,</span> window<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>d<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">);</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> len <span style="color:#ff79c6">==</span> Integer<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MAX_VALUE</span> <span style="color:#ff79c6">?</span> <span style="color:#f1fa8c">&#34;&#34;</span> <span style="color:#ff79c6">:</span> s<span style="color:#ff79c6">.</span><span style="color:#50fa7b">substring</span><span style="color:#ff79c6">(</span>start<span style="color:#ff79c6">,</span> start <span style="color:#ff79c6">+</span> len<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h3 id="nsum">NSum</h3>
+<p>twoSum的关键在于对于无序数组，首先考虑把数组排序后再考虑双指针，而这里主要是考虑使用HashMap去处理无序数组相关问题。</p>
+<p>两数之和：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">twoSum</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> res <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[</span>2<span style="color:#ff79c6">];</span>
+    <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>nums <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">null</span> <span style="color:#ff79c6">||</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">==</span> 0<span style="color:#ff79c6">){</span>
+        <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+    Map<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> map <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> HashMap<span style="color:#ff79c6">&lt;&gt;();</span>
+    <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++){</span>
+        <span style="color:#8be9fd">int</span> temp <span style="color:#ff79c6">=</span> target <span style="color:#ff79c6">-</span> nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">];</span>
+        <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">containsKey</span><span style="color:#ff79c6">(</span>temp<span style="color:#ff79c6">)){</span>
+            res<span style="color:#ff79c6">[</span>1<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+            res<span style="color:#ff79c6">[</span>0<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>temp<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+        map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">],</span> i<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>三数之和为0：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#8be9fd;font-style:italic">public</span> List<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#50fa7b">threeSum</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        List<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> res <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>n <span style="color:#ff79c6">&lt;</span> 3<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        Arrays<span style="color:#ff79c6">.</span><span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> n <span style="color:#ff79c6">-</span> 2<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#6272a4">// 如果nums[i] &gt; 0了，数组后面就不可能为0
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+            <span style="color:#6272a4">// 去重操作！！
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">!=</span> 0 <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>i <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">continue</span><span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+            <span style="color:#6272a4">// 目标数为它的负数
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">int</span> target <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">];</span>
+            <span style="color:#6272a4">// j为mid指针，k为right指针，进行移动
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> k <span style="color:#ff79c6">=</span> n <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span> j <span style="color:#ff79c6">&lt;</span> k<span style="color:#ff79c6">;</span> <span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#8be9fd">int</span> sum <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">+</span> nums<span style="color:#ff79c6">[</span>k<span style="color:#ff79c6">];</span>
+                <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>sum <span style="color:#ff79c6">==</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                    res<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>Arrays<span style="color:#ff79c6">.</span><span style="color:#50fa7b">asList</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">],</span> nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">],</span> nums<span style="color:#ff79c6">[</span>k<span style="color:#ff79c6">]));</span>
+                    <span style="color:#6272a4">// ！去重复操作，这是关键
+</span><span style="color:#6272a4"></span>                    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>j <span style="color:#ff79c6">&lt;</span> k <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>j <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                        j<span style="color:#ff79c6">++;</span>
+                    <span style="color:#ff79c6">}</span>
+                    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>j <span style="color:#ff79c6">&lt;</span> k <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>k <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> nums<span style="color:#ff79c6">[</span>k<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                        k<span style="color:#ff79c6">--;</span>
+                    <span style="color:#ff79c6">}</span>
+                    j<span style="color:#ff79c6">++;</span>
+                    k<span style="color:#ff79c6">--;</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>sum <span style="color:#ff79c6">&gt;</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                    k<span style="color:#ff79c6">--;</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                    j<span style="color:#ff79c6">++;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+  	<span style="color:#ff79c6">}</span>
+</code></pre></div><p>三数之和可以化解成，两数组之和加一次for迭代一个数，关键在于不让第一个数重复，至于后面的两个数，复用的towSum也保证它们不能重复。</p>
+<p>因此对于NSum问题：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * N数之和
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @param nums
+</span><span style="color:#6272a4">     * @param n 代表N个数之和
+</span><span style="color:#6272a4">     * @param target NSum == target
+</span><span style="color:#6272a4">     * @return
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> List<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#50fa7b">nSum</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> n<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        List<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> res <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">==</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        Arrays<span style="color:#ff79c6">.</span><span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">return</span> nSumTarget<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> n<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> target<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> List<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#50fa7b">nSumTarget</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> n<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> start<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> size <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        List<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> res <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#6272a4">// 最少是n&gt;2的情况
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>n <span style="color:#ff79c6">&lt;</span> 2 <span style="color:#ff79c6">||</span> size <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>n <span style="color:#ff79c6">==</span> 2<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span> <span style="color:#6272a4">// 最后复用twoSum函数
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">int</span> lo <span style="color:#ff79c6">=</span> start<span style="color:#ff79c6">,</span> hi <span style="color:#ff79c6">=</span> size <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>lo <span style="color:#ff79c6">&lt;</span> hi<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> ans <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;&gt;();</span>
+                <span style="color:#8be9fd">int</span> left <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>lo<span style="color:#ff79c6">],</span> right <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>hi<span style="color:#ff79c6">];</span>
+                <span style="color:#8be9fd">int</span> sum <span style="color:#ff79c6">=</span> left <span style="color:#ff79c6">+</span> right<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>sum <span style="color:#ff79c6">&lt;</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>lo <span style="color:#ff79c6">&lt;</span> hi <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>lo<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> left<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                        lo<span style="color:#ff79c6">++;</span>
+                    <span style="color:#ff79c6">}</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>sum <span style="color:#ff79c6">&gt;</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>lo <span style="color:#ff79c6">&lt;</span> hi <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>hi<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                        hi<span style="color:#ff79c6">--;</span>
+                    <span style="color:#ff79c6">}</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>sum <span style="color:#ff79c6">==</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                    ans<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>left<span style="color:#ff79c6">);</span>
+                    ans<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>right<span style="color:#ff79c6">);</span>
+                    res<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>ans<span style="color:#ff79c6">);</span>
+                    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>lo <span style="color:#ff79c6">&lt;</span> hi <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>lo<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> left<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                        lo<span style="color:#ff79c6">++;</span>
+                    <span style="color:#ff79c6">}</span>
+                    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>lo <span style="color:#ff79c6">&lt;</span> hi <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>hi<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                        hi<span style="color:#ff79c6">--;</span>
+                    <span style="color:#ff79c6">}</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> start<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> size<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span> <span style="color:#6272a4">// n &gt; 2，递归计算(n-1)Sum的结果
+</span><span style="color:#6272a4"></span>                List<span style="color:#ff79c6">&lt;</span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> ret <span style="color:#ff79c6">=</span> nSumTarget<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> n <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">,</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> target <span style="color:#ff79c6">-</span> nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]);</span>
+                <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> arr <span style="color:#ff79c6">:</span> ret<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                    arr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]);</span>
+                    res<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">);</span>
+                <span style="color:#ff79c6">}</span>
+                <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&lt;</span> size <span style="color:#ff79c6">-</span> 1 <span style="color:#ff79c6">&amp;&amp;</span> nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> nums<span style="color:#ff79c6">[</span>i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                    i<span style="color:#ff79c6">++;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="题目补充">题目补充</h2>
+<h3 id="数字序列">数字序列</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * 实现获取 下一个排列 的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。
+</span><span style="color:#6272a4">     * 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。
+</span><span style="color:#6272a4">     * 必须 原地 修改，只允许使用额外常数空间。
+</span><span style="color:#6272a4">     * Q.1 2 3 4 5
+</span><span style="color:#6272a4">     * A.1 2 3 5 4
+</span><span style="color:#6272a4">     * Q.1 5 4 3 2
+</span><span style="color:#6272a4">     * A. 2 1 3 4 5
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @param nums
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">nextPermutation</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>n <span style="color:#ff79c6">&lt;=</span> 1<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// 数组中升序的最后一位
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> n <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> n <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">[</span>i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                l <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// 之后查找降序的第一位
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> l <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> nums<span style="color:#ff79c6">[</span>l<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                r <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// 交换两个位置的数
+</span><span style="color:#6272a4"></span>        swap<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> l<span style="color:#ff79c6">,</span> r<span style="color:#ff79c6">);</span>
+        <span style="color:#6272a4">// 进行排序 对降序的
+</span><span style="color:#6272a4"></span>        Arrays<span style="color:#ff79c6">.</span><span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> l <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> n<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><h3 id="数组中第k大的数">数组中第K大的数</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">   <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * 数组中第k大的元素
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @param nums
+</span><span style="color:#6272a4">     * @param k
+</span><span style="color:#6272a4">     * @return
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">findKthLargest</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> k<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> heapSize <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        buildMaxHeap<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> heapSize<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&gt;=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> k <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span> <span style="color:#ff79c6">--</span>i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            swap<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">--</span>heapSize<span style="color:#ff79c6">;</span>
+            maxHeapify<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> heapSize<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> nums<span style="color:#ff79c6">[</span>0<span style="color:#ff79c6">];</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">buildMaxHeap</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> a<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> heapSize<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> heapSize <span style="color:#ff79c6">/</span> 2<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&gt;=</span> 0<span style="color:#ff79c6">;</span> <span style="color:#ff79c6">--</span>i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            maxHeapify<span style="color:#ff79c6">(</span>a<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">,</span> heapSize<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">maxHeapify</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> a<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> heapSize<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">*</span> 2 <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">*</span> 2 <span style="color:#ff79c6">+</span> 2<span style="color:#ff79c6">,</span> largest <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>l <span style="color:#ff79c6">&lt;</span> heapSize <span style="color:#ff79c6">&amp;&amp;</span> a<span style="color:#ff79c6">[</span>l<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> a<span style="color:#ff79c6">[</span>largest<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+            largest <span style="color:#ff79c6">=</span> l<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>r <span style="color:#ff79c6">&lt;</span> heapSize <span style="color:#ff79c6">&amp;&amp;</span> a<span style="color:#ff79c6">[</span>r<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> a<span style="color:#ff79c6">[</span>largest<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+            largest <span style="color:#ff79c6">=</span> r<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>largest <span style="color:#ff79c6">!=</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            swap<span style="color:#ff79c6">(</span>a<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">,</span> largest<span style="color:#ff79c6">);</span>
+            maxHeapify<span style="color:#ff79c6">(</span>a<span style="color:#ff79c6">,</span> largest<span style="color:#ff79c6">,</span> heapSize<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><h3 id="数组中出现两次的元素">数组中出现两次的元素</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java">    <span style="color:#6272a4">/**
+</span><span style="color:#6272a4">     * 给定一个整数数组 a，其中1 ≤ a[i] ≤ n （n为数组长度）, 其中有些元素出现两次而其他元素出现一次。
+</span><span style="color:#6272a4">     * 找到所有出现两次的元素。
+</span><span style="color:#6272a4">     * 你可以不用到任何额外空间并在O(n)时间复杂度内解决这个问题吗？
+</span><span style="color:#6272a4">     * 注意1 ≤ a[i] ≤ n
+</span><span style="color:#6272a4">     * 通过这个来在原地数组进行记录
+</span><span style="color:#6272a4">     *
+</span><span style="color:#6272a4">     * @param nums
+</span><span style="color:#6272a4">     * @return
+</span><span style="color:#6272a4">     */</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">findDuplicates</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> ret <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            nums<span style="color:#ff79c6">[(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">%</span> n<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">+=</span> n<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> 2 <span style="color:#ff79c6">*</span> n<span style="color:#ff79c6">)</span> ret<span style="color:#ff79c6">.</span><span style="color:#50fa7b">add</span><span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> ret<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+</code></pre></div><h3 id="搜索旋转数组">搜索旋转数组</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Solution</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">search</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> len <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>len <span style="color:#ff79c6">==</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#8be9fd">int</span> l <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">,</span> r <span style="color:#ff79c6">=</span> len <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(;</span>l<span style="color:#ff79c6">&lt;=</span>r<span style="color:#ff79c6">;)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> mid <span style="color:#ff79c6">=</span> l <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">((</span>r <span style="color:#ff79c6">-</span> l<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">==</span> target<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">return</span> mid<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">[</span>r<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&gt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&amp;&amp;</span> target <span style="color:#ff79c6">&lt;=</span> nums<span style="color:#ff79c6">[</span>r<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                    l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                    r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>target <span style="color:#ff79c6">&lt;</span> nums<span style="color:#ff79c6">[</span>mid<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&amp;&amp;</span> target <span style="color:#ff79c6">&gt;=</span> nums<span style="color:#ff79c6">[</span>l<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                    r <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                    l <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div>
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author"><a href="http://www.edgarding.cn"><img src="/img/favicon.png" />EdgarDing Blog</a></span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">2元</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
+		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/2021/kubernetes-%E5%9F%BA%E7%A1%80-kubernetes-ji-chu/" data-toggle="tooltip" data-placement="top" title="Kubernetes-基础">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/2021/%E7%AE%97%E6%B3%951-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97-suan-fa-1-zhan-he-dui-lie/" data-toggle="tooltip" data-placement="top" title="算法(1)-栈和队列">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/cloud-native" title="cloud-native">
+                            cloud-native
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://fortuna7.top">oneday oneday 老博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:edgarding97@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/EdgarDing77">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            <li>
+                <a target="_blank" href="https://www.instagram.com/edgarding7/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; EdgarDing Blog 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+</body>
+</html>

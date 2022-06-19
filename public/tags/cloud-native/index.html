@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="Cloud Native" />
+    <meta property="og:title" content="Cloud Native" />
+    <meta property="twitter:title" content="Cloud Native" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Searches | EdgarDing 的博客 | One day One day</title>
+    <title>Cloud Native | EdgarDing 的博客 | One day One day</title>
 
-    <link rel="canonical" href="/search/">
+    <link rel="canonical" href="/tags/cloud-native/">
 
     
     
@@ -167,6 +167,7 @@
 
 
 
+  
 <div class="container">
     <div class="row">
         
@@ -179,113 +180,57 @@
             post-container
         ">
             
-<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.6.0/dist/instantsearch-theme-algolia.min.css">
 
-<div id="search-searchbar"></div>
- <div class="post-list" id="search-hits">
- </div>
+<div class="post-preview">
+    <a href="http://www.edgarding.cn/post/2021/kubernetes-%E5%9F%BA%E7%A1%80-kubernetes-ji-chu/">
+        <h2 class="post-title">
+            Kubernetes-基础
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            Kubernetes-基础 2021/09/14 前言 由于有段时间没接触Kubernetes，最近面试运维开发的时候又经常问到，因此重新体系的入门下Kuberne
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by EdgarDing Blog on Friday, September 17, 2021
+        
+        
+    
+    </p>
 
-<script>
-const search = instantsearch({
-  appId: '',
-  indexName: '',
-  apiKey: ''
-});
+</div>
+<hr>
 
-const hitTemplate = function(hit) {
+<div class="post-preview">
+    <a href="http://www.edgarding.cn/post/2021/datadog-agent%E9%83%A8%E7%BD%B2-datadogagent-bu-shu/">
+        <h2 class="post-title">
+            Datadog Agent部署
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            Datadog Agent 部署 Datadog Cluster Agent提供了一种简化的集中式方法来收集集群级别的监视数据。通过充当API服务器和基于节点的代理之间的代理，群集代理有助于减轻
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by EdgarDing Blog on Tuesday, September 14, 2021
+        
+        
+    
+    </p>
 
-
-  let date = '';
-  if (hit.date) {
-    date = moment.unix(hit.date).format('MMM D, YYYY');
-  }
-  let url = `${hit.url}#${hit.anchor}`;
-  const title = hit._highlightResult.title.value;
-
-  let breadcrumbs = '';
-  if (hit._highlightResult.headings) {
-    breadcrumbs = hit._highlightResult.headings.map(match => {
-      return `<span class="post-breadcrumb">${match.value}</span>`
-    }).join(' > ')
-  }
-
-  let content = "" ; 
-  if (hit._highlightResult.content){
-      content = hit._highlightResult.content.value;
-  }
-  else{
-      content = hit.summary;
-  }
-
-
-  return `
-    <div class="post-item">
-      <span class="post-meta">${date}</span>
-      <h2><a class="post-link" href="${url}">${title}</a></h2>
-      <a href="${url}" class="post-breadcrumbs">${breadcrumbs}</a>
-      <div class="post-snippet">${content}</div>
-    </div>
-  `;
-}
+</div>
+<hr>
 
 
-search.addWidget(
-  instantsearch.widgets.searchBox({
-    container: '#search-searchbar',
-    placeholder: 'Search into posts...',
-    poweredBy: true // This is required if you're on the free Community plan
-  })
-);
+            
 
-search.addWidget(
-  instantsearch.widgets.hits({
-    container: '#search-hits',
-    templates: {
-      item: hitTemplate
-    }
-  })
-);
 
-search.start();
-</script>
-
-<style>
-.ais-search-box {
-  max-width: 100%;
-  margin-bottom: 15px;
-}
-.post-item {
-  margin-bottom: 30px;
-}
-.post-link .ais-Highlight {
-  color: #111;
-  font-style: normal;
-  text-decoration: underline;
-}
-.post-breadcrumbs {
-  color: #424242;
-  display: block;
-}
-.post-breadcrumb {
-  font-size: 18px;
-  color: #424242;
-}
-.post-breadcrumb .ais-Highlight {
-  font-weight: bold;
-  font-style: normal;
-}
-.post-snippet .ais-Highlight {
-  color: #2a7ae2;
-  font-style: normal;
-  font-weight: bold;
-}
-.post-snippet img {
-  display: none;
-}
-</style>
 
        	</div>
         
@@ -410,6 +355,8 @@ search.start();
 
 	</div>
 </div>
+
+
 
 
 

@@ -11,8 +11,8 @@
     <meta property="og:type" content="article">
 
     
-    <meta property="og:image" content="https://edgarding.cn/img/home-bg-jeep.jpg">
-    <meta property="twitter:image" content="https://edgarding.cn/img/home-bg-jeep.jpg" />
+    <meta property="og:image" content="http://www.edgarding.cn/img/home-bg-main.jpg">
+    <meta property="twitter:image" content="http://www.edgarding.cn/img/home-bg-main.jpg" />
     
 
     
@@ -35,7 +35,7 @@
     <meta name="keyword"  content="Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>EdgarDing Blog | 丁骏杰的博客 | EdgarDing Blog</title>
+    <title>EdgarDing Blog | EdgarDing 的博客 | One day One day</title>
 
     <link rel="canonical" href="/">
 
@@ -98,15 +98,7 @@
                     
                         
                         <li>
-                            <a href="/categories/life">life</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/tech">tech</a>
-                        </li>
-                        
-                        <li>
-                            <a href="/categories/tips">tips</a>
+                            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>
                         </li>
                         
                     
@@ -160,7 +152,7 @@
 
 
 
-<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+<header class="intro-header" style="background-image: url('/img/home-bg-main.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
@@ -191,134 +183,112 @@
             
 
 <div class="post-preview">
-    <a href="https://edgarding.cn/2018/05/23/external_system_auth/">
+    <a href="http://www.edgarding.cn/post/2021/%E7%AE%97%E6%B3%950-base-suan-fa-base/">
         <h2 class="post-title">
-            微服务安全沉思录之三
+            算法(0)-base
         </h2>
-	
-        <h3 class="post-subtitle">
-            外部系统访问控制
-        </h3>
 	
         <div class="post-content-preview">
 	
-            一些外部的第三方系统可能需要访问系统内部的微服务。例如在网上商店的例子中，外部的推荐服务可能需要接入系统，以获取商店的商品目录信息。相对于内部服务之间的访问而言，外部系统的访问需要进行严格的安全控制。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by     &#34;赵化冰&#34; on Wednesday, May 23, 2018
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://edgarding.cn/2018/05/23/service_2_service_auth/">
-        <h2 class="post-title">
-            微服务安全沉思录之二
-        </h2>
-	
-        <h3 class="post-subtitle">
-            服务间认证与鉴权
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            除来自用户的访问请求以外，微服务应用中的各个微服务相互之间还有大量的访问,根据应用系统数据敏感程度不同，对于系统内微服务的访问也需要进行相应的安全控制。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by     &#34;赵化冰&#34; on Wednesday, May 23, 2018
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://edgarding.cn/2018/05/22/user_authentication_authorization/">
-        <h2 class="post-title">
-            微服务安全沉思录之一
-        </h2>
-	
-        <h3 class="post-subtitle">
-            用户访问认证与鉴权
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            这段时间对之前微服务安全相关的一些想法进行了进一步总结和归纳，理清在之前文章里面没有想得太清楚的地方，例如服务间的认证与鉴权以及用户身份在服务调用链中的传递。在这一系列博客里面将分为三个部分对微服务安全进行系统阐述：用户访问认证与鉴权，服务间认证与鉴权，外部系统访问控制。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by     &#34;赵化冰&#34; on Wednesday, May 23, 2018
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://edgarding.cn/2018/05/23/istio-auto-injection-with-webhook/">
-        <h2 class="post-title">
-            Istio Sidecar自动注入原理
-        </h2>
-	
-        <h3 class="post-subtitle">
-            Kubernetes webhook扩展机制解析
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            Kubernets 1.9版本引入了Admission Webhook(web 回调)扩展机制，通过Webhook,开发者可以非常灵活地对Kubernets API Server的功能进行扩展，在API Server创建资源时对资源进行验证或者修改。 Istio 0.7版本就利用了Kubernets webhook实现了sidecar的自动注入。
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by     &#34;赵化冰&#34; on Wednesday, May 23, 2018
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://edgarding.cn/2018/05/01/may-day-jiulonghu/">
-        <h2 class="post-title">
-            川西秘境探险
-        </h2>
-	
-        <h3 class="post-subtitle">
-            2018五一甘堡藏寨，九龙湖自驾游记
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            <h2 id="寻浮云牧场不遇">寻浮云牧场不遇</h2>
-<p>五一节前的一周内，几个朋友就纷纷坐不住了，一个二个不再安心上班，开始在微信群里讨论过节要到哪里耍。
-大家思来想去，最后决定还是去理县方向。因为根据多年自驾的经验，只要出了汶川，沿途都是风景。</p>
+            算法(0)-base Introduction 该文主要总结一些有关算法的基础，其具体的分类等在之后进行，这也是对自己刷题这么久来的一次系统化整理。该篇主要进行一些前
        
         </div>
     </a>
     <p class="post-meta">
     
-        Posted by 赵化冰 on Tuesday, May 1, 2018
+        Posted by EdgarDing Blog on Wednesday, November 17, 2021
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="http://www.edgarding.cn/post/2021/kubernetes-%E5%9F%BA%E7%A1%80-kubernetes-ji-chu/">
+        <h2 class="post-title">
+            Kubernetes-基础
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            Kubernetes-基础 2021/09/14 前言 由于有段时间没接触Kubernetes，最近面试运维开发的时候又经常问到，因此重新体系的入门下Kuberne
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by EdgarDing Blog on Friday, September 17, 2021
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="http://www.edgarding.cn/post/2021/datadog-agent%E9%83%A8%E7%BD%B2-datadogagent-bu-shu/">
+        <h2 class="post-title">
+            Datadog Agent部署
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            Datadog Agent 部署 Datadog Cluster Agent提供了一种简化的集中式方法来收集集群级别的监视数据。通过充当API服务器和基于节点的代理之间的代理，群集代理有助于减轻
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by EdgarDing Blog on Tuesday, September 14, 2021
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="http://www.edgarding.cn/post/2021/%E7%AE%97%E6%B3%95-%E6%8E%92%E5%BA%8F-pai-xu-suan-fa/">
+        <h2 class="post-title">
+            算法-排序
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            算法-排序 Introduction 以下为自己整理总结的常用排序算法与实现。 时间复杂度一次完整的计算：http://discrete.gr/complexity/ 基
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by EdgarDing Blog on Wednesday, September 8, 2021
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="http://www.edgarding.cn/post/2021/springboot%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-springboot%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+        <h2 class="post-title">
+            SpringBoot核心源码分析
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            SpringBoot 核心源码分析 convention over configuration 约定优于配置 SprinBoot 核心特性：约定优于配置 举一个具体一点的例子，这个理念我们其实一直都在遵循并使用，比如我们在 MVC 项目的开发中会
+       
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by EdgarDing Blog on Saturday, October 17, 2020
         
         
     
@@ -337,10 +307,6 @@
         <a href="/">&larr; Newer Posts</a>
     </li>
     
-    
-    <li class="next">
-        <a href="/page/3/">Older Posts &rarr;</a>
-    </li>
     
 </ul>
 
@@ -430,61 +396,21 @@
             
             
                
-            
-               
-                    <a href="/tags/docker" title="docker">
-                        docker
+                    <a href="/tags/cloud-native" title="cloud-native">
+                        cloud-native
                     </a>
                
             
                
-            
-               
-                    <a href="/tags/istio" title="istio">
-                        istio
+                    <a href="/tags/spring" title="spring">
+                        spring
                     </a>
                
             
                
-                    <a href="/tags/kubernetes" title="kubernetes">
-                        kubernetes
+                    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                        算法
                     </a>
-               
-            
-               
-                    <a href="/tags/microservice" title="microservice">
-                        microservice
-                    </a>
-               
-            
-               
-            
-               
-                    <a href="/tags/security" title="security">
-                        security
-                    </a>
-               
-            
-               
-                    <a href="/tags/service-mesh" title="service-mesh">
-                        service-mesh
-                    </a>
-               
-            
-               
-            
-               
-            
-               
-                    <a href="/tags/tips" title="tips">
-                        tips
-                    </a>
-               
-            
-               
-            
-               
-            
                
             
         </div>
@@ -567,25 +493,12 @@
             
             
            
-                   <li>
-                       <a href='/index.xml' rel="alternate" type="application/rss+xml" title="EdgarDing Blog" >
-                           <span class="fa-stack fa-lg">
-                               <i class="fas fa-circle fa-stack-2x"></i>
-                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-                           </span>
-                       </a>
-                   </li>
-            
              </ul>
 		<p class="copyright text-muted">
                     Copyright &copy; EdgarDing Blog 2022
                     <br>
-                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="100px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
-                    </iframe>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a>
+                    
                 </p>
             </div>
         </div>
