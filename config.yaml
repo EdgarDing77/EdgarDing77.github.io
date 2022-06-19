@@ -1,0 +1,90 @@
+baseurl: http://www.edgarding.cn
+title: EdgarDing Blog
+theme: hugo-theme-cleanwhite
+languageCode: en-us
+disqusShortname: ""
+googleAnalytics: ""
+preserveTaxonomyNames: true
+paginate: 10
+hasCJKLanguage: true
+taxonomies:
+  category: categories
+  tag: tags
+outputs:
+  home:
+    - HTML
+    - RSS
+    - Algolia
+params:
+  header_image: img/home-bg-main.jpg
+  SEOTitle: EdgarDing 的博客 | One day One day
+  description: 一天又一天
+  keyword: Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务,
+    Microservice
+  slogan: Do Not Go Gentle Into That Good Night.
+  image_404: img/404-bg.jpg
+  title_404: 你来到了没有知识的荒原 :(
+  omit_categories: false
+  page_view_conter: false
+  leancloud_app_id: ""
+  leancloud_app_key: ""
+  algolia_search: true
+  algolia_appId: ""
+  algolia_indexName: ""
+  algolia_apiKey: ""
+  sidebar_about_description: Rookie ... You Only Live Once.
+  sidebar_avatar: img/edgarding.jpeg
+  featured_tags: true
+  featured_condition_size: 5
+  ba_track_id: ""
+  disqus_proxy: ""
+  disqus_site: ""
+  twikoo_env_id: ""
+  reward: true
+  friends: true
+  bookmarks: false
+  about_me: true
+  social:
+    email: edgarding97@gmail.com
+    instagram: https://www.instagram.com/edgarding7/
+    github: https://github.com/EdgarDing77
+  friend_link:
+    - title: oneday oneday 老博客
+      href: https://fortuna7.top
+  bookmark_link:
+    - title: Martin Fowler
+      href: https://martinfowler.com
+    - title: ServiceMesher
+      href: http://www.servicemesher.com
+    - title: Pxhere
+      href: https://pxhere.com
+    - title: unsplash
+      href: https://unsplash.com
+  addtional_menus:
+    - title: ARCHIVE
+      href: /top/archive/
+    - title: ABOUT
+      href: /top/about/
+  algolia:
+    vars:
+      - title
+      - summary
+      - date
+      - publishdate
+      - expirydate
+      - permalink
+    params:
+      - categories
+      - tags
+outputFormats:
+  Algolia:
+    baseName: algolia
+    isPlainText: true
+    mediaType: application/json
+    notAlternative: true
+markup:
+  tableOfContents:
+    endLevel: 2
+    startLevel: 1
+  highlight:
+    style: dracula
