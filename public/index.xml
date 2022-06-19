@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>EdgarDing Blog</title>
-    <link>https://edgarding.cn/</link>
+    <link>http://www.edgarding.cn/</link>
     <description>Recent content on EdgarDing Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://edgarding.cn/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="http://www.edgarding.cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title></title>
-      <link>https://edgarding.cn/search/placeholder/</link>
+      <link>http://www.edgarding.cn/search/placeholder/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://edgarding.cn/search/placeholder/</guid>
+      <guid>http://www.edgarding.cn/search/placeholder/</guid>
       <description></description>
     </item>
     
     <item>
       <title></title>
-      <link>https://edgarding.cn/top/about/</link>
+      <link>http://www.edgarding.cn/top/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://edgarding.cn/top/about/</guid>
+      <guid>http://www.edgarding.cn/top/about/</guid>
       <description>OneDay OneDay  You Only Live Once.
  Do not go gentle into that good night, Old age should burn and rave at close of day; Rage, rage against the dying of the light.
 Though wise men at their end know dark is right, Because their words had forked no lightning they Do not go gentle into that good night.
@@ -29,10 +29,10 @@ Good men, the last wave by, crying how bright Their frail deeds might have dance
     
     <item>
       <title>Posts Archive</title>
-      <link>https://edgarding.cn/top/archive/</link>
+      <link>http://www.edgarding.cn/top/archive/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://edgarding.cn/top/archive/</guid>
+      <guid>http://www.edgarding.cn/top/archive/</guid>
       <description></description>
     </item>
     
