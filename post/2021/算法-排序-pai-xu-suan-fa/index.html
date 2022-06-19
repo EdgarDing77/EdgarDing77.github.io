@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="EdgarDing Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="http://www.edgarding.cn/img/home-bg-main.jpg">
+    <meta property="twitter:image" content="http://www.edgarding.cn/img/home-bg-main.jpg" />
+    
+
+    
+    <meta name="title" content="算法-排序" />
+    <meta property="og:title" content="算法-排序" />
+    <meta property="twitter:title" content="算法-排序" />
+    
+
+    
+    <meta name="description" content="一天又一天">
+    <meta property="og:description" content="一天又一天" />
+    <meta property="twitter:description" content="一天又一天" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>算法-排序 | EdgarDing 的博客 | One day One day</title>
+
+    <link rel="canonical" href="/post/2021/%E7%AE%97%E6%B3%95-%E6%8E%92%E5%BA%8F-pai-xu-suan-fa/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">EdgarDing Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-main.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                    </div>
+                    <h1>算法-排序</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    EdgarDing Blog
+                             
+                            on 
+                            Wednesday, September 8, 2021
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="算法-排序">算法-排序</h1>
+<h2 id="introduction">Introduction</h2>
+<p>以下为自己整理总结的常用排序算法与实现。
+时间复杂度一次完整的计算：<a href="http://discrete.gr/complexity/">http://discrete.gr/complexity/</a></p>
+<blockquote>
+<p>基础的三种排序：冒泡排序、插入排序、选择排序
+三种常见的排序：归并排序、快速排序、插入排序</p>
+</blockquote>
+<p>简单接口说明：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">Sort</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h3 id="复杂度浏览">复杂度浏览</h3>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Time Complexity</th>
+<th></th>
+<th></th>
+<th>Space Complexity</th>
+<th>staility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>Best</td>
+<td>Average</td>
+<td>Worst</td>
+<td>Worst</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Bubble_sort">Bubble Sort</a></td>
+<td><code>Ω(n)</code></td>
+<td><code>Θ(n^2)</code></td>
+<td><code>O(n^2)</code></td>
+<td><code>O(1)</code></td>
+<td>Y</td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Insertion_sort">Insertion Sort</a></td>
+<td><code>Ω(n)</code></td>
+<td><code>Θ(n^2)</code></td>
+<td><code>O(n^2)</code></td>
+<td><code>O(1)</code></td>
+<td>Y</td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Selection_sort">Selection Sort</a></td>
+<td><code>Ω(n^2)</code></td>
+<td><code>Θ(n^2)</code></td>
+<td><code>O(n^2)</code></td>
+<td><code>O(1)</code></td>
+<td>N</td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Quicksort">Quicksort</a></td>
+<td><code>Ω(n log(n))</code></td>
+<td><code>Θ(n log(n))</code></td>
+<td><code>O(n^2)</code></td>
+<td><code>O(log(n))</code></td>
+<td>N</td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Merge_sort">Mergesort</a></td>
+<td><code>Ω(n log(n))</code></td>
+<td><code>Θ(n log(n))</code></td>
+<td><code>O(n log(n))</code></td>
+<td><code>O(n)</code></td>
+<td>Y</td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Heapsort">Heapsort</a></td>
+<td><code>Ω(n log(n))</code></td>
+<td><code>Θ(n log(n))</code></td>
+<td><code>O(n log(n))</code></td>
+<td><code>O(1)</code></td>
+<td>N</td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Shellsort">Shell Sort</a></td>
+<td><code>Ω(n log(n))</code></td>
+<td><code>Θ(n(log(n))^2)</code></td>
+<td><code>O(n(log(n))^2)</code></td>
+<td><code>O(1)</code></td>
+<td>N</td>
+</tr>
+<tr>
+<td><a href="https://en.wikipedia.org/wiki/Counting_sort">Counting Sort</a></td>
+<td><code>Ω(n+k)</code></td>
+<td><code>Θ(n+k)</code></td>
+<td><code>O(n+k)</code></td>
+<td><code>O(k)</code></td>
+<td>Y</td>
+</tr>
+<tr>
+<td><a href="https://en.wikipedia.org/wiki/Tree_sort">Tree Sort</a></td>
+<td><code>Ω(n log(n))</code></td>
+<td><code>Θ(n log(n))</code></td>
+<td><code>O(n^2)</code></td>
+<td><code>O(n)</code></td>
+<td>Y</td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Bucket_sort">Bucket Sort</a></td>
+<td><code>Ω(n+k)</code></td>
+<td><code>Θ(n+k)</code></td>
+<td><code>O(n^2)</code></td>
+<td><code>O(n)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Radix_sort">Radix Sort</a></td>
+<td><code>Ω(nk)</code></td>
+<td><code>Θ(nk)</code></td>
+<td><code>O(nk)</code></td>
+<td><code>O(n+k)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://en.wikipedia.org/wiki/Cubesort">Cubesort</a></td>
+<td><code>Ω(n)</code></td>
+<td><code>Θ(n log(n))</code></td>
+<td><code>O(n log(n))</code></td>
+<td><code>O(n)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://en.wikipedia.org/wiki/Timsort">Timsort</a></td>
+<td><code>Ω(n)</code></td>
+<td><code>Θ(n log(n))</code></td>
+<td><code>O(n log(n))</code></td>
+<td><code>O(n)</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>参考：<a href="https://www.bigocheatsheet.com/">复杂度浏览表</a></p>
+<h2 id="冒泡排序">冒泡排序</h2>
+<p>每次从头开始进行比较，将大的数往后移动，在第n次循环结束的时候，第n大的数就位于数组的第n-1位。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">BubbleSort</span> <span style="color:#8be9fd;font-style:italic">implements</span> Sort <span style="color:#ff79c6">{</span>
+    @Override
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#6272a4">// 若没有发生交换的时候表示循环结束
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">boolean</span> isSwap <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">false</span><span style="color:#ff79c6">;</span>
+            <span style="color:#6272a4">// j &lt; n - i 减少循环次数
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> 1<span style="color:#ff79c6">;</span> j <span style="color:#ff79c6">&lt;</span> n <span style="color:#ff79c6">-</span> i<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">[</span>j <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> arr<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                    swap<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> j <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">,</span> j<span style="color:#ff79c6">);</span>
+                    isSwap <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">true</span><span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(!</span>isSwap<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">break</span><span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> arr<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+
+</code></pre></div><h2 id="插入排序">插入排序</h2>
+<p>将数找到合适的位置，将该位置的数全部向后移动，留出插入的空间进行插入。（未有交换操作）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">InsertionSort</span> <span style="color:#8be9fd;font-style:italic">implements</span> Sort <span style="color:#ff79c6">{</span>
+    @Override
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 1<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#6272a4">// 选中的数
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">int</span> key <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">];</span>
+            <span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span>
+            <span style="color:#6272a4">// 寻找合适的位置
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(;</span>j <span style="color:#ff79c6">&gt;=</span> 0 <span style="color:#ff79c6">&amp;&amp;</span> arr<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&gt;</span> key<span style="color:#ff79c6">;</span>j<span style="color:#ff79c6">--)</span> <span style="color:#ff79c6">{</span>
+                arr<span style="color:#ff79c6">[</span>j <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">];</span>
+            <span style="color:#ff79c6">}</span>
+            arr<span style="color:#ff79c6">[</span>j <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> key<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> arr<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+
+</code></pre></div><h2 id="选择排序">选择排序</h2>
+<p>在尚未排序的序列中找到一个最小的元素，放入到排序完序列的最后一位。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">SelectionSort</span> <span style="color:#8be9fd;font-style:italic">implements</span> Sort <span style="color:#ff79c6">{</span>
+    @Override
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#6272a4">// 选定最小的数
+</span><span style="color:#6272a4"></span>            <span style="color:#8be9fd">int</span> min <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span> j <span style="color:#ff79c6">&lt;</span> n<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;</span> arr<span style="color:#ff79c6">[</span>min<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                    min <span style="color:#ff79c6">=</span> j<span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>min <span style="color:#ff79c6">!=</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                swap<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> min<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> arr<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="归并排序">归并排序</h2>
+<blockquote>
+<p>将两个有序的数组归并成一个较大的数组。
+要将一个数组排序，先（递归）分成两半分别排序，然后将递归结果合并。将复杂问题进行简单化，然后解决完后这个复杂问题也就解决。</p>
+</blockquote>
+<p><strong>特点：</strong></p>
+<ul>
+<li>将任意长度为N的数组排序所需的时间和NlgN成正比</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>所需的额外空间和N成正比</li>
+</ul>
+<p>归并排序的递归调用发生在处理数组之前，且在内循环的时候仍然在进行数组的移动。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MergeSort</span> <span style="color:#8be9fd;font-style:italic">implements</span> Sort <span style="color:#ff79c6">{</span>
+    @Override
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        mergeSort<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> arr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">return</span> arr<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">mergeSort</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> left<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>left <span style="color:#ff79c6">&lt;</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> mid <span style="color:#ff79c6">=</span> left <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">((</span>right <span style="color:#ff79c6">-</span> left<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&gt;&gt;</span> 1<span style="color:#ff79c6">);</span>
+            <span style="color:#6272a4">// 注意这里递归调用是mid的值
+</span><span style="color:#6272a4"></span>            <span style="color:#6272a4">// 如果以left ～ mid-1 可能会stackoverflow
+</span><span style="color:#6272a4"></span>            mergeSort<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> left<span style="color:#ff79c6">,</span> mid<span style="color:#ff79c6">);</span>
+            mergeSort<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> right<span style="color:#ff79c6">);</span>
+            merge<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> left<span style="color:#ff79c6">,</span> mid<span style="color:#ff79c6">,</span> right<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">merge</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> left<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> mid<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> size <span style="color:#ff79c6">=</span> right <span style="color:#ff79c6">-</span> left <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+        <span style="color:#6272a4">// 创建一个size大小的数组存放归并后的数组
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> temp <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[</span>size<span style="color:#ff79c6">];</span>
+        <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> left<span style="color:#ff79c6">,</span> j <span style="color:#ff79c6">=</span> mid <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> index <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&lt;=</span> mid <span style="color:#ff79c6">&amp;&amp;</span> j <span style="color:#ff79c6">&lt;=</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;</span> arr<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                temp<span style="color:#ff79c6">[</span>index<span style="color:#ff79c6">++]</span> <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">++];</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                temp<span style="color:#ff79c6">[</span>index<span style="color:#ff79c6">++]</span> <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">++];</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&lt;=</span> mid<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            temp<span style="color:#ff79c6">[</span>index<span style="color:#ff79c6">++]</span> <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">++];</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>j <span style="color:#ff79c6">&lt;=</span> right<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            temp<span style="color:#ff79c6">[</span>index<span style="color:#ff79c6">++]</span> <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">++];</span>
+        <span style="color:#ff79c6">}</span>
+        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">arraycopy</span><span style="color:#ff79c6">(</span>temp<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> arr<span style="color:#ff79c6">,</span> left<span style="color:#ff79c6">,</span> size<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+
+<span style="color:#ff79c6">}</span>
+
+</code></pre></div><h2 id="快速排序">快速排序</h2>
+<blockquote>
+<p>快排是一种分治排序。
+将一个数组分为两个子数组，将两部分独立排序。与归并排序是互补的，其归并是递归调用发生在处理整个数组之后，二快排则是之前。</p>
+</blockquote>
+<p><strong>特点：</strong></p>
+<ul>
+<li>
+<p>原地排序 → 需要辅助栈</p>
+</li>
+<li>
+<p>将任意长度为N的数组排序所需的时间和NlgN成正比</p>
+</li>
+<li>
+<p>快排的内循环比大多数排序算法都要短 → 依赖于切分数组的效果 → 依赖于切分元素的值</p>
+</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>非常脆弱（不稳定）</li>
+</ul>
+<p>快排的切分方法的内循环是使用一个递增的索引将数组元素与定值做比较，这种简洁的方式，比起归并和shell排序，它们仍需要在内循环中移动数组。相比起归并，</p>
+<p>其次，快排的另一个优势在于它的比较次数较小。</p>
+<p><strong>解决快排的优化方法：</strong></p>
+<ul>
+<li>
+<p>快排不稳定的原因：</p>
+<ul>
+<li>
+<p>数组切分不平衡 → 如果第一次最小元素切分，第二次从第二小的元素进行切分，如此这般，每次调用只会移除一个元素。</p>
+</li>
+<li>
+<p>大量重复的元素</p>
+</li>
+</ul>
+</li>
+<li>
+<p>解决办法 → 数组随机排序：</p>
+<ul>
+<li>
+<p>切换到插入排序
+对于小数组而言，快排比插入排序慢
+因为递归，快排中的sort（）方法会在小数组中也调用自己</p>
+</li>
+<li>
+<p>三取样切分
+使用子数组的一小部分元素的中位数来切分数组，切分更好但是会带来计算中位数的开销。</p>
+</li>
+<li>
+<p>墒最优排序
+如果数组中出现大量的重复元素，一般来说这时就无须进行下去，但是快排仍会继续进行数组切分。
+三向切分，维护一个lt，使得a[lo..lt-1]中的元素都小于v，维护一个rt，使得a[rt+1&hellip;a.len-1]中的所有元素都大于v。
+多了维护的开销。</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">QuickSort</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">sortArray</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        quickSort<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">return</span> nums<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">quickSort</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> l<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> r<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>l <span style="color:#ff79c6">&lt;</span> r<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> pivot <span style="color:#ff79c6">=</span> randomPartition<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> l<span style="color:#ff79c6">,</span> r<span style="color:#ff79c6">);</span>
+            quickSort<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> l<span style="color:#ff79c6">,</span> pivot <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">);</span>
+            quickSort<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> pivot <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> r<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">randomPartition</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> l<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> r<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Random<span style="color:#ff79c6">().</span><span style="color:#50fa7b">nextInt</span><span style="color:#ff79c6">(</span>r <span style="color:#ff79c6">-</span> l <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">+</span> l<span style="color:#ff79c6">;</span>
+        swap<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> r<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">return</span> partition<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> l<span style="color:#ff79c6">,</span> r<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">partition</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> l<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> r<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// pivot -&gt; nums[r]
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">=</span>l<span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j<span style="color:#ff79c6">=</span>l<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">&lt;=</span>r<span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;=</span> nums<span style="color:#ff79c6">[</span>r<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                swap<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> j<span style="color:#ff79c6">,</span> <span style="color:#ff79c6">++</span>i<span style="color:#ff79c6">);</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        swap<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">,</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> r<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">return</span> i <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">swap</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> j<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> temp <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">];</span>
+        nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">];</span>
+        nums<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> temp<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="堆排序">堆排序</h2>
+<blockquote>
+<p>基于<em>二叉堆</em>数据结构的一种优先队列的实现，用数组保存元素并按照一定条件排序。实现高效的删除最大元素和插入最大元素的操作。</p>
+</blockquote>
+<p>在二叉堆数组中，每个元素都要保证大于等于两个特定的元素。在一个堆中，位置k的结点的父结点的位置为[k/2]，而它的两个子结点的位置则分别为2k和2k+1。</p>
+<p>用它实现排序的时候，需要进行堆化操作，使用一个面向最大元素的优先队列（最大堆-最大元素位于根），并重复删除最大元素，来实现堆排序。</p>
+<ol>
+<li>
+<p>先将初始序列K[0:n]建成一个大顶堆, 那么此时第一个元素K1最大, 此堆为初始的无序区.</p>
+</li>
+<li>
+<p>再将关键字最大的记录K1 (即堆顶, 第一个元素)和无序区的最后一个记录 Kn 交换, 由此得到新的无序区K[1:n−1]和有序区K[n], 且满足K[1:n−1].keys≤K[n].key</p>
+</li>
+<li>
+<p>交换K1 和 Kn 后, 堆顶可能违反堆性质, 因此需将K[1..n−1]调整为堆. 然后重复步骤②, 直到无序区只有一个元素时停止.</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>节点k的左子节点：2*k</p>
+</li>
+<li>
+<p>节点k的右子节点：2*k+1</p>
+</li>
+<li>
+<p>父节点：floor(k/2)</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">HeapSort</span> <span style="color:#8be9fd;font-style:italic">implements</span> Sort <span style="color:#ff79c6">{</span>
+    @Override
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">sort</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// 1.构建大顶堆
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> arr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> n <span style="color:#ff79c6">/</span> 2<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&gt;=</span> 0<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">--)</span> <span style="color:#ff79c6">{</span>
+            maxHeapify<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">,</span> n <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// 2.调整堆结构 + 交换堆顶与末尾元素 -&gt; 从而达到排序的目的
+</span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> n <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span> j <span style="color:#ff79c6">&gt;</span> 0<span style="color:#ff79c6">;</span> j<span style="color:#ff79c6">--)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#6272a4">// 堆顶的元素由于是最大的，与末尾元素进行交换
+</span><span style="color:#6272a4"></span>            <span style="color:#6272a4">// 使得arr[j]是所有元素中最大的数
+</span><span style="color:#6272a4"></span>            swap<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> j<span style="color:#ff79c6">);</span>
+            <span style="color:#6272a4">// 删除最大元素 j
+</span><span style="color:#6272a4"></span>            maxHeapify<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> j<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> arr<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">buildHeap</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> len<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">=</span>len<span style="color:#ff79c6">/</span>2<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">&gt;=</span>0<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">--)</span> <span style="color:#ff79c6">{</span>
+            maxHeapify<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">,</span> len<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">maxHeapify</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> arr<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> len<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(;(</span>i <span style="color:#ff79c6">&lt;&lt;</span> 1<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&lt;</span> len<span style="color:#ff79c6">;)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> left <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">*</span> 2<span style="color:#ff79c6">,</span> right <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">*</span> 2 <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">,</span> largest <span style="color:#ff79c6">=</span> i<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>left <span style="color:#ff79c6">&lt;</span> len <span style="color:#ff79c6">&amp;&amp;</span> arr<span style="color:#ff79c6">[</span>largest<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;</span> arr<span style="color:#ff79c6">[</span>left<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                largest <span style="color:#ff79c6">=</span> left<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>right <span style="color:#ff79c6">&lt;</span> len <span style="color:#ff79c6">&amp;&amp;</span> arr<span style="color:#ff79c6">[</span>largest<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">&lt;</span> arr<span style="color:#ff79c6">[</span>right<span style="color:#ff79c6">])</span> <span style="color:#ff79c6">{</span>
+                largest <span style="color:#ff79c6">=</span> right<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>largest <span style="color:#ff79c6">!=</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                swap<span style="color:#ff79c6">(</span>arr<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">,</span> largest<span style="color:#ff79c6">);</span>
+                i <span style="color:#ff79c6">=</span> largest<span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#ff79c6">break</span><span style="color:#ff79c6">;</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div>
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author"><a href="http://www.edgarding.cn"><img src="/img/favicon.png" />EdgarDing Blog</a></span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">2元</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
+		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/2021/springboot%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-springboot%E6%A0%B8%E5%BF%83%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" data-toggle="tooltip" data-placement="top" title="SpringBoot核心源码分析">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/2021/datadog-agent%E9%83%A8%E7%BD%B2-datadogagent-bu-shu/" data-toggle="tooltip" data-placement="top" title="Datadog Agent部署">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/cloud-native" title="cloud-native">
+                            cloud-native
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/spring" title="spring">
+                            spring
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://fortuna7.top">oneday oneday 老博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:edgarding97@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/EdgarDing77">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            <li>
+                <a target="_blank" href="https://www.instagram.com/edgarding7/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; EdgarDing Blog 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+</body>
+</html>
