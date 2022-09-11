@@ -2,7 +2,7 @@
 title: Kubernetes-基础
 date: 2021-09-17 20:30:16.198
 updated: 2021-09-22 19:16:41.178
-categories: 
+categories: [Cloud Native]
 tags: [Cloud Native]
 ---
 

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="EdgarDing Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="http://www.edgarding.cn/img/home-bg-main.jpg">
+    <meta property="twitter:image" content="http://www.edgarding.cn/img/home-bg-main.jpg" />
+    
+
+    
+    <meta name="title" content="算法(1)-栈和队列" />
+    <meta property="og:title" content="算法(1)-栈和队列" />
+    <meta property="twitter:title" content="算法(1)-栈和队列" />
+    
+
+    
+    <meta name="description" content="一天又一天">
+    <meta property="og:description" content="一天又一天" />
+    <meta property="twitter:description" content="一天又一天" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Istio, Kubernetes, 微服务, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>算法(1)-栈和队列 | EdgarDing 的博客 | One day One day</title>
+
+    <link rel="canonical" href="/post/algorithm/%E7%AE%97%E6%B3%951-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97-suan-fa-1-zhan-he-dui-lie/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">EdgarDing Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/cloud-native">cloud-native</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/%E7%AE%97%E6%B3%95">算法</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/top/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-main.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                    </div>
+                    <h1>算法(1)-栈和队列</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    EdgarDing Blog
+                             
+                            on 
+                            Tuesday, January 4, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="算法1-栈与队列">算法(1)-栈与队列</h1>
+<h2 id="introduction">Introduction</h2>
+<p><strong>栈与队列特点：</strong></p>
+<ul>
+<li>栈stack：LIFO后进先出</li>
+<li>队列queue：FIFO先进先出</li>
+</ul>
+<p><strong>API定义：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">Queue</span><span style="color:#ff79c6">&lt;</span>Item<span style="color:#ff79c6">&gt;</span> <span style="color:#8be9fd;font-style:italic">implements</span> Iterable<span style="color:#ff79c6">&lt;</span>Item<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">{</span>
+		<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">enqueue</span><span style="color:#ff79c6">(</span>Item item<span style="color:#ff79c6">);</span>
+  	Item <span style="color:#50fa7b">dequeue</span><span style="color:#ff79c6">();</span>
+  	<span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">();</span>
+  	<span style="color:#8be9fd">int</span> <span style="color:#50fa7b">size</span><span style="color:#ff79c6">();</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">Stack</span><span style="color:#ff79c6">&lt;</span>Item<span style="color:#ff79c6">&gt;</span> <span style="color:#8be9fd;font-style:italic">implements</span> Iterable<span style="color:#ff79c6">&lt;</span>Item<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">{</span>
+  	<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>Item item<span style="color:#ff79c6">);</span>
+  	Item <span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+  	<span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">();</span>
+  	<span style="color:#8be9fd">int</span> <span style="color:#50fa7b">size</span><span style="color:#ff79c6">();</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>以上为简单的API定义，队列多用于涉及公平性的问题上如排队、软件的处理队列等，其基本原则就是公平，而栈的特性也十分常见如浏览器的回退、读邮件的顺序等，元素压入的顺序与处理的顺序正好相反。</p>
+<h2 id="常见技巧">常见技巧</h2>
+<h4 id="使用递归函数逆序操作一个栈">使用递归函数逆序操作一个栈</h4>
+<blockquote>
+<p>即实现栈中的元素逆序，只不过通过递归的方式实现。实现只能通过栈来实现。</p>
+</blockquote>
+<p><strong>实现</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">getAndRemoveLastElement</span><span style="color:#ff79c6">(</span>Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> stack<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+  	<span style="color:#8be9fd">int</span> res <span style="color:#ff79c6">=</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+  	<span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+      	<span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+      	<span style="color:#8be9fd">int</span> last <span style="color:#ff79c6">=</span> getAndRemoveLastElement<span style="color:#ff79c6">(</span>stack<span style="color:#ff79c6">);</span>
+      	stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>res<span style="color:#ff79c6">);</span>
+      	<span style="color:#ff79c6">return</span> last<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>以上为实现该问题的主要函数，返回获取并删除栈底的元素。</p>
+<h3 id="用一个栈实现另一个栈的排序">用一个栈实现另一个栈的排序</h3>
+<blockquote>
+<p>一个元素类型为整数的栈，按照栈顶到栈底从大到小的顺序排序，只能申请一个栈。</p>
+</blockquote>
+<p><strong>思路</strong></p>
+<ol>
+<li>排序的栈为stack，申请的栈为helper，在stack上操作pop()的元素记做cur</li>
+<li>若cur&lt;=helper.peek()，则helper.push(cur)</li>
+<li>若cur&gt;helper.peek()，则将所有helper元素逐一压入stack，直到cur&lt;=helper.peek()，再将cur压入helper</li>
+</ol>
+<p><strong>实现</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">sortStackByStack</span><span style="color:#ff79c6">(</span>Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> stack<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+  	Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> hepler <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> LinkedList<span style="color:#ff79c6">&lt;&gt;();</span>
+  	<span style="color:#ff79c6">while</span><span style="color:#ff79c6">(!</span>stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+      	<span style="color:#8be9fd">int</span> cur <span style="color:#ff79c6">=</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+      	<span style="color:#ff79c6">while</span><span style="color:#ff79c6">(!</span>helper<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">&amp;&amp;</span> cur <span style="color:#ff79c6">&gt;</span> helper<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+          	stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>helper<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">());</span>
+        <span style="color:#ff79c6">}</span>
+      	helper<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>cur<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+  	<span style="color:#ff79c6">while</span><span style="color:#ff79c6">(!</span>helper<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+      	stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>helper<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">());</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="经典问题">经典问题</h2>
+<h3 id="最小栈">最小栈</h3>
+<blockquote>
+<h4 id="155-最小栈httpsleetcode-cncomproblemsmin-stack"><a href="https://leetcode-cn.com/problems/min-stack/">155. 最小栈</a></h4>
+<p>难度简单1124</p>
+<p>设计一个支持 <code>push</code> ，<code>pop</code> ，<code>top</code> 操作，并能在常数时间内检索到最小元素的栈。</p>
+<ul>
+<li><code>push(x)</code> —— 将元素 x 推入栈中。</li>
+<li><code>pop()</code> —— 删除栈顶的元素。</li>
+<li><code>top()</code> —— 获取栈顶元素。</li>
+<li><code>getMin()</code> —— 检索栈中的最小元素。</li>
+</ul>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>pop</code>、<code>top</code> 和 <code>getMin</code> 操作总是在 <strong>非空栈</strong> 上调用。</li>
+</ul>
+</blockquote>
+<p><strong>思路</strong></p>
+<p>使用两个栈，一个正常存储元素，另一个与之相对存储当前的最小元素。</p>
+<ol>
+<li>stackDate：存储正常元素，stackMin：存储最小元素</li>
+<li>插入操作：stackMin进行比较插入，则可以达到当前栈顶的元素是stackData的最小元素</li>
+<li>删除操作：一起pop()即可</li>
+</ol>
+<p><strong>实现</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MinStack</span> <span style="color:#ff79c6">{</span>
+    Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> stackData<span style="color:#ff79c6">,</span> stackMin<span style="color:#ff79c6">;</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">MinStack</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        stackData <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> LinkedList<span style="color:#ff79c6">&lt;&gt;();</span>
+        stackMin <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> LinkedList<span style="color:#ff79c6">&lt;&gt;();</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        stackData<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>val<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>stackMin<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+           stackMin<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>val<span style="color:#ff79c6">);</span> 
+        <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+            stackMin<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>stackMin<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">&lt;</span> val <span style="color:#ff79c6">?</span> stackMin<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">:</span> val<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">pop</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(!</span>stackData<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+            stackData<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+            stackMin<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">top</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">return</span> stackData<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">getMin</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">return</span> stackMin<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><ul>
+<li>因为多为增删操作，采用链式存储</li>
+<li>为什么使用Deque？JDK中Stack的方法被<code>sychronized</code>修饰，因此效率不高。</li>
+<li>所有操作：空间：O(n) 时间：O(1)</li>
+</ul>
+<h3 id="两个栈组成的队列">两个栈组成的队列</h3>
+<blockquote>
+<h4 id="232-用栈实现队列httpsleetcode-cncomproblemsimplement-queue-using-stacks"><a href="https://leetcode-cn.com/problems/implement-queue-using-stacks/">232. 用栈实现队列</a></h4>
+<p>难度简单525</p>
+<p>请你仅使用两个栈实现先入先出队列。队列应当支持一般队列支持的所有操作（<code>push</code>、<code>pop</code>、<code>peek</code>、<code>empty</code>）：</p>
+<p>实现 <code>MyQueue</code> 类：</p>
+<ul>
+<li><code>void push(int x)</code> 将元素 x 推到队列的末尾</li>
+<li><code>int pop()</code> 从队列的开头移除并返回元素</li>
+<li><code>int peek()</code> 返回队列开头的元素</li>
+<li><code>boolean empty()</code> 如果队列为空，返回 <code>true</code> ；否则，返回 <code>false</code></li>
+</ul>
+<p><strong>说明：</strong></p>
+<ul>
+<li>你只能使用标准的栈操作 —— 也就是只有 <code>push to top</code>, <code>peek/pop from top</code>, <code>size</code>, 和 <code>is empty</code> 操作是合法的。</li>
+<li>你所使用的语言也许不支持栈。你可以使用 list 或者 deque（双端队列）来模拟一个栈，只要是标准的栈操作即可。</li>
+</ul>
+<p><strong>进阶：</strong></p>
+<ul>
+<li>你能否实现每个操作均摊时间复杂度为 <code>O(1)</code> 的队列？换句话说，执行 <code>n</code> 个操作的总时间复杂度为 <code>O(n)</code> ，即使其中一个操作可能花费较长时间。</li>
+</ul>
+</blockquote>
+<p><strong>思路</strong></p>
+<p>根据栈的特点LIFO，可以将两个栈的特点结合实现队列的FIFO。</p>
+<ol>
+<li>使用两个栈，压入栈stackIn、弹出栈stackOut</li>
+<li>push()：只放入stackIn中</li>
+<li>pop() | peek()：若stackOut为空，则将所有stackIn数据压入stackOut，通过stackOut进行返回</li>
+</ol>
+<p><strong>实现</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MyQueue</span> <span style="color:#ff79c6">{</span>
+    Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> stackIn<span style="color:#ff79c6">,</span> stackOut<span style="color:#ff79c6">;</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">MyQueue</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        stackIn <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> LinkedList<span style="color:#ff79c6">&lt;&gt;();</span>
+        stackOut <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> LinkedList<span style="color:#ff79c6">&lt;&gt;();</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> x<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        stackIn<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>x<span style="color:#ff79c6">);</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">pop</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        put<span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">return</span> stackOut<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">peek</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        put<span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">return</span> stackOut<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">put</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>stackOut<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(;!</span>stackIn<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">();)</span> <span style="color:#ff79c6">{</span>
+                stackOut<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>stackIn<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">());</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+    
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">empty</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#ff79c6">return</span> stackIn<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">&amp;&amp;</span> stackOut<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><ul>
+<li>要点：如果stackOut不为空，则绝对不能将stackIn的数据倾倒到stackOut，会破坏元素顺序。</li>
+</ul>
+<h3 id="逆波兰表达式求值">逆波兰表达式求值</h3>
+<blockquote>
+<h4 id="150-逆波兰表达式求值httpsleetcode-cncomproblemsevaluate-reverse-polish-notation"><a href="https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/">150. 逆波兰表达式求值</a></h4>
+<p>难度中等439</p>
+<p>根据<a href="https://baike.baidu.com/item/%E9%80%86%E6%B3%A2%E5%85%B0%E5%BC%8F/128437"> 逆波兰表示法</a>，求表达式的值。</p>
+<p>有效的算符包括 <code>+</code>、<code>-</code>、<code>*</code>、<code>/</code> 。每个运算对象可以是整数，也可以是另一个逆波兰表达式。</p>
+<p><strong>说明：</strong></p>
+<ul>
+<li>整数除法只保留整数部分。</li>
+<li>给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。</li>
+</ul>
+<p>提示：</p>
+<p>1 &lt;= tokens.length &lt;= 104
+tokens[i] 要么是一个算符（&quot;+&quot;、&quot;-&quot;、&quot;*&quot; 或 &ldquo;/&quot;），要么是一个在范围 [-200, 200] 内的整数</p>
+<p>逆波兰表达式：</p>
+<p>逆波兰表达式是一种后缀表达式，所谓后缀就是指算符写在后面。</p>
+<p>平常使用的算式则是一种中缀表达式，如 ( 1 + 2 ) * ( 3 + 4 ) 。
+该算式的逆波兰表达式写法为 ( ( 1 2 + ) ( 3 4 + ) * ) 。
+逆波兰表达式主要有以下两个优点：</p>
+<p>去掉括号后表达式无歧义，上式即便写成 1 2 + 3 4 + * 也可以依据次序计算出正确结果。
+适合用栈操作运算：遇到数字则入栈；遇到算符则取出栈顶两个数字进行计算，并将结果压入栈中。</p>
+</blockquote>
+<p><strong>思路</strong></p>
+<ol>
+<li>将操作数入栈，遇到运算符弹出，进行计算后压入栈。</li>
+<li>最后结果为栈中的最后一个数。</li>
+</ol>
+<p><strong>实现</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Solution</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">evalRPN</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> tokens<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> stack <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> LinkedList<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span>String str <span style="color:#ff79c6">:</span> tokens<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(!(</span><span style="color:#f1fa8c">&#34;+&#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">equals</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">||</span> <span style="color:#f1fa8c">&#34;-&#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">equals</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">)</span>
+            <span style="color:#ff79c6">||</span> <span style="color:#f1fa8c">&#34;*&#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">equals</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">||</span> <span style="color:#f1fa8c">&#34;/&#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">equals</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">)))</span> <span style="color:#ff79c6">{</span>
+                stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>Integer<span style="color:#ff79c6">.</span><span style="color:#50fa7b">valueOf</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">));</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#8be9fd">int</span> b <span style="color:#ff79c6">=</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+                <span style="color:#8be9fd">int</span> a <span style="color:#ff79c6">=</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+                <span style="color:#ff79c6">switch</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;+&#34;</span><span style="color:#ff79c6">:</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>a <span style="color:#ff79c6">+</span> b<span style="color:#ff79c6">);</span> <span style="color:#ff79c6">break</span><span style="color:#ff79c6">;</span>
+                    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;-&#34;</span><span style="color:#ff79c6">:</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>a <span style="color:#ff79c6">-</span> b<span style="color:#ff79c6">);</span> <span style="color:#ff79c6">break</span><span style="color:#ff79c6">;</span>
+                    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;*&#34;</span><span style="color:#ff79c6">:</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>a <span style="color:#ff79c6">*</span> b<span style="color:#ff79c6">);</span> <span style="color:#ff79c6">break</span><span style="color:#ff79c6">;</span>
+                    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;/&#34;</span><span style="color:#ff79c6">:</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>a <span style="color:#ff79c6">/</span> b<span style="color:#ff79c6">);</span> <span style="color:#ff79c6">break</span><span style="color:#ff79c6">;</span>
+                <span style="color:#ff79c6">}</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="经典结构">经典结构</h2>
+<h3 id="单调栈-monotonic-stack">单调栈 Monotonic Stack</h3>
+<blockquote>
+<h4 id="496-下一个更大元素-ihttpsleetcode-cncomproblemsnext-greater-element-i"><a href="https://leetcode-cn.com/problems/next-greater-element-i/">496. 下一个更大元素 I</a></h4>
+<p>难度简单621</p>
+<p><code>nums1</code> 中数字 <code>x</code> 的 <strong>下一个更大元素</strong> 是指 <code>x</code> 在 <code>nums2</code> 中对应位置 <strong>右侧</strong> 的 <strong>第一个</strong> 比 <code>x</code> 大的元素。</p>
+<p>给你两个 <strong>没有重复元素</strong> 的数组 <code>nums1</code> 和 <code>nums2</code> ，下标从 <strong>0</strong> 开始计数，其中<code>nums1</code> 是 <code>nums2</code> 的子集。</p>
+<p>对于每个 <code>0 &lt;= i &lt; nums1.length</code> ，找出满足 <code>nums1[i] == nums2[j]</code> 的下标 <code>j</code> ，并且在 <code>nums2</code> 确定 <code>nums2[j]</code> 的 <strong>下一个更大元素</strong> 。如果不存在下一个更大元素，那么本次查询的答案是 <code>-1</code> 。</p>
+<p>返回一个长度为 <code>nums1.length</code> 的数组 <code>ans</code> 作为答案，满足 <code>ans[i]</code> 是如上所述的 <strong>下一个更大元素</strong> 。</p>
+</blockquote>
+<p><strong>思路</strong></p>
+<ol>
+<li>从后往前将元素压入栈stack，记当前元素为cur，这里的栈记录右侧比当前元素第一个大的元素</li>
+<li>若cur&gt;stack.peek()，stack.pop()直到cur &lt;= stack.peek()或stack.isEmpty()</li>
+<li>利用HashMap记录每个位置</li>
+</ol>
+<p><strong>实现</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Solution</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">nextGreaterElement</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums1<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums2<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        Map<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> map <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> HashMap<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;();</span>
+        Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> stack <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ArrayDeque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;();</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> nums2<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span> <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&gt;=</span> 0<span style="color:#ff79c6">;</span> <span style="color:#ff79c6">--</span>i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> num <span style="color:#ff79c6">=</span> nums2<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">];</span>
+            <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(!</span>stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">&amp;&amp;</span> num <span style="color:#ff79c6">&gt;=</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span> 
+              <span style="color:#6272a4">// 小的元素出栈 毕竟被大的元素给挡住
+</span><span style="color:#6272a4"></span>                stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+            <span style="color:#ff79c6">}</span>
+            map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">put</span><span style="color:#ff79c6">(</span>num<span style="color:#ff79c6">,</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">-</span>1 <span style="color:#ff79c6">:</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">());</span>
+            stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>num<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> res <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[</span>nums1<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">];</span>
+        <span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 0<span style="color:#ff79c6">;</span> i <span style="color:#ff79c6">&lt;</span> nums1<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span> <span style="color:#ff79c6">++</span>i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            res<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> map<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">(</span>nums1<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> res<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><ul>
+<li>要点：for循环要从后往前扫描元素，因为我们借助的是栈元素，倒着入栈，其实就是正着出栈。</li>
+</ul>
+<p><strong>变体</strong></p>
+<blockquote>
+<p>如何处理循环数组？</p>
+<h4 id="503-下一个更大元素-iihttpsleetcode-cncomproblemsnext-greater-element-ii"><a href="https://leetcode-cn.com/problems/next-greater-element-ii/">503. 下一个更大元素 II</a></h4>
+<p>难度中等539</p>
+<p>给定一个循环数组（最后一个元素的下一个元素是数组的第一个元素），输出每个元素的下一个更大元素。数字 x 的下一个更大的元素是按数组遍历顺序，这个数字之后的第一个比它更大的数，这意味着你应该循环地搜索它的下一个更大的数。如果不存在，则输出 -1。</p>
+</blockquote>
+<ol>
+<li>计算机内存是线性的，因此循环的实现主要通过‘%’来实现。</li>
+<li>回到该问题，如何解决循环的问题呢？可以将原始数组翻倍，将原始数组后再接一个原始数组，这样不仅可以与右边比较，还可以与左边比较。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Solution</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">nextGreaterElements</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> ans <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[</span>n<span style="color:#ff79c6">];</span>
+        Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> stack <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> LinkedList<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">=</span>2<span style="color:#ff79c6">*</span>n<span style="color:#ff79c6">-</span>1<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">&gt;=</span>0<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">--)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#8be9fd">int</span> num <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">[</span>i <span style="color:#ff79c6">%</span> n<span style="color:#ff79c6">];</span>
+            <span style="color:#ff79c6">while</span><span style="color:#ff79c6">(!</span>stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">&amp;&amp;</span> num <span style="color:#ff79c6">&gt;=</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+                stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">pop</span><span style="color:#ff79c6">();</span>
+            <span style="color:#ff79c6">}</span>
+            ans<span style="color:#ff79c6">[</span>i <span style="color:#ff79c6">%</span> n<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">=</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">-</span>1 <span style="color:#ff79c6">:</span> stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">peek</span><span style="color:#ff79c6">();</span> 
+            stack<span style="color:#ff79c6">.</span><span style="color:#50fa7b">push</span><span style="color:#ff79c6">(</span>num<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> ans<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p><strong>小结</strong></p>
+<p>单调栈实际就是栈，通过一些巧妙逻辑，使得每次新元素入栈后，栈内的元素都保持单调（单调增或减）。其用途并不广泛，只适用一类问题 Next Greater Element。</p>
+<h3 id="单调队列-monotonic-queue">单调队列 Monotonic Queue</h3>
+<blockquote>
+<h4 id="239-滑动窗口最大值httpsleetcode-cncomproblemssliding-window-maximum"><a href="https://leetcode-cn.com/problems/sliding-window-maximum/">239. 滑动窗口最大值</a></h4>
+<p>难度困难1332</p>
+<p>给你一个整数数组 <code>nums</code>，有一个大小为 <code>k</code> 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 <code>k</code> 个数字。滑动窗口每次只向右移动一位。</p>
+<p>返回滑动窗口中的最大值。</p>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 105</code></li>
+<li><code>-104 &lt;= nums[i] &lt;= 104</code></li>
+<li><code>1 &lt;= k &lt;= nums.length</code></li>
+</ul>
+</blockquote>
+<ul>
+<li>该题难度在于，窗口的值是动态调整的，无法知道何时窗口的最大值是否还在，如需要确定则就需要进行窗口的遍历，因此算出最大值的效率就不是O(1)了。</li>
+</ul>
+<p><strong>思路</strong></p>
+<ol>
+<li>需要一个能动态记录当前窗口最大值的API。</li>
+<li>单调队列的API相比队列，也仅是多了max()，来获取当前队列的最大值。</li>
+<li>为了方便进行头部和尾部的插入删除，因此选用双链表是最合适的。</li>
+<li>为了保证单调性，且核心需求是O(1)时间获取当前队列最大值，在设计上主要通过push(val)，若val&gt;队尾元素，则删除，直到队尾元素&gt;=val放入，保证了队列中从队头到队尾单调递减。</li>
+</ol>
+<p><strong>实现</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Solution</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> <span style="color:#50fa7b">maxSlidingWindow</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> nums<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> k<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#8be9fd">int</span> n <span style="color:#ff79c6">=</span> nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">length</span><span style="color:#ff79c6">;</span>
+        <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[]</span> ans <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#8be9fd">int</span><span style="color:#ff79c6">[</span>n <span style="color:#ff79c6">-</span> k <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">];</span>
+        MonotonicQueue queue <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> MonotonicQueue<span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">for</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> i<span style="color:#ff79c6">=</span>0<span style="color:#ff79c6">,</span>j<span style="color:#ff79c6">=</span>0<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">&lt;</span>n<span style="color:#ff79c6">;</span> i<span style="color:#ff79c6">++)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&lt;</span> k <span style="color:#ff79c6">-</span> 1<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#6272a4">// 填充k - 1个数到队列中
+</span><span style="color:#6272a4"></span>                queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">offer</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]);</span>
+            <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+                <span style="color:#6272a4">// 维持只有k个元素
+</span><span style="color:#6272a4"></span>                queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">offer</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i<span style="color:#ff79c6">]);</span>
+                ans<span style="color:#ff79c6">[</span>j<span style="color:#ff79c6">++]</span> <span style="color:#ff79c6">=</span> queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">max</span><span style="color:#ff79c6">();</span>
+                queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">poll</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">[</span>i <span style="color:#ff79c6">-</span> k <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">]);</span> <span style="color:#6272a4">// 移除最旧的元素
+</span><span style="color:#6272a4"></span>            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">return</span> ans<span style="color:#ff79c6">;</span>
+    <span style="color:#ff79c6">}</span>
+
+    <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MonotonicQueue</span> <span style="color:#ff79c6">{</span>
+        Deque<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> queue<span style="color:#ff79c6">;</span>
+        MonotonicQueue<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+            queue <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> LinkedList<span style="color:#ff79c6">&lt;&gt;();</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// 整个单调队列的重点
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">offer</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">while</span><span style="color:#ff79c6">(!</span>queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">&amp;&amp;</span> queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getLast</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">&lt;</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+                queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">removeLast</span><span style="color:#ff79c6">();</span>
+            <span style="color:#ff79c6">}</span>
+            queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">offerLast</span><span style="color:#ff79c6">(</span>val<span style="color:#ff79c6">);</span>
+        <span style="color:#ff79c6">}</span>
+
+        <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">poll</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> val<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">if</span><span style="color:#ff79c6">(</span>val <span style="color:#ff79c6">==</span> queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getFirst</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+                queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">removeFirst</span><span style="color:#ff79c6">();</span>
+            <span style="color:#ff79c6">}</span>
+        <span style="color:#ff79c6">}</span>
+        <span style="color:#6272a4">// 获取当前队列的最大值
+</span><span style="color:#6272a4"></span>        <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">max</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+            <span style="color:#ff79c6">return</span> queue<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getFirst</span><span style="color:#ff79c6">();</span>
+        <span style="color:#ff79c6">}</span>
+    <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><ul>
+<li>虽然进行max()操作时O(1)，但是整体的复杂度仍是O(n)，因为进行offer()的时候仍需要遍历。</li>
+</ul>
+<p><strong>小结</strong></p>
+<p>单调队列同单调栈一样，通过一些逻辑，使得每次新元素入队后，队内元素保持单调性（单调递增或单调递减）。该数据结构用途在于可以解决<strong>滑动窗口</strong>的一些问题如“滑动窗口最大值”等。</p>
+<p>最后，分清“优先队列”和“单调队列”，单调队列添加元素时靠删除元素保证单调性，而优先队列通过二叉堆来进行自动排序。</p>
+
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/algorithm/%E7%AE%97%E6%B3%950-base-suan-fa-base/" data-toggle="tooltip" data-placement="top" title="算法(0)-base">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/algorithm/%E7%AE%97%E6%B3%952-%E9%93%BE%E8%A1%A8-suan-fa-2-lian-biao/" data-toggle="tooltip" data-placement="top" title="算法(2)-链表">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95" title="算法">
+                            算法
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://fortuna7.top">oneday oneday 老博客</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:edgarding97@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/EdgarDing77">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            <li>
+                <a target="_blank" href="https://www.instagram.com/edgarding7/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; EdgarDing Blog 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+</body>
+</html>

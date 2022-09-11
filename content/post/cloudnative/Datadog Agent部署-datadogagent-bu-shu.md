@@ -2,7 +2,7 @@
 title: Datadog Agent部署
 date: 2021-09-14 17:47:15.454
 updated: 2021-11-11 14:27:02.664
-categories: 
+categories: [Cloud Native]
 tags: [Cloud Native]
 ---
 
