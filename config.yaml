@@ -1,91 +1,250 @@
----
 baseurl: https://www.edgarding.cn
 title: EdgarDing Blog
-theme: hugo-theme-cleanwhite
-languageCode: en-us
-disqusShortname: "edgarding"
-googleAnalytics: "G-QB764C3NYN"
+theme: PaperMod
+paginate: 5
 
-preserveTaxonomyNames: true
-paginate: 10
-hasCJKLanguage: true
-taxonomies:
-  category: categories
-  tag: tags
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+
+googleAnalytics: G-QB764C3NYN
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+languages:
+  en:
+    languageName: "English"
+    weight: 1
+    taxonomies:
+      category: categories
+      tag: tags
+      series: series
+    menu:
+      main:
+        - name: Archive
+          url: archives
+          weight: 5
+        - name: Search
+          url: search/
+          weight: 10
+        - name: Tags
+          url: tags/
+          weight: 10
+  zh:
+    languageName: "中文"
+    weight: 2
+    taxonomies:
+      category: categories
+      tag: tags
+      series: series
+    menu:
+      main:
+        - name: 归档
+          url: archives
+          weight: 5
+        - name: 搜索
+          url: search/
+          weight: 10
+        - name: 标签
+          url: tags/
+          weight: 10
+
 outputs:
   home:
     - HTML
     - RSS
-    - Algolia
+    - JSON # is necessary
 
 params:
-  header_image: img/home-bg-main.jpg
-  SEOTitle: EdgarDing 的博客 | One day One day
-  description: 一天又一天
-  keyword: Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Kubernetes, 云平台
-  slogan: You Only Live Once.
-  image_404: img/404-bg.jpg
-  title_404: 你来到了没有知识的荒原 :(
-  leancloud_app_id: ""
-  leancloud_app_key: ""
-  sidebar_about_description: I hope the day comes easy and the moments pass slow, And each road leads you where you want to go.
-  sidebar_avatar: img/edgarding.jpeg
-  featured_tags: true
-  featured_condition_size: 5
-  ba_track_id: "066319231b9d681d7bd32915602c755c"
-  disqus_proxy: ""
-  disqus_site: ""
-  twikoo_env_id: ""
-  reward: false
-  about_me: true
-  omit_categories: false
-  page_view_conter: true
-  social:
-    email: edgarding97@gmail.com
-    instagram: https://www.instagram.com/edgarding7/
-    github: https://github.com/EdgarDing77
-  addtional_menus:
-    - title: ARCHIVE
-      href: /top/archive/
-    - title: ABOUT
-      href: /top/about/
-  #############
-  friends: false
-  friend_link:
-    - title: oneday oneday 老博客
-      href: https://fortuna7.top
-  ############
-  bookmarks: false
-  bookmark_link:
-    - title: Martin Fowler
-      href: https://martinfowler.com
-  ############# 待完善
-  algolia_search: true
-  algolia_appId: "I62C5GH8Z4"
-  algolia_indexName: "edgarding"
-  algolia_apiKey: "3c8936237db9c1f21e0936b4f34d3b67"
-  algolia:
-    vars:
-      - title
-      - summary
-      - date
-      - publishdate
-      - expirydate
-      - permalink
-    params:
-      - categories
-      - tags
+  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  title: 一天又一天
+  description: "ExampleSite description"
+  keywords: [Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Kubernetes, 云平台]
+  author: EdgarDing
+  # author: ["Me", "You"] # multiple authors
+  images: ["<link or path of image for opengraph, twitter-cards>"]
+  DateFormat: "January 2, 2006"
+  defaultTheme: auto # dark, light
+  disableThemeToggle: false
+  ShowToc: true
+  TocOpen: false
+  UseHugoToc: false
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: false
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false # TODO 后续开启
+  hidemeta: false
+  hideSummary: false
 
-outputFormats:
-  Algolia:
-    baseName: algolia
-    isPlainText: true
-    mediaType: application/json
-    notAlternative: true
+  assets:
+    # disableHLJS: true # to disable highlight.js
+    # disableFingerprinting: true
+    favicon: "img/favicon.ico"
+    favicon16x16: "img/favicon-16x16.png"
+    favicon32x32: "img/favicon-32x32.png"
+    apple_touch_icon: "img/apple-touch-icon.png"
+    safari_pinned_tab: "<link / abs url>"
 
+  label:
+    text: "Home"
+    icon: /apple-touch-icon.png
+    iconHeight: 35
+
+  # profile-mode
+  profileMode:
+    enabled: true # needs to be explicitly set
+    title: EdgarDing
+    subtitle: "*Have a nice day!*"
+    imageUrl: "img/edgarding.jpeg"
+    imageWidth: 120
+    imageHeight: 120
+    imageTitle: my image
+    buttons:
+      - name: Posts
+        url: posts
+      - name: Tags
+        url: tags
+
+  # home-info mode
+  homeInfoParams:
+    Title: "Hi there \U0001F44B"
+    Content: Welcome to my blog
+
+  socialIcons:
+    - name: twitter
+      url: "https://twitter.com/"
+    - name: github
+      url: "https://github.com/EdgarDing77"
+
+  analytics:
+    google:
+      SiteVerificationTag: "G-QB764C3NYN"
+    bing:
+      SiteVerificationTag: ""
+    yandex:
+      SiteVerificationTag: ""
+
+  cover:
+    hidden: true # hide everywhere but not in structured data
+    hiddenInList: true # hide on list pages and home
+    hiddenInSingle: true # hide on single page
+
+  editPost:
+    URL: "https://github.com/EdgarDing77/EdgarDing77.github.io/post"
+    Text: "Suggest Changes" # edit text
+    appendFilePath: true # to append file path to Edit link
+
+  # for search
+  # https://fusejs.io/api/options.html
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+menu:
+  main:
+    - identifier: categories
+      name: categories
+      url: /categories/
+      weight: 10
+    - identifier: tags
+      name: tags
+      url: /tags/
+      weight: 20
+    - identifier: example
+      name: example.org
+      url: https://example.org
+      weight: 30
+# Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
+pygmentsUseClasses: true
 markup:
-  tableOfContents:
-    endLevel: 2
-    startLevel: 1
   highlight:
-    style: dracula
+    noClasses: false
+    # anchorLineNos: true
+    # codeFences: true
+    # guessSyntax: true
+    # lineNos: true
+    # style: monokai
+
+
+
+
+#params:
+#  header_image: img/home-bg-main.jpg
+#  SEOTitle: EdgarDing 的博客 | One day One day
+#  description: 一天又一天
+#  keyword: Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Kubernetes, 云平台
+#  slogan: You Only Live Once.
+#  image_404: img/404-bg.jpg
+#  title_404: 你来到了没有知识的荒原 :(
+#  leancloud_app_id: ""
+#  leancloud_app_key: ""
+#  sidebar_about_description: I hope the day comes easy and the moments pass slow, And each road leads you where you want to go.
+#  sidebar_avatar: img/edgarding.jpeg
+#  featured_tags: true
+#  featured_condition_size: 5
+#  ba_track_id: "066319231b9d681d7bd32915602c755c"
+#  disqus_proxy: ""
+#  disqus_site: ""
+#  twikoo_env_id: ""
+#  reward: false
+#  about_me: true
+#  omit_categories: false
+#  page_view_conter: true
+#  social:
+#    email: edgarding97@gmail.com
+#    instagram: https://www.instagram.com/edgarding7/
+#    github: https://github.com/EdgarDing77
+#  addtional_menus:
+#    - title: ARCHIVE
+#      href: /top/archive/
+#    - title: ABOUT
+#      href: /top/about/
+#  #############
+#  friends: false
+#  friend_link:
+#    - title: oneday oneday 老博客
+#      href: https://fortuna7.top
+#  ############
+#  bookmarks: false
+#  bookmark_link:
+#    - title: Martin Fowler
+#      href: https://martinfowler.com
+#  ############# 待完善
+#  algolia_search: true
+#  algolia_appId: "I62C5GH8Z4"
+#  algolia_indexName: "edgarding"
+#  algolia_apiKey: "3c8936237db9c1f21e0936b4f34d3b67"
+#  algolia:
+#    vars:
+#      - title
+#      - summary
+#      - date
+#      - publishdate
+#      - expirydate
+#      - permalink
+#    params:
+#      - categories
+#      - tags
+#
+#outputFormats:
+#  Algolia:
+#    baseName: algolia
+#    isPlainText: true
+#    mediaType: application/json
+#    notAlternative: true
+

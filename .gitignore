@@ -2,6 +2,8 @@ node_modules
 static/_pagefind
 public
 resources
+.idea
 .env
 *.log
 **/.DS_Store
+

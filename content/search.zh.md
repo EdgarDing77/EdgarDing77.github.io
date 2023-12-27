@@ -1,6 +1,6 @@
 ---
-title: "Search"
+title: "搜索"
 layout: "search"
 summary: "search"
-placeholder: "try something..."
+placeholder: "试试吧..."
 ---
