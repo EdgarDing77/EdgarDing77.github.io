@@ -67,7 +67,7 @@ params:
   keywords: [Edgarding, 博客, 个人网站, 互联网, Web, 云原生, PaaS, Kubernetes, 云平台]
   author: EdgarDing
   # author: ["Me", "You"] # multiple authors
-  images: ["<link or path of image for opengraph, twitter-cards>"]
+  images: ["img/edgarding.jpeg"]
   DateFormat: "January 2, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
@@ -122,8 +122,6 @@ params:
     Content: Welcome to my blog
 
   socialIcons:
-    - name: twitter
-      url: "https://twitter.com/"
     - name: github
       url: "https://github.com/EdgarDing77"
 

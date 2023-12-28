@@ -5,89 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="744a8d05-b5e7-4b4e-a54b-edc3b98736cb" name="Changes" comment="优化">
-      <change afterPath="$PROJECT_DIR$/public/CNAME" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/algolia.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/categories/tech/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/categories/tech/index.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/categories/tech/page/1/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/custom.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/font-awesome.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/hugo-easy-gallery.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/hugo-theme-cleanwhite.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/hugo-theme-cleanwhite.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/iDisqus.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/iDisqus.min.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/mindmap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/zanshang.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/alipay-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/alipay-10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/alipay-100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/alipay-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/alipay-5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/alipay-50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/wechat-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/wechat-10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/wechat-100.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/wechat-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/wechat-5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/reward/wechat-50.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/eac.min.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/fitvids.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/hux-blog.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/hux-blog.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/iDisqus.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/iDisqus.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/iDisqus.min.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/jquery.nav.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/jquery.tagcloud.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/jquerymigrate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/kity.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/kityminder.core.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/load-photoswipe.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/mindmap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/mindmap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/reward.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/page/1/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/post/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/post/index.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/post/tech/kubernetes/kubernetes-build-guide/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/post/template.md.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/search/index.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/search/placeholder/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/tags/kubernetes/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/tags/kubernetes/index.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/tags/kubernetes/page/1/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/top/about/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/top/archive/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/top/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/top/index.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/archives.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/archives.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/posts/template.md.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/content/posts/template.md.tmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/search.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/search.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/search.zh.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/search.zh.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/img/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/static/img/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/img/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/hugo-theme-cleanwhite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/paper" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +41,7 @@
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "release",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "last_opened_file_path": "G:/golib/hugo-blog/content",
