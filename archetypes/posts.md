@@ -1,12 +1,9 @@
 ---
 title: '{{ replace .File.ContentBaseName `-` ` ` | title }}'
-subtitle: ''
-description: ""
 date: '{{ .Date }}'
 author: "EdgarDing"
-tags:
-  - Kubernetes
-  - Test
-
-categories: ["Tech"]
+description: ""
+summary: ""
+tags: ["kubernetes"]
+categories: ["tech"]
 ---

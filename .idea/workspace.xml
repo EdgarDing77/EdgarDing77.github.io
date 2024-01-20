@@ -5,8 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="744a8d05-b5e7-4b4e-a54b-edc3b98736cb" name="Changes" comment="优化">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/hugo.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/hugo.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content/archives.en.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/themes/PaperMod/archetypes/post.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/archives.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/archives.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/posts/cloudnative/Datadog Agent部署-datadogagent-bu-shu.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/posts/cloudnative/Kubernetes-基础-kubernetes-ji-chu.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/posts/template.md.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/archetypes/posts.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/posts/test.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/search.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/search.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/search.zh.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/search.en.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/comments.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/comments.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,10 +31,10 @@
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="master" />
-        <entry key="$PROJECT_DIR$/themes/PaperMod" value="a1cb044262d33d11860feb847c4c30aa281aee82" />
+        <entry key="$PROJECT_DIR$/themes/PaperMod" value="master" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/themes/PaperMod" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -31,21 +44,25 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2UmeT0UbCJw45WsMbEiqGmFnKXV" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "release",
+    "git-widget-placeholder": "djj__dev",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "G:/golib/hugo-blog/content",
+    "last_opened_file_path": "/Users/edgarding/WritersideProjects/EdgarDing77.github.io",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -58,7 +75,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/content" />
+      <recent name="$PROJECT_DIR$/themes/PaperMod/archetypes" />
       <recent name="G:\golib\hugo-blog\content" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/themes/PaperMod" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -87,7 +111,7 @@
                   <entry key="roots">
                     <value>
                       <list>
-                        <option value="$PROJECT_DIR$" />
+                        <option value="$PROJECT_DIR$/themes/PaperMod" />
                       </list>
                     </value>
                   </entry>
