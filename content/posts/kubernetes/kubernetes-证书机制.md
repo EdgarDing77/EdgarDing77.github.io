@@ -913,7 +913,7 @@ type: kubernetes.io/service-account-token
 
 从上面token的内容，这个里面包含一个CA证书是kubernates ca证书，用于验证 apiserver。token就是api-server用来验证kube-proxy的。token的内容并不是证书，所以使用 serviceAccount 与 api-server 通讯是一个单向TLS认证。在k8s里除了scheduler，controller-manager使用kubeconfig 作为凭证访问apiserver，pod访问 apiserver 和 kube-proxy 类似，都是使用token 挂载。
 
-## **kubelet 证书**
+## kubelet 证书
 
 kubelet 与 kube-controller等组件一样，采用 kubeconfig（kubelet.conf）来进行认证，都是采用 kubernetes CA (ca.crt)生成。
 
@@ -1018,7 +1018,7 @@ kubelet 证书权限：https://v1-24.docs.kubernetes.io/zh-cn/docs/reference/acc
 
 kubelet证书可以用来查看pod信息，不能创建pod、不能查看所有命名空间的secret和configMap。看起来和文档中的说明一致。
 
-### **TLS bootstrapping**
+### TLS bootstrapping
 
 在安装 Kubernetes 时，需要为每一个工作节点上的 Kubelet 分别生成一个证书。由于工作节点可能很多，手动生成 Kubelet 证书的过程会比较繁琐。为了解决这个问题，Kubernetes 提供了 [TLS bootstrapping](https://kubernetes.io/zh/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/) 的方式来简化 Kubelet 证书的生成过程。
 
@@ -1049,7 +1049,7 @@ Environment="KUBELET_EXTRA_ARGS=--feature-gates=RotateKubeletServerCertificate=t
     - --feature-gates=RotateKubeletServerCertificate=true # 该参数表示自动同意，可以不配置，因为server的请求不会自动批准，需要手动批准。
 ```
 
-### **kubelet 服务端证书**
+### kubelet 服务端证书
 
 kubelet 的客户端主要是：apiserver 和 相关监控组件。
 
@@ -1136,9 +1136,9 @@ kubelet server 证书轮换**：（[参考](https://v1-24.docs.kubernetes.io/zh-
 6. 重新启动 kubelet。
 7. 确保节点状况变为 `Ready`。
 
-## **证书轮转**
+## 证书轮转
 
-### **证书更新**
+### 证书更新
 
 证书更新的几种方式：
 
@@ -1189,7 +1189,7 @@ Kubernetes 提供了一个 `certificates.k8s.io` API，可以使用配置的 CA 
 
 Kubeadm没有提供设置证书时间的参数，有效期是一年，获取集群证书过期时间，容易过期的是ca证书派发出来的证书文件。（因为ca证书有效期是10年，足够用了，主要过期的是ca派发出来的证书）
 
-### **自动轮转**
+### 自动轮转
 
 **指的是 kubelet 的 客户端证书 进行证书的自动轮转，而 服务端证书 需要手动 approve。**
 
@@ -1307,7 +1307,7 @@ front-proxy-ca          May 28, 2032 10:49 UTC   9y              no
 > Note: kubelet.conf is not included in the list above because kubeadm configures kubelet for automatic certificate renewal.
 >
 
-### **kubeadm部署方式**
+### kubeadm部署方式
 
 更新的方式：
 
@@ -1401,7 +1401,7 @@ notAfter=Aug 26 03:47:23 2021 GMT
 - `-csr-only` 可用于经过一个外部 CA 生成的证书签名请求来更新证书（无需实际替换更新证书）。
 - 可以更新单个证书而不是全部证书。
 
-### **非kubeadm集群部署方式**
+### 非kubeadm集群部署方式
 
 非 kubeadm 集群参考 [配置 CA 并创建 TLS 证书](https://github.com/feiskyer/kubernetes-handbook/blob/master/setup/k8s-hard-way/04-certificate-authority.md) 重新生成证书，并重启各个 Kubernetes 服务。
 
@@ -1443,7 +1443,7 @@ kubeadm certs renew all
 
 发现，若证书到期，k8s的命令无法执行，且k8s上的容器服务无法正常提供服务。
 
-## **Q&A**
+## Q&A
 
 **问题：K8S集群一共有多少证书？**
 
@@ -1528,11 +1528,11 @@ Kubernetes 提供了两种客户端认证的方法，控制平面组件采用的
 
 why > 相关讨论：https://www.reddit.com/r/kubernetes/comments/n6v2ni/difference_between_serviceaccount_token_and/
 
-## **Charts**
+## Charts
 
 https://kubernetes.io/docs/setup/best-practices/certificates/#all-certificates
 
-### **CA**
+### CA
 
 | Default CN | Parent CA | O (in Subject) | kind | hosts (SAN) |
 | --- | --- | --- | --- | --- |
@@ -1544,7 +1544,7 @@ https://kubernetes.io/docs/setup/best-practices/certificates/#all-certificates
 | kube-apiserver-kubelet-client | kubernetes-ca | system:masters | client |  |
 | front-proxy-client | kubernetes-front-proxy-ca |  | client |  |
 
-### **证书需求**
+### 证书需求
 
 | Default CN | Parent CA | O (in Subject) | kind | hosts (SAN) |
 | --- | --- | --- | --- | --- |
@@ -1556,7 +1556,7 @@ https://kubernetes.io/docs/setup/best-practices/certificates/#all-certificates
 | kube-apiserver-kubelet-client | kubernetes-ca | system:masters | client |  |
 | front-proxy-client | kubernetes-front-proxy-ca |  | client |  |
 
-### **证书路径**
+### 证书路径
 
 | Default CN | recommended key path | recommended cert path | command | key argument | cert argument |
 | --- | --- | --- | --- | --- | --- |
@@ -1575,7 +1575,7 @@ https://kubernetes.io/docs/setup/best-practices/certificates/#all-certificates
 | etcd-ca |  | etcd/ca.crt | etcdctl |  | --cacert |
 | kube-etcd-healthcheck-client | etcd/healthcheck-client.key | etcd/healthcheck-client.crt | etcdctl | --key | --cert |
 
-### **用于 user account 的证书**
+### 用于 user account 的证书
 
 | filename | credential name | Default CN | O (in Subject) |
 | --- | --- | --- | --- |
@@ -1611,7 +1611,7 @@ https://kubernetes.io/docs/setup/best-practices/certificates/#all-certificates
 /etc/kubernetes/pki/sa.pub
 ```
 
-## **Notation**
+## Notation
 
 - CA (Certificate Authority)：根证书签发机构，用于签发证书（即证明证书是合法的）。
     - CA 拥有私钥 (ca.key) 和证书 (ca.crt，包含公钥)。对于自签名 CA 来说， ca.crt 需要分发给所有客户端。

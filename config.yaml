@@ -86,8 +86,9 @@ params:
   defaultTheme: auto # dark, light
   disableThemeToggle: false
   ShowToc: true
-  TocOpen: false
+  TocOpen: true
   UseHugoToc: false
+  TocSide: 'right'
   ShowReadingTime: true
   ShowShareButtons: false
   ShowPostNavLinks: true

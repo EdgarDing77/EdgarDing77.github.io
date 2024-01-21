@@ -4,22 +4,20 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="744a8d05-b5e7-4b4e-a54b-edc3b98736cb" name="Changes" comment="优化">
-      <change afterPath="$PROJECT_DIR$/content/archives.en.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/themes/PaperMod/archetypes/post.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="744a8d05-b5e7-4b4e-a54b-edc3b98736cb" name="Changes" comment="toc优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/archives.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/archives.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/posts/cloudnative/Datadog Agent部署-datadogagent-bu-shu.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/posts/cloudnative/Kubernetes-基础-kubernetes-ji-chu.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/posts/template.md.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/archetypes/posts.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/posts/test.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/search.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/search.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/search.zh.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/search.en.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/posts/kubernetes/kubernetes-证书机制.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/posts/kubernetes/kubernetes-证书机制.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/comments.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/comments.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/post-single.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/post-single.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/profile-mode.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/profile-mode.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/search.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/search.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/terms.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/terms.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/core/reset.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/core/reset.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/core/theme-vars.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/core/theme-vars.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/footer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/toc.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/toc.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/PaperMod/theme.toml" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/theme.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +123,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化" />
+    <MESSAGE value="toc优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="toc优化" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
