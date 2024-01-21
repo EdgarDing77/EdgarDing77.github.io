@@ -7,7 +7,6 @@
     <list default="true" id="744a8d05-b5e7-4b4e-a54b-edc3b98736cb" name="Changes" comment="toc优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/posts/kubernetes/kubernetes-证书机制.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/posts/kubernetes/kubernetes-证书机制.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

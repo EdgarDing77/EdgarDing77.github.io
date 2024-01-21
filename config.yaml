@@ -144,7 +144,7 @@ params:
     google:
       SiteVerificationTag: "G-QB764C3NYN"
     bing:
-      SiteVerificationTag: ""
+      SiteVerificationTag: "12363b44cf434bf29301ebe9f3cef31c"
     yandex:
       SiteVerificationTag: ""
 
