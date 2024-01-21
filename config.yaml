@@ -95,25 +95,24 @@ params:
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: false
   ShowWordCount: true
-  ShowRssButtonInSectionTermList: true
+  ShowRssButtonInSectionTermList: false
   disableSpecial1stPost: false
   disableScrollToTop: false
-  comments: true # TODO 后续开启
+  comments: true
   hidemeta: false
   hideSummary: false
 
   assets:
     # disableHLJS: true # to disable highlight.js
     # disableFingerprinting: true
-    favicon: "img/favicon.ico"
-    favicon16x16: "img/favicon-16x16.png"
-    favicon32x32: "img/favicon-32x32.png"
-    apple_touch_icon: "img/apple-touch-icon.png"
-    safari_pinned_tab: "img/apple-touch-icon.png"
-
+    favicon: "https://cdn.jsdelivr.net/gh/EdgarDing77/images@hugo_blog/static/img/favicon.ico"
+    favicon16x16: "https://cdn.jsdelivr.net/gh/EdgarDing77/images@hugo_blog/static/img/favicon-16x16.png"
+    favicon32x32: "https://cdn.jsdelivr.net/gh/EdgarDing77/images@hugo_blog/static/img/favicon-32x32.png"
+    apple_touch_icon: "https://cdn.jsdelivr.net/gh/EdgarDing77/images@hugo_blog/static/img/apple-touch-icon.png"
+    safari_pinned_tab: "https://cdn.jsdelivr.net/gh/EdgarDing77/images@hugo_blog/static/img/apple-touch-icon.png"
   label:
     text: "Home"
-    icon: "img/apple-touch-icon.png"
+    icon: "https://cdn.jsdelivr.net/gh/EdgarDing77/images@hugo_blog/static/img/apple-touch-icon.png"
     iconHeight: 35
 
   # profile-mode
@@ -121,7 +120,7 @@ params:
     enabled: true # needs to be explicitly set
     title: EdgarDing
     subtitle: "*Have a nice day!*"
-    imageUrl: "img/edgarding.jpeg"
+    imageUrl: "https://cdn.jsdelivr.net/gh/EdgarDing77/images@hugo_blog/static/img/edgarding.jpeg"
     imageWidth: 120
     imageHeight: 120
     imageTitle: EdgarDing
@@ -155,7 +154,7 @@ params:
     hiddenInSingle: true # hide on single page
 
   editPost:
-    URL: "https://github.com/EdgarDing77/EdgarDing77.github.io"
+    URL: "https://github.com/EdgarDing77/EdgarDing77.github.io/blob/master/content"
     Text: "Suggest Changes" # edit text
     appendFilePath: true # to append file path to Edit link
 

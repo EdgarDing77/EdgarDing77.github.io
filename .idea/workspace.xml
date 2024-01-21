@@ -8,16 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/content/posts/kubernetes/kubernetes-证书机制.md" beforeDir="false" afterPath="$PROJECT_DIR$/content/posts/kubernetes/kubernetes-证书机制.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/post-single.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/post-single.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/profile-mode.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/profile-mode.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/search.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/search.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/terms.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/common/terms.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/core/reset.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/core/reset.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/assets/css/core/theme-vars.css" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/assets/css/core/theme-vars.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/footer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/toc.html" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/layouts/partials/toc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/themes/PaperMod/theme.toml" beforeDir="false" afterPath="$PROJECT_DIR$/themes/PaperMod/theme.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +22,7 @@
         <entry key="$PROJECT_DIR$/themes/PaperMod" value="master" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/themes/PaperMod" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -57,7 +47,7 @@
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "djj__dev",
+    "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "last_opened_file_path": "/Users/edgarding/WritersideProjects/EdgarDing77.github.io",

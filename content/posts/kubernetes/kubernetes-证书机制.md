@@ -5,7 +5,7 @@ author: "EdgarDing"
 description: "详解 kubernetes 证书相关内容"
 summary: "kubernetes 证书类型、有效期、轮转机制"
 tags: ["kubernetes"]
-categories: ["tech"]
+categories: ["kubernetes"]
 ---
 
 # k8s-证书机制
@@ -1276,7 +1276,7 @@ deadline = totalDuration + time.Duration(rand.Float64()[0.0~1.0] * 0.2 * totalDu
 > ref：https://kubernetes.io/docs/tasks/tls/certificate-rotation/
 >
 
-### **手动轮转**
+### 手动轮转
 
 查询集群的过期时间：
 
@@ -1405,7 +1405,7 @@ notAfter=Aug 26 03:47:23 2021 GMT
 
 非 kubeadm 集群参考 [配置 CA 并创建 TLS 证书](https://github.com/feiskyer/kubernetes-handbook/blob/master/setup/k8s-hard-way/04-certificate-authority.md) 重新生成证书，并重启各个 Kubernetes 服务。
 
-## **实践**
+## 实践
 
 reference：https://kubernetes.io/zh/docs/tasks/tls/manual-rotation-of-ca-certificates/
 
